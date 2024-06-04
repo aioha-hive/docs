@@ -4,44 +4,21 @@ sidebar_position: 1
 
 # Introduction
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Aioha (All-In-One Hive Authentication) is an API that provides a common interface for working with different Hive login providers. This allows easier integration of [Hive](https://hive.io) login and transacting on the network with fewer code.
 
-## Getting Started
+Aioha can be used through two different ways:
 
-Get started by **creating a new site**.
+1. **Core API**
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+This is the base library containing the inner workings of Aioha. It provides the programmatic APIs needed to interact with Hive login providers without much work on provider-specific code, all within one or two lines of code. Recommended when login UI customizability is important to the application.
 
-### What you'll need
+2. **Ready Made Login UI**
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+These are ready to use framework-specific libraries that implements all the UI logic required for an Aioha-powered Hive login modal. It includes and uses the Aioha core API (described above) under the hood. Best for most developers so they have more time to focus on the main functionality of the application.
 
-## Generate a new site
+## Supported Providers
 
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+* [Keychain](https://hive-keychain.com)
+* [HiveAuth](https://hiveauth.com)
+* [HiveSigner](https://hivesigner.com)
+* [Ledger](https://hiveledger.io)
