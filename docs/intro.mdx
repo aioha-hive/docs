@@ -1,0 +1,53 @@
+---
+sidebar_position: 1
+---
+
+# Introduction
+
+Aioha (All-In-One Hive Authentication) is an API that provides a common interface for working with different Hive login providers. This allows easier integration of [Hive](https://hive.io) login and transacting on the network with fewer code.
+
+Aioha is designed for use in browser contexts and can be used through two different ways:
+
+1. [**Core API**](/docs/category/core-api)
+
+This is the base library containing the inner workings of Aioha. It provides the programmatic APIs needed to interact with Hive login providers without much work on provider-specific code, all within one or two lines of code. Recommended when login UI customizability is important to the application.
+
+2. **Ready Made Login UI**
+
+These are ready to use framework-specific libraries that implements all the UI logic required for an Aioha-powered Hive login modal. It includes and uses the Aioha core API (described above) under the hood. Best for most developers so they have more time to focus on the main functionality of the application.
+
+## Supported Providers
+
+* [Keychain](https://hive-keychain.com)
+* [HiveAuth](https://hiveauth.com)
+* [HiveSigner](https://hivesigner.com)
+* [Ledger](https://hiveledger.io)
+
+## Feature Matrix
+
+|Feature|Keychain|HiveAuth|HiveSigner|Ledger|
+|-|-|-|-|-|
+|Login|✅|✅|✅<sup>1</sup>|✅|
+|Memo encryption|✅|❌|❌|❌|
+|Memo decryption|✅|❌|✅<sup>2</sup>|❌|
+|Sign message|✅|✅|❌|✅|
+|Sign tx (without broadcast)|✅|❌<sup>3</sup>|❌|✅|
+|Sign tx (with broadcast)|✅|✅|✅|✅|
+|Transact using owner auth|❌|❌|✅|✅|
+
+<sup>1</sup> A HiveSigner access token will be returned instead of an ECDSA signature.<br/><sup>2</sup> Memo must be encrypted using `@hivesigner`'s public posting key.<br/><sup>3</sup> While technically supported by the provider, the PKSA generates the transaction headers instead of using supplied values. This is unhelpful for signing multisig transactions.
+
+## Local Storage Reserved Keys
+
+Aioha uses certain keys in browser `localStorage` to store persistent logins, and in the case of HiveSigner provider, pass info from callback URL.
+
+:::warning
+Do **not** modify any values for the local storage keys below outside Aioha core and HiveSigner callback page.
+:::
+
+The following keys are reserved:
+
+* General: `aiohaUsername`, `aiohaProvider`
+* HiveAuth: `hiveauthToken`, `hiveauthKey`, `hiveauthExp`
+* HiveSigner: `hivesignerTxId`, `hivesignerToken`, `hivesignerExpiry`, `hivesignerUsername`
+* Ledger: `ledgerPath`

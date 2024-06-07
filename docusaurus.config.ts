@@ -83,9 +83,13 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'Docs',
+              label: 'Introduction',
               to: '/docs/intro',
             },
+            {
+              label: 'Core API',
+              to: '/docs/category/core-api'
+            }
           ],
         },
         {
@@ -94,6 +98,10 @@ const config: Config = {
             {
               label: 'Discord',
               href: 'https://discord.gg/ZWj5NqaBeF',
+            },
+            {
+              label: 'Sting',
+              href: 'https://chat.peakd.com/t/hive-134220/1'
             }
           ],
         },
