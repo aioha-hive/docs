@@ -132,6 +132,10 @@ const config: Config = {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
     },
+    colorMode: {
+      defaultMode: 'dark',
+      respectPrefersColorScheme: true
+    }
   } satisfies Preset.ThemeConfig,
 };
 
