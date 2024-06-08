@@ -16,7 +16,7 @@ Create an instance of Aioha. All providers are registered by default excluding H
 Provider-specific configs are **optional** with exception of HiveSigner which is required to register HiveSigner provider.
 
 ```js
-import { initAioha, KeyTypes, Providers } from '@aioha/aioha'
+import { initAioha, Asset, KeyTypes, Providers } from '@aioha/aioha'
 
 const aioha = initAioha({
   keychain: {
@@ -77,6 +77,16 @@ const aioha = initAioha({
       Posting = 'posting',
       Active = 'active',
       Memo = 'memo'
+    }
+    ```
+  </TabItem>
+  <TabItem value='enum-asset' label='Asset'>
+    The `Asset` enum exported are as follows:
+
+    ```js
+    export enum Asset {
+      HIVE = 'HIVE',
+      HBD = 'HBD'
     }
     ```
   </TabItem>
