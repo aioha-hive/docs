@@ -322,6 +322,14 @@ Returns a boolean of whether a user is logged in or not.
 aioha.isLoggedIn()
 ```
 
+### Is Provider Enabled
+
+Returns a boolean of whether the specified provider is registered and available to use.
+
+```js
+aioha.isProviderEnabled(Providers.HiveAuth)
+```
+
 ## Setters
 
 ### Set Hive API
@@ -494,8 +502,8 @@ Transfer HIVE/HBD to another account.
 <Tabs>
   <TabItem value='vote-witness' label='Vote Witness'>
     ```js
-    const voteWitness = await aioha.voteWitness('votee', true)
-    const unvoteWitness = await aioha.voteWitness('votee', false)
+    const voteWitness = await aioha.voteWitness('thewitness', true)
+    const unvoteWitness = await aioha.voteWitness('thewitness', false)
     ```
   </TabItem>
   <TabItem value='vote-proposals' label='Vote Proposals'>
@@ -508,6 +516,29 @@ Transfer HIVE/HBD to another account.
     ```js
     const setProxy = await aioha.setProxy('proxiedacc')
     const clearProxy = await aioha.clearProxy()
+    ```
+  </TabItem>
+</Tabs>
+
+### Authority
+
+<Tabs>
+  <TabItem value='auths-accounts' label='Account Auths'>
+    ```js
+    // Add 'aioha' account to posting auths with weight 1
+    const addAccount = await aioha.addAccountAuthority('aioha', KeyTypes.Posting, 1)
+
+    // Remove 'aioha' account from posting auths
+    const rmAccount = await aioha.removeAccountAuthority('aioha', KeyTypes.Posting)
+    ```
+  </TabItem>
+  <TabItem value='auths-keys' label='Key Auths'>
+    ```js
+    // Add 'STMxxxx' public key to posting auths with weight 1
+    const addKey = await aioha.addKeyAuthority('STMxxxx', KeyTypes.Posting, 1)
+
+    // Remove 'STMxxxx' public key from posting auths
+    const rmKey = await aioha.removeKeyAuthority('STMxxxx', KeyTypes.Posting)
     ```
   </TabItem>
 </Tabs>
