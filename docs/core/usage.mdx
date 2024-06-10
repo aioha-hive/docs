@@ -19,9 +19,6 @@ Provider-specific configs are **optional** with exception of HiveSigner which is
 import { initAioha, Asset, KeyTypes, Providers } from '@aioha/aioha'
 
 const aioha = initAioha({
-  keychain: {
-    loginTitle: 'Login'
-  },
   hiveauth: {
     name: 'Aioha',
     description: 'Aioha test app'
@@ -37,9 +34,6 @@ const aioha = initAioha({
 ### Configuration
 
 <Tabs>
-  <TabItem value='config-keychain' label='Keychain'>
-    * `loginTitle` *(optional)*: Title to be displayed on login
-  </TabItem>
   <TabItem value='config-hiveauth' label='HiveAuth'>
     * `name`: Short name of the app. Default: `Aioha Generic App`
     * `description` *(optional)*: App description
@@ -106,6 +100,7 @@ Login with specified provider and username. A signature request will be made to 
     const login = await aioha.login(Providers.Keychain, 'hiveusername', {
       msg: 'Hello World',
       keyType: KeyTypes.Posting,
+      loginTitle: 'Login',
       hiveauth: {
         cbWait: (payload, evt) => {
           // display HiveAuth QR code using `payload` as data
@@ -115,6 +110,7 @@ Login with specified provider and username. A signature request will be made to 
     ```
     * `msg`: Message to be signed
     * `keyType`: Key type to be used to sign the message
+    * `loginTitle` *(optional)*: Title to be displayed on certain providers
     * `hiveauth.cbWait`: Callback function returning auth payload. It shall display a QR code using `payload` as data to be scanned by a HiveAuth PKSA.
   </TabItem>
   <TabItem value='login-result' label='Result'>
