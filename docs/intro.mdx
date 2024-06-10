@@ -22,18 +22,19 @@ These are ready to use framework-specific libraries that implements all the UI l
 * [HiveAuth](https://hiveauth.com)
 * [HiveSigner](https://hivesigner.com)
 * [Ledger](https://hiveledger.io)
+* [Peak Vault](https://vault.peakd.com)
 
 ## Feature Matrix
 
-|Feature|Keychain|HiveAuth|HiveSigner|Ledger|
-|-|-|-|-|-|
-|Login|✅|✅|✅<sup>1</sup>|✅|
-|Memo encryption|✅|❌|❌|❌|
-|Memo decryption|✅|❌|✅<sup>2</sup>|❌|
-|Sign message|✅|✅|❌|✅|
-|Sign tx (without broadcast)|✅|❌<sup>3</sup>|❌|✅|
-|Sign tx (with broadcast)|✅|✅|✅|✅|
-|Transact using owner auth|❌|❌|✅|✅|
+|Feature|Peak Vault|Keychain|HiveAuth|HiveSigner|Ledger|
+|-|-|-|-|-|-|
+|Login|✅|✅|✅|✅<sup>1</sup>|✅|
+|Memo encryption|✅|✅|❌|❌|❌|
+|Memo decryption|✅|✅|❌|✅<sup>2</sup>|❌|
+|Sign message|✅|✅|✅|❌|✅|
+|Sign tx (without broadcast)|✅|✅|❌<sup>3</sup>|❌|✅|
+|Sign tx (with broadcast)|✅|✅|✅|✅|✅|
+|Transact using owner auth|❌|❌|❌|✅|✅|
 
 <sup>1</sup> A HiveSigner access token will be returned instead of an ECDSA signature.<br/>
 <sup>2</sup> Memo must be encrypted using `@hivesigner`'s public posting key.<br/>
