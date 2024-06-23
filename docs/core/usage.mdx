@@ -319,9 +319,17 @@ Returns a boolean of whether a user is logged in or not.
 aioha.isLoggedIn()
 ```
 
+### Is Provider Registered
+
+Returns a boolean of whether the specified provider is registered. This does not indicate that the said provider is available to the user (i.e. due to required browser extension not installed).
+
+```js
+aioha.isProviderRegistered(Providers.HiveAuth)
+```
+
 ### Is Provider Enabled
 
-Returns a boolean of whether the specified provider is registered and available to use.
+Returns a boolean of whether the specified provider is registered and available for use by the user.
 
 ```js
 aioha.isProviderEnabled(Providers.HiveAuth)

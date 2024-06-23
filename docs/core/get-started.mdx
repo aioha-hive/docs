@@ -91,3 +91,40 @@ const rewardClaim = await aioha.claimRewards()
 HiveSigner provider requires a callback page that stores the login and transaction results into `localStorage` which is then used as callback data for the application.
 
 A sample callback HTML page has been included in the Aioha core repository [here](https://github.com/aioha-hive/aioha/blob/main/snippets/hivesigner.html).
+
+## Polyfills
+
+When using Aioha with Webpack or Vite, you may need to add some polyfills for it to work correctly.
+
+<Tabs>
+  <TabItem value="webpack" label="Webpack" default>
+    ```js
+    const { DefinePlugin, ProvidePlugin } = require('webpack')
+
+    module.exports = {
+      // ...
+      plugins: [
+        // ...
+        new DefinePlugin({
+          'process.env.NODE_DEBUG': false
+        }),
+        new ProvidePlugin({
+          Buffer: ['buffer', 'Buffer']
+        })
+      ]
+    }
+    ```
+  </TabItem>
+  <TabItem value="vite" label="Vite">
+    ```js
+    import { defineConfig } from 'vite'
+
+    export default defineConfig({
+      // ...
+      define: {
+        'process.env.NODE_DEBUG': false
+      }
+    })
+    ```
+  </TabItem>
+</Tabs>
