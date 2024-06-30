@@ -94,7 +94,7 @@ A sample callback HTML page has been included in the Aioha core repository [here
 
 ## Polyfills
 
-When using Aioha with Webpack or Vite, you may need to add some polyfills for it to work correctly.
+When using Aioha with bundlers such as Webpack or Vite, you may need to add some polyfills for it to work correctly.
 
 <Tabs>
   <TabItem value="webpack" label="Webpack" default>
@@ -118,12 +118,21 @@ When using Aioha with Webpack or Vite, you may need to add some polyfills for it
   <TabItem value="vite" label="Vite">
     ```js
     import { defineConfig } from 'vite'
+    import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
     export default defineConfig({
       // ...
       define: {
         'process.env.NODE_DEBUG': false
-      }
+      },
+      plugins: [
+        // ...
+        nodePolyfills({
+          globals: {
+            Buffer: true
+          }
+        })
+      ]
     })
     ```
   </TabItem>
