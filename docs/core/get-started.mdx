@@ -89,9 +89,25 @@ const rewardClaim = await aioha.claimRewards()
 
 ## HiveSigner Callback Page
 
-HiveSigner provider requires a callback page that stores the login and transaction results into `localStorage` which is then used as callback data for the application.
+HiveSigner provider requires a callback page that stores the login and transaction results into `localStorage` which is then used as callback data for the application. The function is included in [`src/lib/hivesigner-cb.ts`](https://github.com/aioha-hive/aioha/blob/main/src/lib/hivesigner-cb.ts) file in Aioha core and may be used as such:
 
-A sample callback HTML page has been included in the Aioha core repository [here](https://github.com/aioha-hive/aioha/blob/main/snippets/hivesigner.html).
+<Tabs>
+  <TabItem value="cdn" label="CDN" default>
+    ```html
+    <script type="module">
+      import { hivesignerCb } from 'https://unpkg.com/@aioha/aioha@latest/dist/hivesigner-cb.js'
+      hivesignerCb()
+    </script>
+    ```
+  </TabItem>
+  <TabItem value="npm" label="NPM Module">
+    ```js
+    import { hivesignerCb } from '@aioha/aioha/build/lib/hivesigner-cb'
+
+    hivesignerCb()
+    ```
+  </TabItem>
+</Tabs>
 
 ## Polyfills
 
