@@ -103,7 +103,7 @@ Login with specified provider and username. A signature request will be made to 
       keyType: KeyTypes.Posting,
       loginTitle: 'Login',
       hiveauth: {
-        cbWait: (payload, evt) => {
+        cbWait: (payload, evt, cancel) => {
           // display HiveAuth QR code using `payload` as data
         }
       }
@@ -112,7 +112,7 @@ Login with specified provider and username. A signature request will be made to 
     * `msg`: Message to be signed
     * `keyType`: Key type to be used to sign the message
     * `loginTitle` *(optional)*: Title to be displayed on certain providers
-    * `hiveauth.cbWait`: Callback function returning auth payload. It shall display a QR code using `payload` as data to be scanned by a HiveAuth PKSA.
+    * `hiveauth.cbWait`: Callback function returning auth payload. It shall display a QR code using `payload` as data to be scanned by a HiveAuth PKSA. Login request may be cancelled before timeout by calling `cancel()`.
   </TabItem>
   <TabItem value='login-result' label='Result'>
     ```json
@@ -292,7 +292,7 @@ Sign and broadcast a Hive transaction.
 List all registered providers.
 
 ```js
-aioha.getProviders() // ['keychain', 'ledger', 'hiveauth', 'hivesigner']
+aioha.getProviders() // ['keychain', 'peakvault', 'ledger', 'hiveauth', 'hivesigner']
 ```
 
 ### Current Provider

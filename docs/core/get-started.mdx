@@ -4,6 +4,7 @@ sidebar_position: 1
 
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
+import Admonition from '@theme/Admonition';
 
 # Get Started
 
@@ -31,7 +32,7 @@ Aioha core may be installed through npm or imported through CDN using ES6 module
 
 ## CDN Import
 
-```html
+```html title="index.html"
 <script type="module">
   import { initAioha } from 'https://unpkg.com/@aioha/aioha@latest/dist/bundle.js'
 </script>
@@ -98,11 +99,18 @@ When using Aioha with bundlers such as Webpack or Vite, you may need to add some
 
 <Tabs>
   <TabItem value="webpack" label="Webpack" default>
-    ```js
+    ```js title="webpack.config.cjs"
     const { DefinePlugin, ProvidePlugin } = require('webpack')
 
     module.exports = {
       // ...
+      resolve: {
+        // ...
+        fallback: {
+          url: false,
+          buffer: require.resolve('buffer/')
+        }
+      },
       plugins: [
         // ...
         new DefinePlugin({
@@ -116,7 +124,7 @@ When using Aioha with bundlers such as Webpack or Vite, you may need to add some
     ```
   </TabItem>
   <TabItem value="vite" label="Vite">
-    ```js
+    ```ts title="vite.config.ts"
     import { defineConfig } from 'vite'
     import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
@@ -133,6 +141,58 @@ When using Aioha with bundlers such as Webpack or Vite, you may need to add some
           }
         })
       ]
+    })
+    ```
+  </TabItem>
+</Tabs>
+
+## Chunking
+
+To keep the main bundle as lightweight as possible, enable chunking (or code splitting) in your bundler.
+
+<Tabs>
+  <TabItem value="webpack" label="Webpack" default>
+    ```js title="webpack.config.cjs"
+    module.exports = {
+      // ...
+      optimization: {
+        splitChunks: {
+          name: (module, chunks, cacheGroupKey) => {
+            const allChunksNames = chunks.map((chunk) => chunk.name).join('-')
+            return allChunksNames
+          }
+        }
+      }
+    }
+    ```
+  </TabItem>
+  <TabItem value="vite" label="Vite/Rollup">
+      <Admonition type="info">
+      You may need to install the dependencies (of the same version) used by Aioha core for Rollup to detect them. Check that the versions you have correspond with the versions used by Aioha core (depending on the version of `@aioha/aioha` you use).
+      ```sh
+      pnpm i -D @engrave/ledger-app-hive @ledgerhq/hw-transport-webusb crypto-js hive-tx
+      ```
+      </Admonition>
+
+    ```js title="vite.config.ts"
+    import { defineConfig } from 'vite'
+
+    export default defineConfig({
+      // ...
+      build: {
+        rollupOptions: {
+          output: {
+            assetFileNames: 'assets/[name][extname]',
+            chunkFileNames: 'vendor/[name]-[hash].js',
+            manualChunks: {
+              hiveledger: ['@engrave/ledger-app-hive'],
+              ledger: ['@ledgerhq/hw-transport-webusb'],
+              cryptojs: ['crypto-js'],
+              hivetx: ['hive-tx']
+            }
+          }
+        }
+      }
     })
     ```
   </TabItem>
