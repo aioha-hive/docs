@@ -133,6 +133,42 @@ Login with specified provider and username. A signature request will be made to 
   </TabItem>
 </Tabs>
 
+## Login and Decrypt Memo
+
+:::note
+Login with signatures [above](#login) are preferred than with memo decryption due to limited support of memo cryptography [in certain providers](/docs#feature-matrix).
+:::
+
+Login with specified provider and username by decrypting a memo.
+
+<Tabs>
+  <TabItem value='login-ex' label='Example'>
+    ```js
+    const login = await aioha.loginAndDecryptMemo(Providers.Keychain, 'hiveusername', {
+      msg: 'Hello World',
+      keyType: KeyTypes.Posting
+    })
+    ```
+    * `msg`: Memo to be decrypted
+    * `keyType`: Key type to be used to decrypt the message
+  </TabItem>
+  <TabItem value='login-result' label='Result'>
+    ```json
+    {
+      "provider": "keychain",
+      "success": true,
+      "result": "#Login",
+      "username": "randomvlogs"
+    }
+    ```
+    * `provider`: Name of provider selected by the user. See [Providers Enum](#enums) above for possibilities.
+    * `success`: Boolean of whether the memo decryption is successful or not
+    * `error`: Error message, if any
+    * `result`: Decrypted message
+    * `username`: Logged in username
+  </TabItem>
+</Tabs>
+
 ## Logout
 
 :::info
