@@ -70,7 +70,7 @@ export const AiohaPage = () => {
 }
 ```
 
-## `AiohaModal` component
+## `AiohaModal` Component
 
 |Property|Required?|Description|Default|
 |-|-|-|-|
@@ -86,3 +86,45 @@ export const AiohaPage = () => {
 :::warning
 `hiveauth.cbWait` in `loginOptions` will be overriden as `AiohaModal` will handle the presentation of HiveAuth QR codes.
 :::
+
+## HiveSigner Callback Page
+
+The callback page has been provided as a component that you can use in a route, as such:
+
+```tsx title="src/Router.tsx"
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { HiveSignerCb } from '@aioha/react-ui'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <HomePage />
+  },
+  {
+    path: '/hivesigner',
+    element: <HiveSignerCb />
+  },
+  // ...rest of your pages
+])
+
+const Router = () => {
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  )
+}
+```
+
+Then specify the path as the callback URL in `initAioha()`:
+
+```ts
+const aioha = initAioha({
+  hivesigner: {
+    app: 'ipfsuploader.app',
+    callbackURL: window.location.origin + '/hivesigner',
+    scope: ['login', 'posting']
+  },
+  // ...other options
+})
+```
