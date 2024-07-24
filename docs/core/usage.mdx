@@ -115,7 +115,7 @@ Login with specified provider and username. A signature request will be made to 
     * `hiveauth.cbWait`: Callback function returning auth payload. It shall display a QR code using `payload` as data to be scanned by a HiveAuth PKSA. Login request may be cancelled before timeout by calling `cancel()`.
   </TabItem>
   <TabItem value='login-result' label='Result'>
-    ```json
+    ```js
     {
       "provider": "keychain",
       "success": true,
@@ -153,7 +153,7 @@ Login with specified provider and username by decrypting a memo.
     * `keyType`: Key type to be used to decrypt the message
   </TabItem>
   <TabItem value='login-result' label='Result'>
-    ```json
+    ```js
     {
       "provider": "keychain",
       "success": true,
@@ -193,7 +193,7 @@ Decrypt a Hive memo or message.
     Required arguments include the encrypted message starting with `#` and the `KeyTypes` enum for the key type to be used.
   </TabItem>
   <TabItem value='decrypt-result' label='Result'>
-    ```json
+    ```js
     {
       "success": true,
       "result": "#Hello World"
@@ -217,7 +217,7 @@ Retrieve an ECDSA signature for a message.
     Required arguments include the message to sign and the `KeyTypes` enum for the key type to be used.
   </TabItem>
   <TabItem value='sign-msg-result' label='Result'>
-    ```json
+    ```js
     {
       "success": true,
       "result": "205a8bf065ada352d309c546012b17b4e88f19fdeb704d9a26abe46f1c2f9bce3f4a4b05ffc4777e5005fc5c4b37cd7412a934b7170654df7761310e45cbf6483c",
@@ -259,7 +259,7 @@ Sign a Hive transaction without broadcasting it.
     Required arguments include the message to sign and the `KeyTypes` enum for the key type to be used (must not be `KeyTypes.Memo`).
   </TabItem>
   <TabItem value='sign-tx-result' label='Result'>
-    ```json
+    ```js
     {
       "success": true,
       "result": {
@@ -309,7 +309,7 @@ Sign and broadcast a Hive transaction.
     Required arguments include an array of operations for the transaction and the `KeyTypes` enum for the key type to be used (must not be `KeyTypes.Memo`).
   </TabItem>
   <TabItem value='sign-bc-tx-result' label='Result'>
-    ```json
+    ```js
     {
       "success": true,
       "result": "87c10767531071732fe15e6c34cf275900c342a3"
