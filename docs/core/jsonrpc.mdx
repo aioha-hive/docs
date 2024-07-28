@@ -376,13 +376,13 @@ The return value for these method calls will be equivalent to sign and broadcast
       "method": "aioha_api.vote_many",
       "params": [
         {
-          "author": 'author1',
-          "permlink": 'permlink1',
+          "author": "author1",
+          "permlink": "permlink1",
           "weight": 10000
         },
         {
-          "author": 'author2',
-          "permlink": 'permlink2',
+          "author": "author2",
+          "permlink": "permlink2",
           "weight": 5000
         }
       ]
@@ -408,10 +408,10 @@ The return value for these method calls will be equivalent to sign and broadcast
         "options": {
           "author": "aioha",
           "permlink": "my-permlink",
-          "max_accepted_payout": '1000000.000 HBD'
-          "percent_hbd": 10000
-          "allow_votes": true
-          "allow_curation_rewards": true
+          "max_accepted_payout": "1000000.000 HBD",
+          "percent_hbd": 10000,
+          "allow_votes": true,
+          "allow_curation_rewards": true,
           "extensions": [[0, {
             "beneficiaries": [
               {
@@ -514,7 +514,7 @@ Transfer HIVE/HBD to another account.
       "params": {
         "to": "bob",
         "amount": 1,
-        "asset": 'HIVE',
+        "asset": "HIVE",
         "memo": "Transferred using Aioha with memo"
       }
     }
@@ -530,7 +530,7 @@ Transfer HIVE/HBD to another account.
       "params": {
         "to": "bob",
         "amount": 1,
-        "asset": 'HIVE',
+        "asset": "HIVE",
         "memo": "Transferred using Aioha with memo",
         "recurrent": {
           "recurrence": 24,
