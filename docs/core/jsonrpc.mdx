@@ -8,6 +8,10 @@ import Admonition from '@theme/Admonition';
 
 # JSON-RPC Specs
 
+:::warning Not Final
+Method, parameter and event names may change in the near future.
+:::
+
 The [EIP-1193 style](https://eips.ethereum.org/EIPS/eip-1193) JSON-RPC API for Hive wallet providers outlined in this page are implemented in Aioha. These are designed to be platform and transport agnostic.
 
 Any RPC methods not defined here shall be redirected to a Hive API node.
@@ -57,7 +61,7 @@ The error code returned are as follows, for Aioha-specific errors:
 <Tabs>
   <TabItem value='request' label='Request'>
     <Admonition type="info">
-      You may need to subscribe to `aioha_api.hiveauth_login_cbwait` in order to receive the HiveAuth QR code payload.
+      You may need to subscribe to [`hiveauth_login_requested` event](#hiveauth-login-requested) in order to receive the HiveAuth QR code payload.
     </Admonition>
 
     ```js
@@ -709,4 +713,45 @@ Call a VSC contract from L1.
     "authority": "active"
   }
 }
+```
+
+## Events
+
+### Connected
+
+The `connect` event is emitted every time an account has been successfully authenticated after:
+
+1. Aioha is first initialized
+2. A `disconnect` event was emitted
+
+```js
+aioha.on('connect', () => void)
+```
+
+### Disconnected
+
+The `disconnect` event is emitted every time an account was logged out and no accounts remain authenticated.
+
+```js
+aioha.on('disconnect', () => void)
+```
+
+### Account Changed
+
+The `account_changed` event is emitted every time the current logged in account changes, under the following circumstances:
+
+1. Another account has been added on top of the existing connected account
+2. The connected account has been changed from one previously authenticated account to another
+3. An account has been disconnected while leaving other accounts remain connected.
+
+```js
+aioha.on('account_changed', () => void)
+```
+
+### HiveAuth Login Requested
+
+The `hiveauth_login_requested` event is emitted every time a new HiveAuth login request is created. This event contains the payload needed to display a QR code to be scanned using a HiveAuth compatible PKSA.
+
+```js
+aioha.on('hiveauth_login_requested', (payload: string) => void)
 ```
