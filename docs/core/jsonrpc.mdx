@@ -61,7 +61,7 @@ The error code returned are as follows, for Aioha-specific errors:
 <Tabs>
   <TabItem value='request' label='Request'>
     <Admonition type="info">
-      You may need to subscribe to [`hiveauth_login_requested` event](#hiveauth-login-requested) in order to receive the HiveAuth QR code payload.
+      You may need to subscribe to [`hiveauth_login_request` event](#hiveauth-login-request) in order to receive the HiveAuth QR code payload.
     </Admonition>
 
     ```js
@@ -748,10 +748,10 @@ The `account_changed` event is emitted every time the current logged in account 
 aioha.on('account_changed', () => void)
 ```
 
-### HiveAuth Login Requested
+### HiveAuth Login Request
 
-The `hiveauth_login_requested` event is emitted every time a new HiveAuth login request is created. This event contains the payload needed to display a QR code to be scanned using a HiveAuth compatible PKSA.
+The `hiveauth_login_request` event is emitted every time a new HiveAuth login request is created. This event contains the payload needed to display a QR code to be scanned using a HiveAuth compatible PKSA.
 
 ```js
-aioha.on('hiveauth_login_requested', (payload: string) => void)
+aioha.on('hiveauth_login_request', (payload: string) => void)
 ```
