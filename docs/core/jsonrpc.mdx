@@ -719,10 +719,7 @@ Call a VSC contract from L1.
 
 ### Connected
 
-The `connect` event is emitted every time an account has been successfully authenticated after:
-
-1. Aioha is first initialized
-2. A `disconnect` event was emitted
+The `connect` event is emitted every time an account has been successfully authenticated, resulting in a transition from a **disconnected** state to a **connected** state.
 
 ```js
 aioha.on('connect', () => void)
