@@ -169,6 +169,20 @@ Login with specified provider and username by decrypting a memo.
   </TabItem>
 </Tabs>
 
+## Login Non-Interactively
+
+May be used when authentication info (i.e. access token) is already available. This is especially useful for one-click login.
+
+```js
+const loginResult = aioha.loginNonInteractive(Providers.HiveSigner, url.searchParams.get('username')!, {
+  ignorePersistence: false, // optional, set to true to overwrite persistent logins already stored
+  hivesigner: {
+    accessToken: 'hivesigner_access_token_here',
+    expiry: 123456 // timestamp in seconds
+  }
+})
+```
+
 ## Logout
 
 :::info
