@@ -8,10 +8,6 @@ import Admonition from '@theme/Admonition';
 
 # JSON-RPC Specs
 
-:::warning Not Final
-Method, parameter and event names may change in the near future.
-:::
-
 The [EIP-1193 style](https://eips.ethereum.org/EIPS/eip-1193) JSON-RPC API for Hive wallet providers outlined in this page are implemented in Aioha. These are designed to be platform and transport agnostic.
 
 Any RPC methods not defined here shall be redirected to a Hive API node.
@@ -41,6 +37,7 @@ The error code returned are as follows, for Aioha-specific errors:
 |4200|Unsupported Method|The requested method is not supported.|
 |4201|Unsupported Provider|The requested provider is not supported or registered.|
 |4900|Disconnected|The provider is disconnected.|
+|4901|Already connected|Account connection has already been established with the provider.|
 |5000|Unknown Error|Unknown error occurred while serving the request.|
 |5001|Extension Not Found|The required browser extension is not installed.|
 |5002|Missing Username|Username is required.|
@@ -53,6 +50,7 @@ The error code returned are as follows, for Aioha-specific errors:
 |5901|Unassociated User|Username is not associated with the device.|
 |5902|Discovery Error|Failed to search accounts associated with the device.|
 |5903|Signature Request Error|Failed to obtain message/transaction signature from the device.|
+|5904|Hash signing disabled|Hash signing is not enabled on the device.|
 
 ## Aioha RPC Methods
 
