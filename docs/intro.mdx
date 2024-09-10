@@ -31,8 +31,8 @@ These are ready to use framework-specific libraries that implements all the UI l
 |-|-|-|-|-|-|
 |Login|✅|✅|✅|✅<sup>1</sup>|✅|
 |Login (non-interactive)|❌|❌|❌|✅|❌|
-|Memo encryption|✅|✅|❌|❌|❌|
-|Memo decryption|✅|✅|❌|✅<sup>2</sup>|❌|
+|Memo encryption|✅|✅|❌<sup>4</sup>|❌|❌|
+|Memo decryption|✅|✅|❌<sup>4</sup>|✅<sup>2</sup>|❌|
 |Sign message|✅|✅|✅|❌|✅|
 |Sign tx (without broadcast)|✅|✅|❌<sup>3</sup>|❌|✅|
 |Sign tx (with broadcast)|✅|✅|✅|✅|✅|
@@ -40,7 +40,8 @@ These are ready to use framework-specific libraries that implements all the UI l
 
 <sup>1</sup> A HiveSigner access token will be returned instead of an ECDSA signature.<br/>
 <sup>2</sup> Memo must be encrypted using `@hivesigner`'s public posting key.<br/>
-<sup>3</sup> While technically supported by the provider, the PKSA generates the transaction headers instead of using supplied values. This is unhelpful for signing multisig transactions.
+<sup>3</sup> While technically supported by the provider, the PKSA generates the transaction headers instead of using supplied values. This is unhelpful for signing multisig transactions.<br/>
+<sup>4</sup> Developer claims to be possible however this is not documented anywhere therefore not implemented in Aioha.
 
 ## Local Storage Reserved Keys
 
