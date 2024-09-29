@@ -392,7 +392,11 @@ aioha.isProviderEnabled(Providers.HiveAuth)
 Set a Hive API node for RPC calls made by Aioha (i.e. HIVE/VEST calculation, broadcast transaction)
 
 ```js
-aioha.setApi('https://techcoderx.com')
+aioha.setApi('https://techcoderx.com', [
+  'https://api.hive.blog',
+  'https://api.openhive.network',
+  // ...more fallback nodes
+])
 ```
 
 ### Set VSC Network ID
@@ -604,4 +608,17 @@ Call a VSC contract from L1.
 
 ```js
 const contractCall = await aioha.vscCallContract('vs41q9c3yg82k4q76nprqk89xzk2n8zhvedrz5prnrrqpy6v9css3seg2q43uvjdc500', 'dumpEnv', 'tx payload', KeyTypes.Active)
+```
+
+## JSON-RPC Request
+
+Make an [EIP-1193 style](https://eips.ethereum.org/EIPS/eip-1193) JSON-RPC request. For more details, refer to [JSON-RPC specs](/docs/core/jsonrpc) page.
+
+```js
+const result = await aioha.request({
+  method: 'aioha_api.your_method_name',
+  params: {
+    foo: 'bar'
+  }
+})
 ```
