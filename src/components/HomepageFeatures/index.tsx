@@ -34,7 +34,7 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        The core bundle is less than 200KB in size. Provider-specific dependencies
+        The main bundle is less than 60KB in size. Provider-specific dependencies
         are only loaded when it is actually being used.
       </>
     ),
