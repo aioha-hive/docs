@@ -602,13 +602,27 @@ Transfer HIVE/HBD to another account.
   </TabItem>
 </Tabs>
 
-### Call VSC Contract
+### VSC Call
 
-Call a VSC contract from L1.
+Transact on VSC from L1, such as calling a smart contract, transfer or withdraw L2 balances.
 
-```js
-const contractCall = await aioha.vscCallContract('vs41q9c3yg82k4q76nprqk89xzk2n8zhvedrz5prnrrqpy6v9css3seg2q43uvjdc500', 'dumpEnv', 'tx payload', KeyTypes.Active)
-```
+<Tabs>
+  <TabItem value='vsc-contract-call' label='Call Contract'>
+  ```js
+  const contractCall = await aioha.vscCallContract('vs41q9c3yg82k4q76nprqk89xzk2n8zhvedrz5prnrrqpy6v9css3seg2q43uvjdc500', 'dumpEnv', 'tx payload', KeyTypes.Active)
+  ```
+  </TabItem>
+  <TabItem value='vsc-xfer' label='Transfer'>
+  ```js
+  const transfer = await aioha.vscTransfer('hive:bob', 1, Asset.HIVE, 'Optional memo')
+  ```
+  </TabItem>
+  <TabItem value='vsc-wd' label='Withdraw'>
+  ```js
+  const transfer = await aioha.vscWithdraw('hive:charlie', 1, Asset.HIVE, 'Optional memo')
+  ```
+  </TabItem>
+</Tabs>
 
 ## JSON-RPC Request
 
