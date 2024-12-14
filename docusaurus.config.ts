@@ -98,12 +98,12 @@ const config: Config = {
           title: 'Community',
           items: [
             {
-              label: 'Discord',
-              href: 'https://discord.gg/ZWj5NqaBeF',
+              label: 'Hive',
+              href: 'https://peakd.com/c/hive-169420',
             },
             {
               label: 'Sting',
-              href: 'https://chat.peakd.com/t/hive-134220/1'
+              href: 'https://chat.peakd.com/t/hive-169420/0'
             }
           ],
         },
@@ -117,6 +117,10 @@ const config: Config = {
             {
               label: 'GitHub',
               href: 'https://github.com/aioha-hive/aioha',
+            },
+            {
+              label: 'X',
+              href: 'https://x.com/aioha_hive'
             },
             {
               // TODO: Demo witness vote page using Aioha core API
