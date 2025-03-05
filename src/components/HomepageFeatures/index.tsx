@@ -34,7 +34,7 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        The main bundle is less than 60KB in size. Provider-specific dependencies
+        The main bundle is less than 100KB in size. Provider-specific dependencies
         are only loaded when it is actually being used.
       </>
     ),
@@ -55,7 +55,7 @@ function Feature({title, Svg, description}: FeatureItem) {
   );
 }
 
-export default function HomepageFeatures(): JSX.Element {
+export default function HomepageFeatures() {
   return (
     <section className={styles.features}>
       <div className="container">
