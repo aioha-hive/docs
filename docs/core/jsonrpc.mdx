@@ -549,7 +549,7 @@ Transfer HIVE/HBD to another account.
 <Tabs>
   <TabItem value='stake' label='Stake'>
     <Admonition type="note">
-      `to` is an optional parameter when staking HIVE to another account.
+      `to` is an optional parameter that is used when staking HIVE to another account.
     </Admonition>
     ```js
     {
@@ -739,7 +739,7 @@ The `account_changed` event is emitted every time the current logged in account 
 
 1. Another account has been added on top of the existing connected account
 2. The connected account has been changed from one previously authenticated account to another
-3. An account has been disconnected while leaving other accounts remain connected.
+3. An account has been disconnected while leaving another account remain connected.
 
 ```js
 aioha.on('account_changed', () => void)
@@ -750,5 +750,37 @@ aioha.on('account_changed', () => void)
 The `hiveauth_login_request` event is emitted every time a new HiveAuth login request is created. This event contains the payload needed to display a QR code to be scanned using a HiveAuth compatible PKSA.
 
 ```js
-aioha.on('hiveauth_login_request', (payload: string) => void)
+aioha.on('hiveauth_login_request', (payload: string, evt: MessageType, cancel: () => void) => void)
+```
+
+### Login Request
+
+The `login_request` event is emitted every time a login request has been made to the user's wallet (excluding HiveAuth, see [above](#hiveauth-login-request)).
+
+```js
+aioha.on('login_request', () => void)
+```
+
+### Memo Request
+
+The `memo_request` event is emitted every time a memo encryption or decryption request has been made to the user's wallet.
+
+```js
+aioha.on('memo_request', () => void)
+```
+
+### Message Signature Request
+
+The `sign_msg_request` event is emitted every time a message signature request has been made to the user's wallet.
+
+```js
+aioha.on('sign_msg_request', () => void)
+```
+
+### Transaction Signature Request
+
+The `sign_tx_request` event is emitted every time a transaction signature request has been made to the user's wallet.
+
+```js
+aioha.on('sign_tx_request', () => void)
 ```

@@ -202,9 +202,7 @@ To keep the main bundle as lightweight as possible, enable chunking (or code spl
             chunkFileNames: 'vendor/[name]-[hash].js',
             manualChunks: {
               hiveledger: ['@engrave/ledger-app-hive'],
-              ledger: ['@ledgerhq/hw-transport-webusb'],
-              cryptojs: ['crypto-js'],
-              hivetx: ['hive-tx']
+              ledger: ['@ledgerhq/hw-transport-webusb']
             }
           }
         }

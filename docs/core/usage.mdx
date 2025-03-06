@@ -96,7 +96,7 @@ Also known as **Connect Wallet**.
 Login with specified provider and username. A signature request will be made to sign message `msg` using `keyType` key that is associated with the Hive account.
 
 <Tabs>
-  <TabItem value='login-ex' label='Example'>
+  <TabItem value='login-use' label='Usage'>
     ```js
     const login = await aioha.login(Providers.Keychain, 'hiveusername', {
       msg: 'Hello World',
@@ -142,7 +142,7 @@ Login with signatures [above](#login) are preferred than with memo decryption du
 Login with specified provider and username by decrypting a memo.
 
 <Tabs>
-  <TabItem value='login-ex' label='Example'>
+  <TabItem value='login-use' label='Usage'>
     ```js
     const login = await aioha.loginAndDecryptMemo(Providers.Keychain, 'hiveusername', {
       msg: 'Hello World',
@@ -195,12 +195,106 @@ Logout the current authenticated user.
 await aioha.logout()
 ```
 
+## Switch User
+
+Switch the active user to another authenticated user listed [here](#list-other-users). Returns a boolean of whether the operation is successful. If failed, the user will be removed from the list and have to be reauthenticated.
+
+```js
+aioha.switchUser('user2')
+```
+
+## Remove User
+
+Remove a user listed [here](#list-other-users). Returns the authentication details of the user removed. Throws an error when the user does not exist.
+
+```js
+aioha.removeOtherLogin('user2')
+```
+
+## Discover Accounts
+
+Search the wallet provider for available accounts.
+
+<Tabs>
+  <TabItem value="discover-acc-use" label="Usage">
+    ```js
+    const discovered = await aioha.discoverAccounts(Providers.Ledger)
+    ```
+  </TabItem>
+  <TabItem value="discover-acc-result" label="Result">
+    ```json
+    {
+      "success": true,
+      "result": {
+        "owner": [
+          {
+            "username": "randomvlogs",
+            "path": "m/48'/13'/0'/0'/0'",
+            "pubkey": "STM5FVEbhT4XkdGfvfnRDRgxTgpmbKyJjJ276Yz3U7s7YtNmkdHfo"
+          }
+        ],
+        "active": [
+          {
+            "username": "randomvlogs",
+            "path": "m/48'/13'/1'/0'/0'",
+            "pubkey": "STM5jV2ZEoXVpi3MqTr2X7CwqxWvMdqAJJdfVCaQmyfcfmEHWHoqo"
+          }
+        ],
+        "posting": [
+          {
+            "username": "randomvlogs",
+            "path": "m/48'/13'/4'/0'/0'",
+            "pubkey": "STM69dCa28Z78HjRUx2EhkoapsrXoXv111KzEadrxyEuWt8iiTC4K"
+          }
+        ]
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+## Encrypt Memo
+
+Encrypt a message with the Hive public key of the recipient and the private key of the sender.
+
+<Tabs>
+  <TabItem value='encrypt-ex-acc' label='Encrypt'>
+    ```js
+    const encrypted = await aioha.encryptMemo('#secret message', KeyTypes.Posting, 'bob')
+    ```
+  </TabItem>
+  <TabItem value='encrypt-ex-keys' label='Encrypt With Keys'>
+    ```js
+    const encrypted = await aioha.encryptMemoWithKeys('#secret message', KeyTypes.Posting, ['STM7KP2BCau71s1ihTqBtGiF4VeVWnJevxreNceDyisxGdt1baS4B', 'STM5jruaymFQ93jwUp15r9SF5wPeaNvRKFE4nbbJv4vfHCk5a6zRu'])
+    ```
+  </TabItem>
+  <TabItem value='encrypt-result-acc' label='Result'>
+    ```json
+    {
+      "success": true,
+      "result": "#Epz5g29x2Wqt5upn7UkuC4tFrR2zzDMaNFFt1KHFBkTAXnTLcK2jBRCX7FmM3bm3YV2FAShXVXkMY2idqRaDJ2KSLyGPJmYyXoY1JbEoKCLsncRssTxcmLkFiMSiyLeoa"
+    }
+    ```
+  </TabItem>
+  <TabItem value='encrypt-result-keys' label='Result With Keys'>
+    ```json
+    {
+      "success": true,
+      "result": {
+        "STM7KP2BCau71s1ihTqBtGiF4VeVWnJevxreNceDyisxGdt1baS4B": "#DTq11bwS4Wo5GmYifD4KCrRWpFtr5en4i57cXjZk5rEHfKqQTFEzxS3rYTgCtcdTi83HUuG51gNX9abLQVjAjwJPRAiXkDYqHJ17h3ytsYZ6SyuxjM7YCGmi3BFTg3Bx9",
+        "STM5jruaymFQ93jwUp15r9SF5wPeaNvRKFE4nbbJv4vfHCk5a6zRu": "#DTq11bwS4Wo5GmYifD4KCrRWpFtr5en4i57cXjZk5rEHfH2s9YvNHSdcguDyKPs5waCx7RWBS2Qjb5uJ1zeBZSYyWpPW35XrecyGg6hrtjokByZYftCDuzjiNKi42SUr5"
+      }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
 ## Decrypt Memo
 
 Decrypt a Hive memo or message.
 
 <Tabs>
-  <TabItem value='decrypt-ex' label='Example'>
+  <TabItem value='decrypt-use' label='Usage'>
     ```js
     const decrypted = await aioha.decryptMemo('#encryptedmessage', KeyTypes.Posting)
     ```
@@ -224,7 +318,7 @@ Decrypt a Hive memo or message.
 Retrieve an ECDSA signature for a message.
 
 <Tabs>
-  <TabItem value='sign-msg-ex' label='Example'>
+  <TabItem value='sign-msg-use' label='Usage'>
     ```js
     const signed = await aioha.signMessage('Message to sign', KeyTypes.Posting)
     ```
@@ -250,7 +344,7 @@ Retrieve an ECDSA signature for a message.
 Sign a Hive transaction without broadcasting it.
 
 <Tabs>
-  <TabItem value='sign-tx-ex' label='Example'>
+  <TabItem value='sign-tx-use' label='Usage'>
     ```js
     const signed = await aioha.signTx({
       "ref_block_num": 27912,
@@ -309,7 +403,7 @@ Sign a Hive transaction without broadcasting it.
 Sign and broadcast a Hive transaction.
 
 <Tabs>
-  <TabItem value='sign-bc-tx-ex' label='Example'>
+  <TabItem value='sign-bc-tx-use' label='Usage'>
     ```js
     const result = aioha.signAndBroadcastTx([
       ['vote', {
@@ -384,6 +478,26 @@ Returns a boolean of whether the specified provider is registered and available 
 ```js
 aioha.isProviderEnabled(Providers.HiveAuth)
 ```
+
+### List Other Users
+
+Returns a list of other authenticated users and the corresponding provider that are currently inactive.
+
+<Tabs>
+  <TabItem value='list-other-use' label='Usage'>
+    ```js
+    aioha.getOtherLogins()
+    ```
+  </TabItem>
+  <TabItem value='list-other-re' label='Result'>
+    ```json
+    {
+      "user1": "keychain",
+      "user2": "peakvault"
+    }
+    ```
+  </TabItem>
+</Tabs>
 
 ## Setters
 

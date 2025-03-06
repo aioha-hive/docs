@@ -31,6 +31,7 @@ These are ready to use framework-specific libraries that implements all the UI l
 |-|-|-|-|-|-|
 |Login|✅|✅|✅|✅<sup>1</sup>|✅|
 |Login (non-interactive)|❌|❌|❌|✅|❌|
+|Discover accounts|❌|❌|❌|❌|✅|
 |Memo encryption|✅|✅|❌<sup>4</sup>|❌|❌|
 |Memo decryption|✅|✅|❌<sup>4</sup>|✅<sup>2</sup>|❌|
 |Sign message|✅|✅|✅|❌|✅|
@@ -53,7 +54,7 @@ Do **not** modify any values for the local storage keys below outside Aioha core
 
 The following keys are reserved:
 
-* General: `aiohaUsername`, `aiohaProvider`
+* General: `aiohaUsername`, `aiohaProvider`, `aiohaPubKey`, `aiohaOtherLogins`
 * HiveAuth: `hiveauthToken`, `hiveauthKey`, `hiveauthExp`
 * HiveSigner: `hivesignerTxId`, `hivesignerToken`, `hivesignerExpiry`, `hivesignerUsername`
 * Ledger: `ledgerPath`
