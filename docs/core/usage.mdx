@@ -16,7 +16,7 @@ Create an instance of Aioha. All providers are registered by default excluding H
 Provider-specific configs are **optional** with exception of HiveSigner which is required to register HiveSigner provider.
 
 ```js
-import { initAioha, Asset, KeyTypes, Providers } from '@aioha/aioha'
+import { initAioha, Asset, KeyTypes, Providers, VscStakeType } from '@aioha/aioha'
 
 const aioha = initAioha({
   hiveauth: {
@@ -518,7 +518,7 @@ aioha.setApi('https://techcoderx.com', [
 Set VSC network ID for VSC related functions.
 
 ```js
-aioha.vscSetNetId('testnet/0bf2e474-6b9e-4165-ad4e-a0d78968d20c')
+aioha.vscSetNetId('vsc-mainnet')
 ```
 
 ## Operations
@@ -721,11 +721,6 @@ Transfer HIVE/HBD to another account.
 Transact on VSC from L1, such as calling a smart contract, transfer or withdraw L2 balances.
 
 <Tabs>
-  <TabItem value='vsc-contract-call' label='Call Contract'>
-  ```js
-  const contractCall = await aioha.vscCallContract('vs41q9c3yg82k4q76nprqk89xzk2n8zhvedrz5prnrrqpy6v9css3seg2q43uvjdc500', 'dumpEnv', 'tx payload', KeyTypes.Active)
-  ```
-  </TabItem>
   <TabItem value='vsc-xfer' label='Transfer'>
   ```js
   const transfer = await aioha.vscTransfer('hive:bob', 1, Asset.HIVE, 'Optional memo')
@@ -734,6 +729,32 @@ Transact on VSC from L1, such as calling a smart contract, transfer or withdraw 
   <TabItem value='vsc-wd' label='Withdraw'>
   ```js
   const transfer = await aioha.vscWithdraw('hive:charlie', 1, Asset.HIVE, 'Optional memo')
+  ```
+  </TabItem>
+  <TabItem value='vsc-stake' label='Stake'>
+  ```js
+  // Stake 2,000 HIVE for consensus
+  const consensusStake = await aioha.vscStake(VscStakeType.Consensus, 2000)
+
+  // Stake 100 HBD
+  const hbdStake = await aioha.vscStake(VscStakeType.HBD, 100)
+  ```
+  </TabItem>
+  <TabItem value='vsc-unstake' label='Unstake'>
+  ```js
+  // Unstake 2,000 HIVE from consensus
+  const consensusStake = await aioha.vscUnstake(VscStakeType.Consensus, 2000)
+
+  // Unstake 100 HBD
+  const hbdStake = await aioha.vscUnstake(VscStakeType.HBD, 100)
+  ```
+  </TabItem>
+  <TabItem value='vsc-contract-call' label='Call Contract'>
+  :::warning
+  As of v1.6.0-beta.4 release, there are no contracts deployed on the VSC mainnet. This method may not be up to date with the latest method to call a contract on mainnet.
+  :::
+  ```js
+  const contractCall = await aioha.vscCallContract('vs41q9c3yg82k4q76nprqk89xzk2n8zhvedrz5prnrrqpy6v9css3seg2q43uvjdc500', 'dumpEnv', 'tx payload', KeyTypes.Active)
   ```
   </TabItem>
 </Tabs>
