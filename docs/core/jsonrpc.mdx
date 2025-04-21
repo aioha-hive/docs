@@ -745,17 +745,9 @@ The `account_changed` event is emitted every time the current logged in account 
 aioha.on('account_changed', () => void)
 ```
 
-### HiveAuth Login Request
-
-The `hiveauth_login_request` event is emitted every time a new HiveAuth login request is created. This event contains the payload needed to display a QR code to be scanned using a HiveAuth compatible PKSA.
-
-```js
-aioha.on('hiveauth_login_request', (payload: string, evt: MessageType, cancel: () => void) => void)
-```
-
 ### Login Request
 
-The `login_request` event is emitted every time a login request has been made to the user's wallet (excluding HiveAuth, see [above](#hiveauth-login-request)).
+The `login_request` event is emitted every time a login request has been made to the user's wallet (excluding HiveAuth, see [below](#hiveauth-login-request)).
 
 ```js
 aioha.on('login_request', () => void)
@@ -771,7 +763,7 @@ aioha.on('memo_request', () => void)
 
 ### Message Signature Request
 
-The `sign_msg_request` event is emitted every time a message signature request has been made to the user's wallet.
+The `sign_msg_request` event is emitted every time a message signature request has been made to the user's wallet  (excluding HiveAuth, see [below](#hiveauth-challenge-request)).
 
 ```js
 aioha.on('sign_msg_request', () => void)
@@ -779,8 +771,32 @@ aioha.on('sign_msg_request', () => void)
 
 ### Transaction Signature Request
 
-The `sign_tx_request` event is emitted every time a transaction signature request has been made to the user's wallet.
+The `sign_tx_request` event is emitted every time a transaction signature request has been made to the user's wallet  (excluding HiveAuth, see [below](#hiveauth-sign-transaction-request)).
 
 ```js
 aioha.on('sign_tx_request', () => void)
+```
+
+### HiveAuth Login Request
+
+The `hiveauth_login_request` event is emitted every time a new HiveAuth login request is created. This event contains the payload needed to display a QR code to be scanned using a HiveAuth compatible PKSA.
+
+```js
+aioha.on('hiveauth_login_request', (payload: string, evt: MessageType, cancel: () => void) => void)
+```
+
+### HiveAuth Challenge Request
+
+The `hiveauth_challenge_request` event is emitted every time a new HiveAuth message signature request is created.
+
+```js
+aioha.on('hiveauth_challenge_request', (payload: string, evt: MessageType, cancel: () => void) => void)
+```
+
+### HiveAuth Sign Transaction Request
+
+The `hiveauth_sign_request` event is emitted every time a new HiveAuth transaction signature request is created.
+
+```js
+aioha.on('hiveauth_sign_request', (payload: string, evt: MessageType, cancel: () => void) => void)
 ```
