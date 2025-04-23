@@ -763,7 +763,7 @@ aioha.on('memo_request', () => void)
 
 ### Message Signature Request
 
-The `sign_msg_request` event is emitted every time a message signature request has been made to the user's wallet  (excluding HiveAuth, see [below](#hiveauth-challenge-request)).
+The `sign_msg_request` event is emitted every time a message signature request has been made to the user's wallet.
 
 ```js
 aioha.on('sign_msg_request', () => void)
@@ -771,7 +771,7 @@ aioha.on('sign_msg_request', () => void)
 
 ### Transaction Signature Request
 
-The `sign_tx_request` event is emitted every time a transaction signature request has been made to the user's wallet  (excluding HiveAuth, see [below](#hiveauth-sign-transaction-request)).
+The `sign_tx_request` event is emitted every time a transaction signature request has been made to the user's wallet.
 
 ```js
 aioha.on('sign_tx_request', () => void)
