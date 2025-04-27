@@ -213,12 +213,14 @@ aioha.removeOtherLogin('user2')
 
 ## Discover Accounts
 
-Search the wallet provider for available accounts.
+Search the wallet provider for available accounts. Returns a map of username to account details which are dependent on the selected provider.
+
+Optionally a callback function may be provided to stream discovered accounts. The stop function may be called to halt account discovery and return all accounts discovered so far.
 
 <Tabs>
   <TabItem value="discover-acc-use" label="Usage">
     ```js
-    const discovered = await aioha.discoverAccounts(Providers.Ledger)
+    const discovered = await aioha.discoverAccounts(Providers.Ledger, (stream, stop) => void)
     ```
   </TabItem>
   <TabItem value="discover-acc-result" label="Result">
@@ -226,28 +228,51 @@ Search the wallet provider for available accounts.
     {
       "success": true,
       "result": {
-        "owner": [
+        "techcoder": [
           {
-            "username": "randomvlogs",
+            "pubkey": "STM6dDqQ4LtL6NRvomWRivRC7fz3VJVvSMWukPVw5Rq4kTi7Bv2dH",
             "path": "m/48'/13'/0'/0'/0'",
-            "pubkey": "STM5FVEbhT4XkdGfvfnRDRgxTgpmbKyJjJ276Yz3U7s7YtNmkdHfo"
-          }
-        ],
-        "active": [
+            "role": "owner"
+          },
           {
-            "username": "randomvlogs",
+            "pubkey": "STM8jWXpM41mZoVRMChR4b6cfZT7c6B1ZSky2URKHAmPrBLAB58MX",
             "path": "m/48'/13'/1'/0'/0'",
-            "pubkey": "STM5jV2ZEoXVpi3MqTr2X7CwqxWvMdqAJJdfVCaQmyfcfmEHWHoqo"
+            "role": "active"
+          },
+          {
+            "pubkey": "STM6b69oq8QeQU68CYiPYDskvoVnZzL2kyia9L8TiccGU9K7DBZjD",
+            "path": "m/48'/13'/4'/0'/0'",
+            "role": "posting"
           }
         ],
-        "posting": [
+        "vibecoderx": [
           {
-            "username": "randomvlogs",
-            "path": "m/48'/13'/4'/0'/0'",
-            "pubkey": "STM69dCa28Z78HjRUx2EhkoapsrXoXv111KzEadrxyEuWt8iiTC4K"
+            "pubkey": "STM6oKFjYRcXfWMfvyguvnYPMYAWSXFgYGVgBymcer5EaZWE8dZEv",
+            "path": "m/48'/13'/0'/1'/0'",
+            "role": "owner"
+          },
+          {
+            "pubkey": "STM7gCJrBZhuiTQ1kwrAC3M17nxeNkK6qAipbZxWtvQbbso8Y6Gs7",
+            "path": "m/48'/13'/1'/1'/0'",
+            "role": "active"
+          },
+          {
+            "pubkey": "STM71VQTAciufuUYHpyCYqCXxPpp92KHDdAMzD7BdrWJQNPJD1i8v",
+            "path": "m/48'/13'/4'/1'/0'",
+            "role": "posting"
           }
         ]
       }
+    }
+    ```
+  </TabItem>
+  <TabItem value="discover-acc-stream" label="Stream">
+    ```json
+    {
+      "username": "techcoder",
+      "pubkey": "STM6b69oq8QeQU68CYiPYDskvoVnZzL2kyia9L8TiccGU9K7DBZjD",
+      "path": "m/48'/13'/4'/0'/0'",
+      "role": "posting"
     }
     ```
   </TabItem>
