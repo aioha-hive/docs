@@ -1,3 +1,4 @@
+import React from 'react'
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
@@ -5,7 +6,7 @@ import styles from './styles.module.css';
 type FeatureItem = {
   title: string;
   Svg: React.ComponentType<React.ComponentProps<'svg'>>;
-  description: JSX.Element;
+  description: React.JSX.Element;
 };
 
 const FeatureList: FeatureItem[] = [
@@ -34,7 +35,7 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        The main bundle is less than 100KB uncompressed in size. Provider-specific dependencies
+        The main bundle is around 60KB uncompressed in size. Provider-specific dependencies
         are only loaded when it is actually being used.
       </>
     ),

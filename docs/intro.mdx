@@ -11,11 +11,11 @@ Aioha is designed for use in browser contexts and can be used through two differ
 
 1. [**Core API**](/docs/category/core-api)
 
-This is the base library containing the inner workings of Aioha. It provides the programmatic APIs needed to interact with Hive login providers without much work on provider-specific code, all within one or two lines of code. Recommended when login UI customizability is important to the application.
+This is the base library containing the inner workings of Aioha. It provides the APIs needed to interact with different Hive login providers, all within one or two lines of code. Recommended when flexibility is important.
 
-2. **Ready Made Login UI**
+2. [**Framework Libraries**](#supported-frameworks)
 
-These are ready to use framework-specific libraries that implements all the UI logic required for an Aioha-powered Hive login modal. It includes and uses the Aioha core API (described above) under the hood. Best for most developers so they have more time to focus on the main functionality of the application.
+These are libraries that provide framework-specific conveniences for integrating Aioha. Optionally includes all the UI logic required for an Aioha-powered Hive login modal. Best for most developers.
 
 ## Supported Providers
 
@@ -25,6 +25,10 @@ These are ready to use framework-specific libraries that implements all the UI l
 * [Ledger](https://hiveledger.io)
 * [Peak Vault](https://vault.peakd.com)
 
+## Supported Frameworks
+
+* React ([Provider](/docs/react/provider), [Ready Made UI](/docs/react/ui))
+
 ## Feature Matrix
 
 |Feature|Peak Vault|Keychain|HiveAuth|HiveSigner|Ledger|
@@ -33,7 +37,7 @@ These are ready to use framework-specific libraries that implements all the UI l
 |Login (non-interactive)|❌|❌|❌|✅|❌|
 |Discover accounts|❌|❌|❌|❌|✅|
 |Memo encryption|✅|✅|❌<sup>4</sup>|❌|❌|
-|Memo decryption|✅|✅|❌<sup>4</sup>|✅<sup>2</sup>|❌|
+|Memo decryption|✅|✅|❌<sup>5</sup>|✅<sup>2</sup>|❌|
 |Sign message|✅|✅|✅|❌|✅|
 |Sign tx (without broadcast)|✅|✅|❌<sup>3</sup>|❌|✅|
 |Sign tx (with broadcast)|✅|✅|✅|✅|✅|
@@ -42,7 +46,8 @@ These are ready to use framework-specific libraries that implements all the UI l
 <sup>1</sup> A HiveSigner access token will be returned instead of an ECDSA signature.<br/>
 <sup>2</sup> Memo must be encrypted using `@hivesigner`'s public posting key.<br/>
 <sup>3</sup> While technically supported by the provider, the PKSA generates the transaction headers instead of using supplied values. This is unhelpful for signing multisig transactions.<br/>
-<sup>4</sup> Developer claims to be possible however this is not documented anywhere therefore not implemented in Aioha.
+<sup>4</sup> Developer claims to be possible however this is not documented anywhere therefore not implemented in Aioha.<br/>
+<sup>5</sup> Only available in protocol 1.0 that doesn't seem to be deployed therefore not implemented in Aioha.
 
 ## Local Storage Reserved Keys
 

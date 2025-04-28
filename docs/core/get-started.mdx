@@ -69,12 +69,7 @@ if (aioha.isLoggedIn()) {
 // Login with provider
 const login = await aioha.login(Providers.Keychain, 'hiveusername', {
   msg: 'Hello World',
-  keyType: KeyTypes.Posting,
-  hiveauth: {
-    cbWait: (payload, evt) => {
-      // display HiveAuth QR code using `payload` as data
-    }
-  }
+  keyType: KeyTypes.Posting
 })
 
 // Transfer 1 HIVE using logged in provider

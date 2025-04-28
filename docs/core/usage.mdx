@@ -113,7 +113,7 @@ Login with specified provider and username. A signature request will be made to 
     * `msg`: Message to be signed
     * `keyType`: Key type to be used to sign the message
     * `loginTitle` *(optional)*: Title to be displayed on certain providers
-    * `paths` *(optional)*: List of [SLIP-48](https://github.com/satoshilabs/slips/blob/master/slip-0048.md) paths to be used for wallets that support it to skip account search
+    * `paths` *(optional)*: List of [SLIP-48](https://github.com/satoshilabs/slips/blob/master/slip-0048.md) paths to be used for wallets that support it to skip account search. Usually passed in from [account discovery](#discover-accounts) results.
     * `hiveauth.cbWait`: Callback function returning auth payload. It shall display a QR code using `payload` as data to be scanned by a HiveAuth PKSA. Login request may be cancelled before timeout by calling `cancel()`.
 
     :::warning
