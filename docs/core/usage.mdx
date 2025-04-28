@@ -102,9 +102,10 @@ Login with specified provider and username. A signature request will be made to 
       msg: 'Hello World',
       keyType: KeyTypes.Posting,
       loginTitle: 'Login',
+      paths: ["m/48'/13'/1'/0'/0'"],
       hiveauth: {
         cbWait: (payload, evt, cancel) => {
-          // display HiveAuth QR code using `payload` as data
+          // WARNING: will be removed in Aioha v2
         }
       }
     })
@@ -112,7 +113,12 @@ Login with specified provider and username. A signature request will be made to 
     * `msg`: Message to be signed
     * `keyType`: Key type to be used to sign the message
     * `loginTitle` *(optional)*: Title to be displayed on certain providers
+    * `paths` *(optional)*: List of [SLIP-48](https://github.com/satoshilabs/slips/blob/master/slip-0048.md) paths to be used for wallets that support it to skip account search
     * `hiveauth.cbWait`: Callback function returning auth payload. It shall display a QR code using `payload` as data to be scanned by a HiveAuth PKSA. Login request may be cancelled before timeout by calling `cancel()`.
+
+    :::warning
+    The `hiveauth.cbWait` callback function is deprecated and will be removed in Aioha v2. Please use the [`hiveauth_login_request` event](/docs/core/jsonrpc#hiveauth-login-request) instead.
+    :::
   </TabItem>
   <TabItem value='login-result' label='Result'>
     ```js

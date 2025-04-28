@@ -717,6 +717,12 @@ Call a VSC contract from L1.
 
 ## Events
 
+Aioha provides several methods for listening to events:
+
+- `aioha.on(eventName, callback)`: Register a callback to listen for an event. The callback will be called every time the event occurs until explicitly unregistered.
+- `aioha.once(eventName, callback)`: Register a callback to listen for an event only once. The callback will be automatically unregistered after being called.
+- `aioha.off(eventName, callback)`: Unregister a specific callback for an event. If no callback is provided, all callbacks for the event will be unregistered.
+
 ### Connected
 
 The `connect` event is emitted every time an account has been successfully authenticated, resulting in a transition from a **disconnected** state to a **connected** state.
@@ -779,7 +785,7 @@ aioha.on('sign_tx_request', () => void)
 
 ### HiveAuth Login Request
 
-The `hiveauth_login_request` event is emitted every time a new HiveAuth login request is created. This event contains the payload needed to display a QR code to be scanned using a HiveAuth compatible PKSA.
+The `hiveauth_login_request` event is emitted every time a new HiveAuth login request is created. This event contains the payload needed to display a QR code to be scanned using a HiveAuth compatible PKSA. Login request may be cancelled before timeout by calling `cancel()`.
 
 ```js
 aioha.on('hiveauth_login_request', (payload: string, evt: MessageType, cancel: () => void) => void)
@@ -787,7 +793,7 @@ aioha.on('hiveauth_login_request', (payload: string, evt: MessageType, cancel: (
 
 ### HiveAuth Challenge Request
 
-The `hiveauth_challenge_request` event is emitted every time a new HiveAuth message signature request is created.
+The `hiveauth_challenge_request` event is emitted every time a new HiveAuth message signature request is created. Challenge request may be cancelled before timeout by calling `cancel()`.
 
 ```js
 aioha.on('hiveauth_challenge_request', (payload: string, evt: MessageType, cancel: () => void) => void)
@@ -795,7 +801,7 @@ aioha.on('hiveauth_challenge_request', (payload: string, evt: MessageType, cance
 
 ### HiveAuth Sign Transaction Request
 
-The `hiveauth_sign_request` event is emitted every time a new HiveAuth transaction signature request is created.
+The `hiveauth_sign_request` event is emitted every time a new HiveAuth transaction signature request is created. Signature request may be cancelled before timeout by calling `cancel()`.
 
 ```js
 aioha.on('hiveauth_sign_request', (payload: string, evt: MessageType, cancel: () => void) => void)
