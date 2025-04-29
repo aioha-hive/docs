@@ -43,13 +43,36 @@ const App = () => {
 import { useAioha } from '@aioha/react-provider'
 
 export const AiohaPage = () => {
-  const { aioha, user, provider } = useAioha()
+  const { aioha, user, provider, otherUsers } = useAioha()
 
   // rest of your page goes here
 }
 ```
 
-Logged in username and provider may be retrieved through `user` and `provider` variables.
+Logged in username and provider may be retrieved through `user` and `provider` variables. Other authenticated accounts can be retrieved through `otherUsers` variable.
+
+## Using Events
+
+Listen for [events](/docs/core/jsonrpc#events) in `useEffect` hook.
+
+```tsx title="src/components/YourComponent.tsx"
+import { useEffect } from 'react'
+import { useAioha } from '@aioha/react-provider'
+
+export const YourComponent = () => {
+  const { aioha } = useAioha()
+  useEffect(() => {
+    const handler = () => {
+      // handle your event here
+    }
+    aioha.on('sign_tx_request', handler)
+
+    return () => {
+      aioha.off('sign_tx_request', handler)
+    }
+  }, [])
+}
+```
 
 ## SSR Apps
 

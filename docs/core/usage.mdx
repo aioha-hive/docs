@@ -460,6 +460,30 @@ Sign and broadcast a Hive transaction.
   </TabItem>
 </Tabs>
 
+## Sign and Broadcast Hive URI
+
+Sign and broadcast a [hive-uri](https://gitlab.syncad.com/hive/hive-uri) encoded transaction.
+
+<Tabs>
+  <TabItem value='sign-bc-uri-use' label='Usage'>
+    ```js
+    const result = aioha.signAndBroadcastUri('hive://sign/ops/W1sidm90ZSIseyJhdXRob3IiOiJzYWdhcmtvdGhhcmk4OCIsInBlcm1saW5rIjoiMjAyNC0wNi0wNS1kYWlseS11cGRhdGVzLWZyb20tc2FnYXJrb3RoYXJpODgiLCJ2b3RlciI6InRlY2hjb2RlcngiLCJ3ZWlnaHQiOjEwMDAwfV1d', KeyTypes.Posting)
+    ```
+    Required arguments include `hive://` prefixed URI and the `KeyTypes` enum for the key type to be used (must not be `KeyTypes.Memo`).
+  </TabItem>
+  <TabItem value='sign-bc-uri-result' label='Result'>
+    ```js
+    {
+      "success": true,
+      "result": "87c10767531071732fe15e6c34cf275900c342a3"
+    }
+    ```
+    * `success`: Boolean of whether transaction has been signed and broadcasted successfully or not
+    * `error`: Error message, if any
+    * `result`: Transaction ID
+  </TabItem>
+</Tabs>
+
 ## Getters
 
 ### Registered Providers
