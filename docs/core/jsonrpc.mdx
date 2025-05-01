@@ -371,7 +371,7 @@ aioha.on('connect', () => void)
 
 ### Disconnected
 
-The `disconnect` event is emitted every time an account was logged out and no accounts remain authenticated.
+The `disconnect` event is emitted every time an account was logged out and no accounts remain active.
 
 ```js
 aioha.on('disconnect', () => void)
@@ -379,11 +379,12 @@ aioha.on('disconnect', () => void)
 
 ### Account Changed
 
-The `account_changed` event is emitted every time the current logged in account changes, under the following circumstances:
+The `account_changed` event is emitted every time the current logged in accounts changes, under the following circumstances:
 
 1. Another account has been added on top of the existing connected account
 2. The connected account has been changed from one previously authenticated account to another
 3. An account has been disconnected while leaving another account remain connected.
+4. A connected but inactive account has been removed.
 
 ```js
 aioha.on('account_changed', () => void)
