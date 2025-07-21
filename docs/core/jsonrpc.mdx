@@ -6,7 +6,7 @@ import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
 import Admonition from '@theme/Admonition';
 
-# JSON-RPC Specs
+# JSON-RPC Interface
 
 The [EIP-1193 style](https://eips.ethereum.org/EIPS/eip-1193) JSON-RPC API for Hive wallet providers outlined in this page are implemented in Aioha. These are designed to be platform and transport agnostic.
 
@@ -51,6 +51,30 @@ The error code returned are as follows, for Aioha-specific errors:
 |5902|Discovery Error|Failed to search accounts associated with the device.|
 |5903|Signature Request Error|Failed to obtain message/transaction signature from the device.|
 |5904|Hash signing disabled|Hash signing is not enabled on the device.|
+
+## Usage
+
+```js
+import { initAioha, AiohaJsonRpc } from '@aioha/aioha/build/extras/jsonrpc-request.js'
+
+const aioha = initAioha()
+const rpc = new AiohaJsonRpc(aioha)
+
+// Login as usual
+const login = await aioha.login(Providers.Custom, 'your-username', { msg: 'Hello World' })
+
+// Make an RPC request
+// This is shown for reference, ideally Wax should be used for Hive RPC client
+const result = await rpc.request({
+  method: 'database_api.get_dynamic_global_properties',
+  params: {}
+})
+
+// Listen to an event
+rpc.on('connect', () => console.log('connected'))
+// or directly through Aioha instance
+aioha.on('connect', () => console.log('connected'))
+```
 
 ## Aioha RPC Methods
 
