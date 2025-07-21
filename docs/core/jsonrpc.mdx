@@ -55,7 +55,8 @@ The error code returned are as follows, for Aioha-specific errors:
 ## Usage
 
 ```js
-import { initAioha, AiohaJsonRpc } from '@aioha/aioha/build/extras/jsonrpc-request.js'
+import { initAioha, Providers } from '@aioha/aioha'
+import { AiohaJsonRpc } from '@aioha/aioha/build/extras/jsonrpc-request.js'
 
 const aioha = initAioha()
 const rpc = new AiohaJsonRpc(aioha)
