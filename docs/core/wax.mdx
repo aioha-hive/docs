@@ -1,0 +1,27 @@
+---
+sidebar_position: 4
+---
+
+# Wax Signer
+
+Aioha may be used to sign transactions on [Wax Typescript](https://gitlab.syncad.com/hive/wax/-/tree/develop/ts?ref_type=heads) library.
+
+:::note
+***Wax*** here refers to the feature-rich multi-language [library](https://gitlab.syncad.com/hive/wax) for [Hive](https://hive.io). Not to be confused with the competing blockchain forked from EOS.
+:::
+
+## Usage
+
+```js
+import { createHiveChain } from '@hiveio/wax'
+import { initAioha, WaxAiohaSigner } from '@aioha/aioha'
+
+const aioha = initAioha()
+const chain = await createHiveChain()
+const tx = await chain.createTransaction()
+
+// push some operations here...
+
+await tx.sign(WaxAiohaSigner.for(aioha, 'active'))
+await chain.broadcast(tx)
+```
