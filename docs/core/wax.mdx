@@ -25,3 +25,11 @@ const tx = await chain.createTransaction()
 await tx.sign(WaxAiohaSigner.for(aioha, 'active'))
 await chain.broadcast(tx)
 ```
+
+## Caveats
+
+Currently most if not all providers produce signatures using the legacy serialization method, while Wax prefers the newer method supported as of HF26 which saves 4 bytes per asset/NAI value in the transaction.
+
+In addition, Aioha primarily uses the legacy transaction JSON format (array tuple of `["operation_name", {...body}]`) while Wax primarily uses the newer JSON format of `{"type": "operation_name", value: {...body}}`.
+
+We plan to address them in the next major breaking release of Aioha.
