@@ -38,16 +38,11 @@ const App = () => {
 
 2. Use the modal component and the [`useAioha()` hook](/docs/react/provider#usage) anywhere within `AiohaProvider`.
 
-:::note
-If your application is primarily styled using Tailwind CSS, it is not required to import `@aioha/react-ui/dist/build.css`.
-:::
-
 ```tsx title="src/components/AiohaPage.tsx"
 import { useState } from 'react'
 import { useAioha, AiohaModal } from '@aioha/react-ui'
 import { KeyTypes } from '@aioha/aioha'
 import { Button, useColorMode } from '@chakra-ui/react'
-import '@aioha/react-ui/dist/build.css'
 
 export const AiohaPage = () => {
   const { colorMode } = useColorMode()
@@ -72,6 +67,44 @@ export const AiohaPage = () => {
     </>
   )
 }
+```
+
+### Tailwind CSS v4
+
+When using the modal in a Tailwind CSS v4 project, add the following `@source` directive to your `index.css` file after the imports:
+
+```css title="src/index.css"
+@import 'tailwindcss';
+/* ...other imports */
+
+@source '../node_modules/@aioha/react-ui';
+```
+
+### Tailwind CSS v3
+
+When using the modal in a Tailwind CSS v3 project, add the following `content` in `tailwind.config.js`:
+
+```js title="tailwind.config.js"
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    // ...
+    './node_modules/@aioha/react-ui/dist/**/*',
+    // ...
+  ],
+  // ...
+}
+```
+
+### Other
+
+When not using Tailwind CSS, add the following import to the file where the `AiohaModal` component is used:
+
+```tsx
+import { AiohaModal } from '@aioha/react-ui'
+import '@aioha/react-ui/dist/build.css'
+
+// rest of your components that uses AiohaModal 
 ```
 
 ## `AiohaModal` Component
