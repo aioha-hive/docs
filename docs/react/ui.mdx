@@ -16,7 +16,7 @@ pnpm i @aioha/react-ui @aioha/aioha
 
 1. Initialize Aioha and setup the provider at the root of your application. This may be in index.jsx, index.tsx or App.tsx depending on the framework you use.
 
-:::note
+:::info
 If you are using a framework that uses SSR (i.e. Next.js), you may need to setup Aioha separately in `useEffect()` as outlined [here](/docs/react/provider#ssr-apps).
 :::
 
@@ -97,6 +97,10 @@ module.exports = {
 ```
 
 ### Other
+
+:::note
+As this is a highly-opinionated component library, the appearance may or may not be different than expected due to potential CSS conflicts with the rest of your application.
+:::
 
 When not using Tailwind CSS, add the following import to the file where the `AiohaModal` component is used:
 
