@@ -284,6 +284,20 @@ Optionally a callback function may be provided to stream discovered accounts. Th
   </TabItem>
 </Tabs>
 
+## View Only Mode
+
+View only mode allows logging in with any username to observe any account without signing capabilities. To enable, register the view only provider:
+
+```js
+aioha.registerViewOnly()
+```
+
+Then login as usual:
+
+```js
+const login = await aioha.login(Providers.ViewOnly, 'alice', {})
+```
+
 ## Encrypt Memo
 
 Encrypt a message with the Hive public key of the recipient and the private key of the sender.
