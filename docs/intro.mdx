@@ -28,6 +28,7 @@ Aioha can be used as a transaction signer for applications powered by [Wax Types
 * [HiveSigner](https://hivesigner.com)
 * [Ledger](https://hiveledger.io)
 * [Peak Vault](https://vault.peakd.com)
+* [MetaMask Snap](https://snaps.metamask.io/snap/npm/hiveio/metamask-snap)
 
 ## Supported Frameworks
 
@@ -35,23 +36,25 @@ Aioha can be used as a transaction signer for applications powered by [Wax Types
 
 ## Feature Matrix
 
-|Feature|Peak Vault|Keychain|HiveAuth|HiveSigner|Ledger|
-|-|-|-|-|-|-|
-|Login|✅|✅|✅|✅<sup>1</sup>|✅|
-|Login (non-interactive)|❌|❌|❌|✅|❌|
-|Discover accounts|❌|❌|❌|❌|✅|
-|Memo encryption|✅|✅|❌<sup>4</sup>|❌|❌|
-|Memo decryption|✅|✅|❌<sup>5</sup>|✅<sup>2</sup>|❌|
-|Sign message|✅|✅|✅|❌|✅|
-|Sign tx (without broadcast)|✅|✅|❌<sup>3</sup>|❌|✅|
-|Sign tx (with broadcast)|✅|✅|✅|✅|✅|
-|Transact using owner auth|❌|❌|❌|✅|✅|
+|Feature|Peak Vault|Keychain|HiveAuth|HiveSigner|Ledger|MetaMask|
+|-|-|-|-|-|-|-|
+|Login|✅|✅|✅|✅<sup>1</sup>|✅|✅<sup>7</sup>|
+|Discover accounts|❌|❌|❌|❌|✅|✅|
+|Memo encryption|✅|✅|❌<sup>4</sup>|❌|❌|✅|
+|Memo decryption|✅|✅|❌<sup>5</sup>|✅<sup>2</sup>|❌|✅|
+|Sign message|✅|✅|✅|❌|✅|❌|
+|Sign tx (without broadcast)|✅|✅|❌<sup>3</sup>|❌|✅|✅|
+|Sign tx (with broadcast)|✅|✅|✅|✅|✅|✅|
+|Sign HF26 serialized tx|❌|❌|❌|❌|❌<sup>6</sup>|✅|
+|Transact using owner auth|❌|❌|❌|✅|✅|✅|
 
 <sup>1</sup> A HiveSigner access token will be returned instead of an ECDSA signature.<br/>
 <sup>2</sup> Memo must be encrypted using `@hivesigner`'s public posting key.<br/>
 <sup>3</sup> While technically supported by the provider, the PKSA generates the transaction headers instead of using supplied values. This is unhelpful for signing multisig transactions.<br/>
 <sup>4</sup> Developer claims to be possible however this is not documented anywhere therefore not implemented in Aioha.<br/>
-<sup>5</sup> Only available in protocol 1.0 that doesn't seem to be deployed therefore not implemented in Aioha.
+<sup>5</sup> Only available in protocol 1.0 that doesn't seem to be deployed therefore not implemented in Aioha.<br/>
+<sup>6</sup> Possible with blind signing, however this is not implemented in Aioha.<br/>
+<sup>7</sup> No signatures will be created, an empty result will be returned.
 
 ## Local Storage Reserved Keys
 
@@ -67,3 +70,4 @@ The following keys are reserved:
 * HiveAuth: `hiveauthToken`, `hiveauthKey`, `hiveauthExp`
 * HiveSigner: `hivesignerTxId`, `hivesignerToken`, `hivesignerExpiry`, `hivesignerUsername`
 * Ledger: `ledgerPath`
+* MetaMask: `mmHiveSnapAccIdx`

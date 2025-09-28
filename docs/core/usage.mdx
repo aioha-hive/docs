@@ -60,7 +60,10 @@ const aioha = initAioha({
       HiveSigner = 'hivesigner',
       HiveAuth = 'hiveauth',
       Ledger = 'ledger',
-      PeakVault = 'peakvault'
+      PeakVault = 'peakvault',
+      MetaMaskSnap = 'metamasksnap',
+      ViewOnly = 'viewonly',
+      Custom = 'custom'
     }
     ```
   </TabItem>
@@ -71,6 +74,7 @@ const aioha = initAioha({
     export enum KeyTypes {
       Posting = 'posting',
       Active = 'active',
+      Owner = 'owner',
       Memo = 'memo'
     }
     ```
@@ -107,6 +111,10 @@ Login with specified provider and username. A signature request will be made to 
         cbWait: (payload, evt, cancel) => {
           // WARNING: will be removed in Aioha v2
         }
+      },
+      metamask: {
+        accountIdx: 0
+        validateUser: false
       }
     })
     ```
@@ -114,7 +122,9 @@ Login with specified provider and username. A signature request will be made to 
     * `keyType`: Key type to be used to sign the message
     * `loginTitle` *(optional)*: Title to be displayed on certain providers
     * `paths` *(optional)*: List of [SLIP-48](https://github.com/satoshilabs/slips/blob/master/slip-0048.md) paths to be used for wallets that support it to skip account search. Usually passed in from [account discovery](#discover-accounts) results.
-    * `hiveauth.cbWait`: Callback function returning auth payload. It shall display a QR code using `payload` as data to be scanned by a HiveAuth PKSA. Login request may be cancelled before timeout by calling `cancel()`.
+    * `hiveauth.cbWait` *(optional)*: Callback function returning auth payload. It shall display a QR code using `payload` as data to be scanned by a HiveAuth PKSA. Login request may be cancelled before timeout by calling `cancel()`.
+    * `metamask.accountIdx` *(optional)*: Account index to use for the MetaMask Snap connection. Defaults to 0.
+    * `metamask.validateUser` *(optional)*: Whether to validate that the Hive account is associated with the public key derived by the MetaMask Snap. Defaults to false.
 
     :::warning
     The `hiveauth.cbWait` callback function is deprecated and will be removed in Aioha v2. Please use the [`hiveauth_login_request` event](/docs/core/jsonrpc#hiveauth-login-request) instead.
@@ -179,6 +189,10 @@ Login with specified provider and username by decrypting a memo.
 
 May be used when authentication info (i.e. access token) is already available. This is especially useful for one-click login.
 
+:::note
+Only available in **HiveSigner**.
+:::
+
 ```js
 const loginResult = aioha.loginNonInteractive(Providers.HiveSigner, url.searchParams.get('username')!, {
   ignorePersistence: false, // optional, set to true to overwrite persistent logins already stored
@@ -219,14 +233,14 @@ aioha.removeOtherLogin('user2')
 
 ## Discover Accounts
 
-Search the wallet provider for available accounts. Returns a map of username to account details which are dependent on the selected provider.
+Search the wallet provider for available accounts. Returns a map of username to account details which are dependent on the selected provider. Options include specifying roles to search accounts.
 
 Optionally a callback function may be provided to stream discovered accounts. The stop function may be called to halt account discovery and return all accounts discovered so far.
 
 <Tabs>
   <TabItem value="discover-acc-use" label="Usage">
     ```js
-    const discovered = await aioha.discoverAccounts(Providers.Ledger, (stream, stop) => void)
+    const discovered = await aioha.discoverAccounts(Providers.Ledger, (stream, stop) => void, { roles: [KeyTypes.Active, KeyTypes.Posting] })
     ```
   </TabItem>
   <TabItem value="discover-acc-result" label="Result">
