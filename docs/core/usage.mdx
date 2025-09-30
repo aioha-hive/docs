@@ -209,11 +209,22 @@ const loginResult = aioha.loginNonInteractive(Providers.HiveSigner, url.searchPa
 Also known as **Disconnect Wallet**.
 :::
 
-Logout the current authenticated user.
+<Tabs>
+  <TabItem value="logout-single" label='Current User'>
+  Logout the current authenticated user.
 
-```js
-await aioha.logout()
-```
+  ```js
+  await aioha.logout()
+  ```
+  </TabItem>
+  <TabItem value="logout-all" label='All Users'>
+  Logout the all authenticated users.
+
+  ```js
+  await aioha.logoutAll()
+  ```
+  </TabItem>
+</Tabs>
 
 ## Switch User
 
@@ -581,6 +592,18 @@ Returns a list of other authenticated users and the corresponding provider that 
     ```
   </TabItem>
 </Tabs>
+
+### Get Login Expiration
+
+Retrieve the login expiration timestamp (in epoch milliseconds) for a username.
+
+:::info
+This is for **HiveAuth** and **HiveSigner** providers as the authentication expires. This method will return `undefined` for other providers that do not expire.
+:::
+
+```js
+aioha.getLoginExpiration('someone')
+```
 
 ## Setters
 

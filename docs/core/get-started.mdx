@@ -159,7 +159,7 @@ When using Aioha with bundlers such as Webpack or Vite, you may need to add some
 
 ## Chunking
 
-To keep the main bundle as lightweight as possible, enable chunking (or code splitting) in your bundler.
+To keep the main bundle as lightweight as possible, enable chunking (or code splitting) in your bundler if not already by default.
 
 <Tabs>
   <TabItem value="webpack" label="Webpack" default>
@@ -175,34 +175,6 @@ To keep the main bundle as lightweight as possible, enable chunking (or code spl
         }
       }
     }
-    ```
-  </TabItem>
-  <TabItem value="vite" label="Vite/Rollup">
-      <Admonition type="info">
-      You may need to install the dependencies (of the same version) used by Aioha core for Rollup to detect them. Check that the versions you have correspond with the versions used by Aioha core (depending on the version of `@aioha/aioha` you use).
-      ```sh
-      pnpm i -D @aioha/ledger-app-hive @ledgerhq/hw-transport-webusb
-      ```
-      </Admonition>
-
-    ```js title="vite.config.ts"
-    import { defineConfig } from 'vite'
-
-    export default defineConfig({
-      // ...
-      build: {
-        rollupOptions: {
-          output: {
-            assetFileNames: 'assets/[name][extname]',
-            chunkFileNames: 'vendor/[name]-[hash].js',
-            manualChunks: {
-              hiveledger: ['@aioha/ledger-app-hive'],
-              ledger: ['@ledgerhq/hw-transport-webusb']
-            }
-          }
-        }
-      }
-    })
     ```
   </TabItem>
 </Tabs>
