@@ -1,0 +1,9 @@
+{
+  "label": "Framework Providers",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "slug": "/framework",
+    "description": "Framework-specific libraries that provide Aioha reactive states for ease of integration."
+  }
+}

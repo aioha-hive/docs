@@ -17,7 +17,7 @@ pnpm i @aioha/react-ui @aioha/aioha
 1. Initialize Aioha and setup the provider at the root of your application. This may be in index.jsx, index.tsx or App.tsx depending on the framework you use.
 
 :::info
-If you are using a framework that uses SSR (i.e. Next.js), you may need to setup Aioha separately in `useEffect()` as outlined [here](/docs/react/provider#ssr-apps).
+If you are using a framework that uses SSR (i.e. Next.js), you may need to setup Aioha separately in `useEffect()` as outlined [here](/docs/framework/react#ssr-apps).
 :::
 
 ```tsx title="src/App.tsx"
@@ -36,7 +36,7 @@ const App = () => {
 }
 ```
 
-2. Use the modal component and the [`useAioha()` hook](/docs/react/provider#usage) anywhere within `AiohaProvider`.
+2. Use the modal component and the [`useAioha()` hook](/docs/framework/react#usage) anywhere within `AiohaProvider`.
 
 ```tsx title="src/components/AiohaPage.tsx"
 import { useState } from 'react'
