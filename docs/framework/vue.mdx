@@ -17,7 +17,7 @@ pnpm i @aioha/vue-provider @aioha/aioha
 
 1. Initialize Aioha and setup provider at the root of your application. This is usually done in `App.vue`.
 
-```vue title="src/App.vue"
+```html title="src/App.vue"
 <script setup lang="ts">
 import { AiohaProvider } from '@aioha/vue-provider'
 import { initAioha } from '@aioha/aioha'
@@ -35,7 +35,7 @@ const aioha = initAioha()
 
 2. Use Aioha anywhere within `AiohaProvider` through the `useAioha()` composable.
 
-```vue title="src/components/AiohaPage.vue"
+```html title="src/components/AiohaPage.vue"
 <script setup lang="ts">
 import { useAioha } from '@aioha/vue-provider'
 
@@ -52,7 +52,7 @@ const { aioha, user, provider, otherUsers } = useAioha()
 
 Alternatively using Vue's `inject()` function:
 
-```vue title="src/components/AiohaPage.vue"
+```html title="src/components/AiohaPage.vue"
 <script setup lang="ts">
 import { inject } from 'vue'
 import { AiohaCtx, UserCtx, ProviderCtx, OtherUsersCtx } from '@aioha/vue-provider'
@@ -75,7 +75,7 @@ const otherUsers = inject(OtherUsersCtx)
 
 Listen for [events](https://aioha.dev/docs/core/jsonrpc#events) using lifecycle hooks within Vue's composition API.
 
-```vue title="src/components/YourComponent.vue"
+```html title="src/components/YourComponent.vue"
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
 import { useAioha } from '@aioha/vue-provider'
@@ -101,7 +101,7 @@ onUnmounted(() => {
 
 If you are using a framework that uses SSR (server-side rendering) such as Nuxt, you may need to setup Aioha separately in a `onMounted()`.
 
-```vue title="src/App.vue"
+```html title="src/App.vue"
 <script setup lang="ts">
 import { AiohaProvider } from '@aioha/vue-provider'
 import { Aioha } from '@aioha/aioha'
