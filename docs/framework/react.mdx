@@ -97,3 +97,24 @@ const App = () => {
   )
 }
 ```
+
+## Migrating to >=1.8.0
+
+The React provider is now part of a single unified package that consists of all framework providers.
+
+Uninstall the old React provider and install the new package:
+
+```sh
+pnpm un @aioha/react-provider
+pnpm i @aioha/providers
+```
+
+Update the imports accordingly:
+
+```ts
+// From:
+import { AiohaProvider, useAioha } from '@aioha/react-provider'
+
+// To:
+import { AiohaProvider, useAioha } from '@aioha/providers/react'
+```
