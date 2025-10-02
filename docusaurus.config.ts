@@ -1,6 +1,6 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
-import type * as Preset from '@docusaurus/preset-classic';
+import { themes as prismThemes } from 'prism-react-renderer'
+import type { Config } from '@docusaurus/types'
+import type * as Preset from '@docusaurus/preset-classic'
 
 const config: Config = {
   title: 'Aioha',
@@ -33,7 +33,7 @@ const config: Config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en']
   },
 
   presets: [
@@ -44,15 +44,14 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          editUrl: 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/'
         },
         blog: false,
         theme: {
-          customCss: './src/css/custom.css',
-        },
-      } satisfies Preset.Options,
-    ],
+          customCss: './src/css/custom.css'
+        }
+      } satisfies Preset.Options
+    ]
   ],
 
   themeConfig: {
@@ -62,14 +61,14 @@ const config: Config = {
       title: 'Aioha',
       logo: {
         alt: 'Aioha Logo',
-        src: 'img/logo.svg',
+        src: 'img/logo.svg'
       },
       items: [
         {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Docs',
+          label: 'Docs'
         },
         {
           href: 'https://peakd.com/@aioha',
@@ -79,9 +78,9 @@ const config: Config = {
         {
           href: 'https://github.com/aioha-hive/aioha',
           label: 'GitHub',
-          position: 'right',
-        },
-      ],
+          position: 'right'
+        }
+      ]
     },
     footer: {
       style: 'dark',
@@ -91,37 +90,41 @@ const config: Config = {
           items: [
             {
               label: 'Introduction',
-              to: '/docs',
+              to: '/docs'
             },
             {
               label: 'Core API',
               to: '/docs/category/core-api'
+            },
+            {
+              label: 'Framework Libraries',
+              to: '/docs/framework'
             }
-          ],
+          ]
         },
         {
           title: 'Community',
           items: [
             {
               label: 'Hive',
-              href: 'https://peakd.com/c/hive-169420',
+              href: 'https://peakd.com/c/hive-169420'
             },
             {
               label: 'Sting',
               href: 'https://chat.peakd.com/t/hive-169420/0'
             }
-          ],
+          ]
         },
         {
           title: 'More',
           items: [
             {
               label: 'Blog',
-              href: 'https://peakd.com/@aioha',
+              href: 'https://peakd.com/@aioha'
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/aioha-hive/aioha',
+              href: 'https://github.com/aioha-hive/aioha'
             },
             {
               label: 'X',
@@ -132,20 +135,20 @@ const config: Config = {
               label: 'Vote for Hive witness',
               href: 'https://vote.hive.uno/@techcoderx'
             }
-          ],
-        },
+          ]
+        }
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Aioha and its contributors.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Aioha and its contributors.`
     },
     prism: {
       theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      darkTheme: prismThemes.dracula
     },
     colorMode: {
       defaultMode: 'dark',
       respectPrefersColorScheme: true
     }
-  } satisfies Preset.ThemeConfig,
-};
+  } satisfies Preset.ThemeConfig
+}
 
-export default config;
+export default config
