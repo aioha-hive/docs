@@ -4,6 +4,7 @@ sidebar_position: 2
 
 import Tabs from '@theme/Tabs'
 import TabItem from '@theme/TabItem'
+import Admonition from '@theme/Admonition';
 
 # Usage
 
@@ -435,6 +436,10 @@ Sign a Hive transaction without broadcasting it.
     }, KeyTypes.Active)
     ```
     Required arguments include the message to sign and the `KeyTypes` enum for the key type to be used (must not be `KeyTypes.Memo`).
+
+    <Admonition type="note" title="important">
+      Due to strict authority checks in HF28, the appropriate `KeyTypes` must be specified for the transaction so that the signature will be created using the correct key. For example, `KeyTypes.Active` must be specified for a transaction containing a transfer operation.
+    </Admonition>
   </TabItem>
   <TabItem value='sign-tx-result' label='Result'>
     ```js
@@ -485,6 +490,10 @@ Sign and broadcast a Hive transaction.
     ], KeyTypes.Posting)
     ```
     Required arguments include an array of operations for the transaction and the `KeyTypes` enum for the key type to be used (must not be `KeyTypes.Memo`).
+
+    <Admonition type="note" title="important">
+      Due to strict authority checks in HF28, the appropriate `KeyTypes` must be specified for the transaction so that the signature will be created using the correct key. For example, `KeyTypes.Posting` must be specified for a transaction containing a vote operation.
+    </Admonition>
   </TabItem>
   <TabItem value='sign-bc-tx-result' label='Result'>
     ```js
