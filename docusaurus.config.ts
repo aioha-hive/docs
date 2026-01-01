@@ -99,6 +99,10 @@ const config: Config = {
             {
               label: 'Framework Libraries',
               to: '/docs/framework'
+            },
+            {
+              label: 'Ready Made UI',
+              to: '/docs/ui'
             }
           ]
         },
