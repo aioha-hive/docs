@@ -1,0 +1,111 @@
+# Lit UI
+
+Opinionated Lit modal UI for Hive logins through Aioha, styled using [Tailwind CSS](https://tailwindcss.com). This provides a quick and easy way to bootstrap a Lit web app with ready to use Aioha-powered modal component.
+
+## Installation[​](#installation "Direct link to Installation")
+
+```
+pnpm i @aioha/lit-ui @aioha/aioha
+```
+
+## CDN Import[​](#cdn-import "Direct link to CDN Import")
+
+index.html
+
+```
+<script type="module">
+  import { initModal } from 'https://unpkg.com/@aioha/lit-ui@latest/dist/bundle.min.js'
+</script>
+```
+
+## Usage[​](#usage "Direct link to Usage")
+
+1. Initialize Aioha and setup the provider at the root of your application. This is usually done at the entrypoint file (i.e. `index.ts` or `my-element.ts`).
+
+my-element.ts
+
+```
+import { LitElement, html } from 'lit'
+import { customElement } from 'lit/decorators.js'
+import { Aioha } from '@aioha/aioha'
+import '@aioha/lit-ui'
+
+@customElement('my-element')
+export class MyElement extends LitElement {
+  aioha: Aioha = new Aioha()
+
+  connectedCallback() {
+    super.connectedCallback()
+
+    // See options: https://aioha.dev/docs/core/usage#instantiation
+    this.aioha.setup()
+  }
+
+  render() {
+    return html`
+      <aioha-provider .aioha=${this.aioha}>
+        <the-rest-of-your-app></the-rest-of-your-app>
+      </aioha-provider>
+    `
+  }
+}
+```
+
+2. Use the modal component and consume the [Lit context](/docs/framework/lit.md#usage) anywhere within `<aioha-provider>`.
+
+aioha-page.ts
+
+```
+import { UserCtx } from '@aioha/providers/lit'
+import { KeyTypes } from '@aioha/aioha'
+import type { LoginResult } from '@aioha/aioha/build/types.js'
+import { consume } from '@lit/context'
+import { LitElement, html } from 'lit'
+import { customElement, state } from 'lit/decorators.js'
+import '@aioha/lit-ui'
+
+@customElement('home-page')
+export class Homepage extends LitElement {
+  @consume({ context: UserCtx, subscribe: true })
+  @state()
+  private _user?: string
+
+  @state()
+  private _aiohaModalDisplayed: boolean
+
+  constructor() {
+    super()
+    this._aiohaModalDisplayed = false
+  }
+
+  private _handleButtonClick() {
+    this._aiohaModalDisplayed = true
+  }
+
+  render() {
+    return html`
+      <button type="button" @click="${this._handleButtonClick}">
+        ${this._user ?? 'Connect Wallet'}
+      </button>
+      <aioha-modal
+        ?displayed="${this._aiohaModalDisplayed}"
+        .loginOptions="${{ msg: 'Hello World', keyType: KeyTypes.Posting }}"
+        arrangement="grid"
+        .onClose="${() => {
+          this._aiohaModalDisplayed = false
+        }}"
+        .onLogin="${(result: LoginResult) => {
+          console.log(result)
+        }}"
+      >
+      </aioha-modal>
+    `
+  }
+}
+```
+
+The list of `<aioha-modal>` component properties may be found [here](/docs/ui/web-components.md#initmodal-options).
+
+## Universal Web Component[​](#universal-web-component "Direct link to Universal Web Component")
+
+The Lit modal UI can be used as a universal web component on vanilla HTML/JS or any other web framework. Details [here](/docs/ui/web-components.md).

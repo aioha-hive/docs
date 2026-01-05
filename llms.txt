@@ -1,0 +1,56 @@
+# Aioha
+
+> All-In-One Hive Authentication
+
+
+## docs
+
+Aioha (All-In-One Hive Authentication) is an API that provides a common interface for working with different Hive login providers. This allows easier integration of Hive login and transacting on the network with fewer code.
+
+- [Introduction](/docs.md): Aioha (All-In-One Hive Authentication) is an API that provides a common interface for working with different Hive login providers. This allows easier integration of Hive login and transacting on the network with fewer code.
+
+### category
+
+- [Core API](/docs/category/core-api.md): The base library for Aioha.
+
+### core
+
+- [Custom Provider](/docs/core/custom-provider.md): Besides the built-in providers, a custom defined provider that extends AiohaBaseProvider class may be registered as Providers.Custom provider. This may be useful for backend use or development of another browser provider.
+- [Get Started](/docs/core/get-started.md): Aioha core may be installed through npm or imported through CDN using ES6 module import syntax.
+- [JSON-RPC Interface](/docs/core/jsonrpc.md): The EIP-1193 style JSON-RPC API for Hive wallet providers outlined in this page are implemented in Aioha. These are designed to be platform and transport agnostic.
+- [Usage](/docs/core/usage.md): Configure and use Aioha in 5 minutes or less.
+- [Wax Signer](/docs/core/wax.md): Aioha may be used to sign transactions on Wax Typescript library.
+
+### faq
+
+1. Why is plaintext private key login not supported?
+
+- [FAQ](/docs/faq.md): 1. Why is plaintext private key login not supported?
+
+### framework
+
+Framework-specific libraries that provide Aioha reactive states for ease of integration.
+
+- [Framework Libraries](/docs/framework.md): Framework-specific libraries that provide Aioha reactive states for ease of integration.
+- [Lit Provider](/docs/framework/lit.md): Lit provider for Aioha that uses Lit's context to provide reactive states in your Lit Element components.
+- [React Provider](/docs/framework/react.md): For React apps that are not using the ready-made UI.
+- [Svelte Provider](/docs/framework/svelte.md): Svelte provider for Aioha that uses Svelte's context API to provide reactive states in your Svelte components.
+- [Vue Provider](/docs/framework/vue.md): Vue provider for Aioha that uses Vue's provide/inject to provide reactive states in your Vue components.
+
+### media
+
+Branding
+
+- [Media Resources](/docs/media.md): Branding
+
+### react
+
+- [React UI](/docs/react/ui.md): Opinionated React modal UI for Hive logins through Aioha, styled using Tailwind CSS. This provides a quick and easy way to bootstrap a React web app with ready to use Aioha-powered modal component.
+
+### ui
+
+Ready made modal containing all the UI components and logic required for Aioha.
+
+- [Ready Made UI](/docs/ui.md): Ready made modal containing all the UI components and logic required for Aioha.
+- [Lit UI](/docs/ui/lit.md): Opinionated Lit modal UI for Hive logins through Aioha, styled using Tailwind CSS. This provides a quick and easy way to bootstrap a Lit web app with ready to use Aioha-powered modal component.
+- [Web Components](/docs/ui/web-components.md): The ready made modal UI is available as a framework agnostic web component that can be integrated on vanilla HTML/JS or any web framework.
