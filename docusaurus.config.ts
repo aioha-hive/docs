@@ -36,6 +36,22 @@ const config: Config = {
     locales: ['en']
   },
 
+  plugins: [
+    [
+      '@signalwire/docusaurus-plugin-llms-txt',
+      {
+        siteTitle: 'Aioha',
+        siteDescription: 'All-In-One Hive Authentication',
+        depth: 2,
+        content: {
+          includeBlog: false,
+          includePages: false,
+          enableLlmsFullTxt: true // Optional: generates llms-full.txt
+        }
+      }
+    ]
+  ],
+
   presets: [
     [
       'classic',
