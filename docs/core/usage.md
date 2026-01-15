@@ -805,6 +805,10 @@ const rmKey = await aioha.removeKeyAuthority('STMxxxx', KeyTypes.Posting)
 
 Transact on Magi from L1, such as calling a smart contract, transfer or withdraw L2 balances.
 
+warning
+
+These methods will be moved to the upcoming Magi TypeScript library and will be removed from Aioha core in v2.
+
 * Transfer
 * Withdraw
 * Stake

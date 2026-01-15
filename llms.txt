@@ -17,7 +17,7 @@ Aioha (All-In-One Hive Authentication) is an API that provides a common interfac
 
 - [Custom Provider](/docs/core/custom-provider.md): Besides the built-in providers, a custom defined provider that extends AiohaBaseProvider class may be registered as Providers.Custom provider. This may be useful for backend use or development of another browser provider.
 - [Get Started](/docs/core/get-started.md): Aioha core may be installed through npm or imported through CDN using ES6 module import syntax.
-- [JSON-RPC Interface](/docs/core/jsonrpc.md): The EIP-1193 style JSON-RPC API for Hive wallet providers outlined in this page are implemented in Aioha. These are designed to be platform and transport agnostic.
+- [JSON-RPC Interface](/docs/core/jsonrpc.md): The JSON-RPC API for Hive wallet providers outlined in this page are implemented in Aioha. These are designed to be platform and transport agnostic.
 - [Usage](/docs/core/usage.md): Configure and use Aioha in 5 minutes or less.
 - [Wax Signer](/docs/core/wax.md): Aioha may be used to sign transactions on Wax Typescript library.
 
