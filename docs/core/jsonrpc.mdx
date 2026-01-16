@@ -33,6 +33,7 @@ The error code returned are as follows, for Aioha-specific errors:
 |-|-|-|
 |4001|User Rejected Request|The user rejected the request.|
 |4002|Request Expired|The request has expired.|
+|4003|Network Error|A network error occured during the operation.|
 |4100|Unauthorized|The requested method and/or account has not been authorized by the user.|
 |4200|Unsupported Method|The requested method is not supported.|
 |4201|Unsupported Provider|The requested provider is not supported or registered.|
@@ -44,6 +45,7 @@ The error code returned are as follows, for Aioha-specific errors:
 |5003|Missing/Invalid Options|Valid options are required.|
 |5004|Invalid Memo|Memo must start with a #.|
 |5005|Unsupported Key Type|Chosen key type is not supported for the requested operation.|
+|5006|Invalid Amount|Amount must be greater than or equal to 0.|
 |5200|Nothing To Do|There are no actions required to complete the request.|
 |5201|Invalid Account Auth|Could not add/remove itself to/from account auth.|
 |5900|Connection Error|Failed to establish connection to the device.|
