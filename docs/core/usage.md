@@ -594,6 +594,18 @@ This is for **HiveAuth** and **HiveSigner** providers as the authentication expi
 aioha.getLoginExpiration('someone')
 ```
 
+### Get Hive Chain ID[​](#get-hive-chain-id "Direct link to Get Hive Chain ID")
+
+Retrieve the current Hive chain ID used to sign transactions.
+
+note
+
+Currently only **Ledger** and **MetaMask Snaps** providers respect this setting. Hive Keychain uses the chain ID of the API node set by the user in the extension.
+
+```
+aioha.getChainId()
+```
+
 ## Setters[​](#setters "Direct link to Setters")
 
 ### Set Hive API[​](#set-hive-api "Direct link to Set Hive API")
@@ -606,6 +618,19 @@ aioha.setApi('https://techcoderx.com', [
   'https://api.openhive.network',
   // ...more fallback nodes
 ])
+```
+
+### Set Hive Chain ID[​](#set-hive-chain-id "Direct link to Set Hive Chain ID")
+
+Set a custom Hive chain ID when signing transactions for testnets.
+
+note
+
+Currently only **Ledger** and **MetaMask Snaps** providers respect this setting. Hive Keychain uses the chain ID of the API node set by the user in the extension.
+
+```
+// default testnet
+aioha.setChainId('18dcf0a285365fc58b71f18b3d3fec954aa0c141c44e4e5cb4cf777b9eab274e')
 ```
 
 ### Set Magi Network ID[​](#set-magi-network-id "Direct link to Set Magi Network ID")

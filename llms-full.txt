@@ -366,6 +366,7 @@ The application may use the error codes to provide a localized message to be dis
 | ---------- | ----------------------- | ------------------------------------------------------------------------ |
 | 4001       | User Rejected Request   | The user rejected the request.                                           |
 | 4002       | Request Expired         | The request has expired.                                                 |
+| 4003       | Network Error           | A network error occured during the operation.                            |
 | 4100       | Unauthorized            | The requested method and/or account has not been authorized by the user. |
 | 4200       | Unsupported Method      | The requested method is not supported.                                   |
 | 4201       | Unsupported Provider    | The requested provider is not supported or registered.                   |
@@ -377,6 +378,8 @@ The application may use the error codes to provide a localized message to be dis
 | 5003       | Missing/Invalid Options | Valid options are required.                                              |
 | 5004       | Invalid Memo            | Memo must start with a #.                                                |
 | 5005       | Unsupported Key Type    | Chosen key type is not supported for the requested operation.            |
+| 5006       | Invalid Amount          | Amount must be greater than or equal to 0.                               |
+| 5007       | Empty transaction       | There are no operations in the transaction.                              |
 | 5200       | Nothing To Do           | There are no actions required to complete the request.                   |
 | 5201       | Invalid Account Auth    | Could not add/remove itself to/from account auth.                        |
 | 5900       | Connection Error        | Failed to establish connection to the device.                            |
@@ -1325,6 +1328,18 @@ This is for **HiveAuth** and **HiveSigner** providers as the authentication expi
 aioha.getLoginExpiration('someone')
 ```
 
+### Get Hive Chain ID[​](#get-hive-chain-id "Direct link to Get Hive Chain ID")
+
+Retrieve the current Hive chain ID used to sign transactions.
+
+note
+
+Currently only **Ledger** and **MetaMask Snaps** providers respect this setting. Hive Keychain uses the chain ID of the API node set by the user in the extension.
+
+```
+aioha.getChainId()
+```
+
 ## Setters[​](#setters "Direct link to Setters")
 
 ### Set Hive API[​](#set-hive-api "Direct link to Set Hive API")
@@ -1337,6 +1352,19 @@ aioha.setApi('https://techcoderx.com', [
   'https://api.openhive.network',
   // ...more fallback nodes
 ])
+```
+
+### Set Hive Chain ID[​](#set-hive-chain-id "Direct link to Set Hive Chain ID")
+
+Set a custom Hive chain ID when signing transactions for testnets.
+
+note
+
+Currently only **Ledger** and **MetaMask Snaps** providers respect this setting. Hive Keychain uses the chain ID of the API node set by the user in the extension.
+
+```
+// default testnet
+aioha.setChainId('18dcf0a285365fc58b71f18b3d3fec954aa0c141c44e4e5cb4cf777b9eab274e')
 ```
 
 ### Set Magi Network ID[​](#set-magi-network-id "Direct link to Set Magi Network ID")
