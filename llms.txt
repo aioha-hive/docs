@@ -12,6 +12,7 @@ Aioha (All-In-One Hive Authentication) is an API that provides a common interfac
 ### category
 
 - [Core API](/docs/category/core-api.md): The base library for Aioha.
+- [Magi](/docs/category/magi.md): Aioha-powered JavaScript/Typescript libraries for Magi network.
 
 ### core
 
@@ -36,6 +37,11 @@ Framework-specific libraries that provide Aioha reactive states for ease of inte
 - [React Provider](/docs/framework/react.md): For React apps that are not using the ready-made UI.
 - [Svelte Provider](/docs/framework/svelte.md): Svelte provider for Aioha that uses Svelte's context API to provide reactive states in your Svelte components.
 - [Vue Provider](/docs/framework/vue.md): Vue provider for Aioha that uses Vue's provide/inject to provide reactive states in your Vue components.
+
+### magi
+
+- [Overview](/docs/magi/overview.md): Magi JS is JavaScript/TypeScript library for interacting with the Magi network with wallet interoperability features.
+- [Usage](/docs/magi/usage.md): Configure and interact with Magi in 5 minutes or less.
 
 ### media
 
