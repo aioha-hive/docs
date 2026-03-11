@@ -1,0 +1,8 @@
+{
+  "label": "Magi",
+  "position": 10,
+  "link": {
+    "type": "generated-index",
+    "description": "Aioha-powered JavaScript/Typescript libraries for Magi network."
+  }
+}
