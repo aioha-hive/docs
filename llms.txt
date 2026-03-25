@@ -41,6 +41,7 @@ Framework-specific libraries that provide Aioha reactive states for ease of inte
 ### magi
 
 - [Overview](/docs/magi/overview.md): Magi JS is JavaScript/TypeScript library for interacting with the Magi network with wallet interoperability features.
+- [Framework Providers](/docs/magi/providers.md): Reactive state providers for Magi JS, available for React, Vue, Svelte and Lit. These work similarly to the Aioha core framework providers but expose Magi-specific state.
 - [Usage](/docs/magi/usage.md): Configure and interact with Magi in 5 minutes or less.
 
 ### media
