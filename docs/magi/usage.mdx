@@ -28,7 +28,8 @@ const magi = new Magi()
     ```js
     export enum Wallet {
       Hive = 'hive',
-      Ethereum = 'evm'
+      Ethereum = 'evm',
+      Bitcoin = 'btc'
     }
     ```
   </TabItem>
@@ -54,7 +55,7 @@ const magi = new Magi()
     ```
 
     :::note
-    `KeyTypes` is only applicable for Hive wallets. Ethereum wallets always sign with the account's key.
+    `KeyTypes` is only applicable for Hive wallets. Ethereum and Bitcoin wallets always sign with the account's key.
     :::
   </TabItem>
 </Tabs>
@@ -86,6 +87,81 @@ const viemClient = createWalletClient({
 magi.setViem(viemClient)
 ```
 
+### Bitcoin Wallet
+
+Register a Bitcoin wallet by providing a `BtcClient` object. This is a minimal interface that any Bitcoin wallet can implement.
+
+```js
+import { BtcClient } from '@aioha/magi'
+```
+
+The `BtcClient` interface:
+
+```ts
+interface BtcClient {
+  address: string
+  signMessage(message: string): Promise<string>
+}
+```
+
+* `address` — Bitcoin address (P2PKH `1...`, P2SH-P2WPKH `3...`, or P2WPKH `bc1q...`)
+* `signMessage` — Signs a message string and returns a base64-encoded signature (BIP-137 or BIP-322)
+
+:::note
+Taproot (`bc1p...`) addresses are not currently supported.
+:::
+
+```js
+magi.setBitcoin({
+  address: 'bc1qYourAddress',
+  signMessage: (msg) => myBtcWallet.signMessage(msg)
+})
+```
+
+<details>
+<summary>Example: Reown AppKit</summary>
+
+If you use [Reown AppKit](https://reown.com/appkit) with the [Bitcoin adapter](https://docs.reown.com/appkit/bitcoin/core/installation), you can create a `BtcClient` from the AppKit modal:
+
+```js
+import { createAppKit } from '@reown/appkit'
+import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
+
+const bitcoinAdapter = new BitcoinAdapter({ projectId })
+const modal = createAppKit({
+  adapters: [bitcoinAdapter],
+  // ...
+})
+
+// After wallet connection:
+const provider = modal.getProvider('bip122')
+magi.setBitcoin({
+  address: modal.getAddress(),
+  signMessage: (msg) => provider.signMessage({
+    message: msg,
+    address: modal.getAddress(),
+    protocol: 'ECDSA'
+  })
+})
+```
+
+</details>
+
+<details>
+<summary>Example: UniSat</summary>
+
+```js
+const unisat = window.unisat
+const accounts = await unisat.requestAccounts()
+
+magi.setBitcoin({
+  address: accounts[0],
+  signMessage: (msg) => unisat.signMessage(msg)
+})
+```
+
+</details>
+
 ## Set Active Wallet
 
 Set the wallet type to use for transactions. This must be called before performing any operations.
@@ -96,6 +172,8 @@ import { Wallet } from '@aioha/magi'
 magi.setWallet(Wallet.Ethereum)
 // or
 magi.setWallet(Wallet.Hive)
+// or
+magi.setWallet(Wallet.Bitcoin)
 ```
 
 ## Setters
@@ -148,10 +226,13 @@ Returns the connected user address, or `undefined` if not connected.
 
 ```js
 // Without prefix
-magi.getUser() // 'alice' or '0xYourAddress'
+magi.getUser() // 'alice', '0xYourAddress', or 'bc1q...'
 
-// With prefix (did: for Ethereum, hive: for Hive)
-magi.getUser(true) // 'hive:alice' or 'did:pkh:eip155:1:0xYourAddress'
+// With prefix
+magi.getUser(true)
+// 'hive:alice'
+// 'did:pkh:eip155:1:0xYourAddress'
+// 'did:pkh:bip122:000000000019d6689c085ae165831e93:bc1q...'
 ```
 
 ### Get Active Wallet
@@ -159,7 +240,7 @@ magi.getUser(true) // 'hive:alice' or 'did:pkh:eip155:1:0xYourAddress'
 Returns the `Wallet` enum of the wallet type currently in use, or `undefined` if not set.
 
 ```js
-magi.getWallet() // Wallet.Hive or Wallet.Ethereum
+magi.getWallet() // Wallet.Hive, Wallet.Ethereum, or Wallet.Bitcoin
 ```
 
 ### Is Connected
@@ -239,7 +320,7 @@ const xfer = await magi.transfer('hive:bob', 1, Asset.hive)
 // Transfer 1 HBD to an Ethereum address with memo
 const xferWithMemo = await magi.transfer('did:pkh:eip155:1:0xRecipient', 1, Asset.hbd, 'Optional memo')
 ```
-* `to`: Recipient address (prefixed with `hive:` or `did:pkh:eip155:1:`)
+* `to`: Recipient address (prefixed with `hive:`, `did:pkh:eip155:1:`, or `did:pkh:bip122:...:`)
 * `amount`: Amount to transfer (must be greater than 0)
 * `currency`: `Asset.hive` or `Asset.hbd`
 * `memo` *(optional)*: Transfer memo
@@ -255,7 +336,7 @@ const wd = await magi.unmap('hive:charlie', 1, Asset.hive)
 // Unmap 50 HBD with memo
 const wdWithMemo = await magi.unmap('hive:charlie', 50, Asset.hbd, 'Optional memo')
 ```
-* `to`: Destination address on L1 (prefixed with `hive:` or `did:pkh:eip155:1:`)
+* `to`: Destination address on L1 (prefixed with `hive:`, `did:pkh:eip155:1:`, or `did:pkh:bip122:...:`)
 * `amount`: Amount to withdraw (must be greater than 0)
 * `currency`: `Asset.hive` or `Asset.hbd`
 * `memo` *(optional)*: Withdrawal memo
