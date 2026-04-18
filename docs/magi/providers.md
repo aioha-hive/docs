@@ -5,11 +5,15 @@ Reactive state providers for Magi JS, available for React, Vue, Svelte and Lit. 
 The providers automatically track:
 
 * `user` — the connected user address (updates on wallet switch, Hive account change, and EVM account change)
-* `wallet` — the active `Wallet` enum (`Wallet.Hive` or `Wallet.Ethereum`)
+* `wallet` — the active `Wallet` enum (`Wallet.Hive`, `Wallet.Ethereum`, `Wallet.Bitcoin`, or `Wallet.ViewOnly`)
 
 info
 
 `MagiProvider` must be nested inside the corresponding [Aioha framework provider](/docs/framework.md) (e.g. `AiohaProvider`) so it can consume Hive wallet state automatically. For EVM wallet support, [Wagmi](https://wagmi.sh) integration is required — see each framework section below for details.
+
+View-only wallets
+
+View-only is driven imperatively on the shared `magi` instance — no provider prop. Call `magi.setViewOnly(did)` and `magi.setWallet(Wallet.ViewOnly)` at any time and the `user` / `wallet` context will update via the `wallet_changed` event. Calling `setViewOnly(newDid)` again while `Wallet.ViewOnly` is active also re-emits `wallet_changed`, so UI bindings pick up the new DID automatically.
 
 ## Installation[​](#installation "Direct link to Installation")
 

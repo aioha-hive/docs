@@ -6,6 +6,8 @@ Magi JS is JavaScript/TypeScript library for interacting with the [Magi network]
 
 * Hive (through [Aioha](/docs.md))
 * Ethereum (through [Viem](https://viem.sh))
+* Bitcoin (any wallet exposing `signMessage`, e.g. [Leather](https://leather.io), [Xverse](https://www.xverse.app), [UniSat](https://unisat.io))
+* View-only (read account state without any signer; signing operations return an error)
 
 ## Installation[​](#installation "Direct link to Installation")
 
@@ -44,6 +46,12 @@ const viemClient = createWalletClient({
   transport: http('http://127.0.0.1:1248')
 })
 magi.setViem(viemClient)
+
+// Bitcoin wallet
+magi.setBitcoin({
+  address: 'bc1qYourAddress',
+  signMessage: (msg) => myBtcWallet.signMessage(msg)
+})
 
 // Hive wallet
 const aioha = initAioha()

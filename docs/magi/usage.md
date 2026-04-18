@@ -23,7 +23,9 @@ The `Wallet` enum exported are as follows:
 ```
 export enum Wallet {
   Hive = 'hive',
-  Ethereum = 'evm'
+  Ethereum = 'evm',
+  Bitcoin = 'btc',
+  ViewOnly = 'viewonly'
 }
 ```
 
@@ -48,7 +50,7 @@ export enum KeyTypes {
 
 note
 
-`KeyTypes` is only applicable for Hive wallets. Ethereum wallets always sign with the account's key.
+`KeyTypes` is only applicable for Hive wallets. Ethereum and Bitcoin wallets always sign with the account's key.
 
 ## Register Wallets[​](#register-wallets "Direct link to Register Wallets")
 
@@ -77,6 +79,104 @@ const viemClient = createWalletClient({
 magi.setViem(viemClient)
 ```
 
+### Bitcoin Wallet[​](#bitcoin-wallet "Direct link to Bitcoin Wallet")
+
+Register a Bitcoin wallet by providing a `BtcClient` object. This is a minimal interface that any Bitcoin wallet can implement.
+
+```
+import { BtcClient } from '@aioha/magi'
+```
+
+The `BtcClient` interface:
+
+```
+interface BtcClient {
+  address: string
+  signMessage(message: string): Promise<string>
+}
+```
+
+* `address` — Bitcoin address (P2PKH `1...`, P2SH-P2WPKH `3...`, or P2WPKH `bc1q...`)
+* `signMessage` — Signs a message string and returns a base64-encoded signature (BIP-137 or BIP-322)
+
+note
+
+Taproot (`bc1p...`) addresses are not currently supported.
+
+```
+magi.setBitcoin({
+  address: 'bc1qYourAddress',
+  signMessage: (msg) => myBtcWallet.signMessage(msg)
+})
+```
+
+Example: Reown AppKit
+
+If you use [Reown AppKit](https://reown.com/appkit) with the [Bitcoin adapter](https://docs.reown.com/appkit/bitcoin/core/installation), you can create a `BtcClient` from the AppKit modal:
+
+```
+import { createAppKit } from '@reown/appkit'
+import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
+
+const bitcoinAdapter = new BitcoinAdapter({ projectId })
+const modal = createAppKit({
+  adapters: [bitcoinAdapter],
+  // ...
+})
+
+// After wallet connection:
+const provider = modal.getProvider('bip122')
+magi.setBitcoin({
+  address: modal.getAddress(),
+  signMessage: (msg) => provider.signMessage({
+    message: msg,
+    address: modal.getAddress(),
+    protocol: 'ECDSA'
+  })
+})
+```
+
+Example: UniSat
+
+```
+const unisat = window.unisat
+const accounts = await unisat.requestAccounts()
+
+magi.setBitcoin({
+  address: accounts[0],
+  signMessage: (msg) => unisat.signMessage(msg)
+})
+```
+
+### View-only Wallet[​](#view-only-wallet "Direct link to View-only Wallet")
+
+Register a view-only wallet by passing a prefixed DID. This lets you display an account's state without ever holding a signer — useful for dashboards, block explorers, or preview UIs.
+
+```
+// Hive account
+magi.setViewOnly('hive:alice')
+
+// Ethereum account
+magi.setViewOnly('did:pkh:eip155:1:0xYourAddress')
+
+// Bitcoin account
+magi.setViewOnly('did:pkh:bip122:000000000019d6689c085ae165831e93:bc1qYourAddress')
+```
+
+The prefix determines the chain:
+
+| Prefix                                             | Chain    |
+| -------------------------------------------------- | -------- |
+| `hive:`                                            | Hive     |
+| `did:pkh:eip155:1:`                                | Ethereum |
+| `did:pkh:bip122:000000000019d6689c085ae165831e93:` | Bitcoin  |
+
+Any other input throws an `Error`.
+
+note
+
+All signing and broadcast operations on a view-only wallet return an `OperationError` with code `4200` and the message `Cannot sign or transact in view only mode`. `getUser()`, `isConnected()`, and `getWallet()` work as usual.
+
 ## Set Active Wallet[​](#set-active-wallet "Direct link to Set Active Wallet")
 
 Set the wallet type to use for transactions. This must be called before performing any operations.
@@ -87,6 +187,10 @@ import { Wallet } from '@aioha/magi'
 magi.setWallet(Wallet.Ethereum)
 // or
 magi.setWallet(Wallet.Hive)
+// or
+magi.setWallet(Wallet.Bitcoin)
+// or
+magi.setWallet(Wallet.ViewOnly)
 ```
 
 ## Setters[​](#setters "Direct link to Setters")
@@ -139,10 +243,13 @@ Returns the connected user address, or `undefined` if not connected.
 
 ```
 // Without prefix
-magi.getUser() // 'alice' or '0xYourAddress'
+magi.getUser() // 'alice', '0xYourAddress', or 'bc1q...'
 
-// With prefix (did: for Ethereum, hive: for Hive)
-magi.getUser(true) // 'hive:alice' or 'did:pkh:eip155:1:0xYourAddress'
+// With prefix
+magi.getUser(true)
+// 'hive:alice'
+// 'did:pkh:eip155:1:0xYourAddress'
+// 'did:pkh:bip122:000000000019d6689c085ae165831e93:bc1q...'
 ```
 
 ### Get Active Wallet[​](#get-active-wallet "Direct link to Get Active Wallet")
@@ -150,7 +257,7 @@ magi.getUser(true) // 'hive:alice' or 'did:pkh:eip155:1:0xYourAddress'
 Returns the `Wallet` enum of the wallet type currently in use, or `undefined` if not set.
 
 ```
-magi.getWallet() // Wallet.Hive or Wallet.Ethereum
+magi.getWallet() // Wallet.Hive, Wallet.Ethereum, Wallet.Bitcoin, or Wallet.ViewOnly
 ```
 
 ### Is Connected[​](#is-connected "Direct link to Is Connected")
@@ -232,7 +339,7 @@ const xfer = await magi.transfer('hive:bob', 1, Asset.hive)
 const xferWithMemo = await magi.transfer('did:pkh:eip155:1:0xRecipient', 1, Asset.hbd, 'Optional memo')
 ```
 
-* `to`: Recipient address (prefixed with `hive:` or `did:pkh:eip155:1:`)
+* `to`: Recipient address (prefixed with `hive:`, `did:pkh:eip155:1:`, or `did:pkh:bip122:...:`)
 * `amount`: Amount to transfer (must be greater than 0)
 * `currency`: `Asset.hive` or `Asset.hbd`
 * `memo` *(optional)*: Transfer memo
@@ -249,7 +356,7 @@ const wd = await magi.unmap('hive:charlie', 1, Asset.hive)
 const wdWithMemo = await magi.unmap('hive:charlie', 50, Asset.hbd, 'Optional memo')
 ```
 
-* `to`: Destination address on L1 (prefixed with `hive:` or `did:pkh:eip155:1:`)
+* `to`: Destination address on L1 (prefixed with `hive:`, `did:pkh:eip155:1:`, or `did:pkh:bip122:...:`)
 * `amount`: Amount to withdraw (must be greater than 0)
 * `currency`: `Asset.hive` or `Asset.hbd`
 * `memo` *(optional)*: Withdrawal memo
@@ -336,7 +443,7 @@ magi.off('wallet_changed')
 
 ### Event Reference[​](#event-reference "Direct link to Event Reference")
 
-| Event             | Description                                                       |
-| ----------------- | ----------------------------------------------------------------- |
-| `wallet_changed`  | Emitted when the active wallet type is changed via `setWallet()`  |
-| `sign_tx_request` | Emitted when a transaction signature is requested from the wallet |
+| Event             | Description                                                                                                                                            |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `wallet_changed`  | Emitted when the active wallet type is changed via `setWallet()`, or when `setViewOnly()` updates the DID while `Wallet.ViewOnly` is the active wallet |
+| `sign_tx_request` | Emitted when a transaction signature is requested from the wallet                                                                                      |
