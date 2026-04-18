@@ -29,7 +29,8 @@ const magi = new Magi()
     export enum Wallet {
       Hive = 'hive',
       Ethereum = 'evm',
-      Bitcoin = 'btc'
+      Bitcoin = 'btc',
+      ViewOnly = 'viewonly'
     }
     ```
   </TabItem>
@@ -162,6 +163,35 @@ magi.setBitcoin({
 
 </details>
 
+### View-only Wallet
+
+Register a view-only wallet by passing a prefixed DID. This lets you display an account's state without ever holding a signer — useful for dashboards, block explorers, or preview UIs.
+
+```js
+// Hive account
+magi.setViewOnly('hive:alice')
+
+// Ethereum account
+magi.setViewOnly('did:pkh:eip155:1:0xYourAddress')
+
+// Bitcoin account
+magi.setViewOnly('did:pkh:bip122:000000000019d6689c085ae165831e93:bc1qYourAddress')
+```
+
+The prefix determines the chain:
+
+| Prefix | Chain |
+|--------|-------|
+| `hive:` | Hive |
+| `did:pkh:eip155:1:` | Ethereum |
+| `did:pkh:bip122:000000000019d6689c085ae165831e93:` | Bitcoin |
+
+Any other input throws an `Error`.
+
+:::note
+All signing and broadcast operations on a view-only wallet return an `OperationError` with code `4200` and the message `Cannot sign or transact in view only mode`. `getUser()`, `isConnected()`, and `getWallet()` work as usual.
+:::
+
 ## Set Active Wallet
 
 Set the wallet type to use for transactions. This must be called before performing any operations.
@@ -174,6 +204,8 @@ magi.setWallet(Wallet.Ethereum)
 magi.setWallet(Wallet.Hive)
 // or
 magi.setWallet(Wallet.Bitcoin)
+// or
+magi.setWallet(Wallet.ViewOnly)
 ```
 
 ## Setters
@@ -240,7 +272,7 @@ magi.getUser(true)
 Returns the `Wallet` enum of the wallet type currently in use, or `undefined` if not set.
 
 ```js
-magi.getWallet() // Wallet.Hive, Wallet.Ethereum, or Wallet.Bitcoin
+magi.getWallet() // Wallet.Hive, Wallet.Ethereum, Wallet.Bitcoin, or Wallet.ViewOnly
 ```
 
 ### Is Connected
@@ -423,5 +455,5 @@ magi.off('wallet_changed')
 
 | Event | Description |
 |-------|-------------|
-| `wallet_changed` | Emitted when the active wallet type is changed via `setWallet()` |
+| `wallet_changed` | Emitted when the active wallet type is changed via `setWallet()`, or when `setViewOnly()` updates the DID while `Wallet.ViewOnly` is the active wallet |
 | `sign_tx_request` | Emitted when a transaction signature is requested from the wallet |
