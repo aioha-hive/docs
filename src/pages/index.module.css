@@ -5,19 +5,149 @@
 
 .heroBanner {
   padding: 4rem 0;
-  text-align: center;
   position: relative;
   overflow: hidden;
+}
+
+.heroInner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.heroLogo {
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+  filter: brightness(0) invert(1);
+}
+
+.heroText {
+  max-width: 640px;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.section {
+  padding: 3rem 0;
+}
+
+.sectionAlt {
+  padding: 3rem 0;
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+.sectionTitle {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.lead {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 2rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.codeWrapper {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.chipList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chip {
+  display: inline-flex;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 999px;
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.chipLink:hover {
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.magiBanner {
+  background: linear-gradient(135deg, var(--ifm-color-primary-darkest), var(--ifm-color-primary));
+  color: #fff;
+  border-radius: 12px;
+  padding: 2.5rem;
+  text-align: center;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.magiBanner h2 {
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+
+.magiBanner p {
+  color: #fff;
+  margin: 0 auto 1.5rem;
+  max-width: 640px;
+}
+
+.magiButton {
+  background: #fff;
+  color: var(--ifm-color-primary-darkest);
+  border: none;
+}
+
+.magiButton:hover {
+  background: var(--ifm-color-emphasis-100);
+  color: var(--ifm-color-primary-darkest);
+  text-decoration: none;
 }
 
 @media screen and (max-width: 996px) {
   .heroBanner {
     padding: 2rem;
   }
-}
 
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .heroInner {
+    text-align: center;
+  }
+
+  .heroLogo {
+    width: 72px;
+    height: 72px;
+  }
+
+  .buttons {
+    justify-content: center;
+  }
+
+  .section,
+  .sectionAlt {
+    padding: 1.5rem 0;
+  }
+
+  .magiBanner {
+    padding: 1.75rem;
+  }
 }
