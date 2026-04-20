@@ -74,26 +74,21 @@ const FeatureList: FeatureItem[] = [
     title: 'Multiple Providers',
     Icon: KeyIcon,
     description: (
-      <>
-        Sign in with Keychain, HiveAuth, HiveSigner, Ledger, Peak Vault, or MetaMask Snap through a single, consistent API.
-      </>
+      <>Sign in with Keychain, HiveAuth, HiveSigner, Ledger, Peak Vault, or MetaMask Snap through a single, consistent API.</>
     )
   },
   {
     title: 'Framework Agnostic',
     Icon: LayersIcon,
-    description: (
-      <>
-        First-class support for React, Vue, Lit, and Svelte, plus universal Web Components for everything else.
-      </>
-    )
+    description: <>First-class support for React, Vue, Lit, and Svelte, plus universal Web Components for everything else.</>
   },
   {
     title: 'Lightweight Core',
     Icon: FeatherIcon,
     description: (
       <>
-        The main bundle is around 64 KB. Provider-specific code loads on demand, so users only download what they actually use.
+        The main bundle is around 17 KB gzipped. Provider-specific code loads on demand, so users only download what they actually
+        use.
       </>
     )
   }

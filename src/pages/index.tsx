@@ -60,7 +60,7 @@ function HomepageHeader() {
           </div>
           <ul className={styles.metaChips} aria-label="Project facts">
             <li className={styles.metaChip}>TypeScript</li>
-            <li className={styles.metaChip}>~64 KB</li>
+            <li className={styles.metaChip}>~17 KB</li>
             <li className={styles.metaChip}>MIT License</li>
           </ul>
         </div>
