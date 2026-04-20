@@ -4,29 +4,99 @@
  */
 
 .heroBanner {
-  padding: 4rem 0;
+  --hero-glow: rgba(255, 200, 200, 0.45);
+  padding: 5.5rem 0 4.5rem;
   position: relative;
   overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.18), transparent 55%),
+    radial-gradient(circle at 80% 80%, rgba(0, 0, 0, 0.25), transparent 60%),
+    linear-gradient(248.5deg, #f85707 0%, #a83aff 100%);
+}
+
+[data-theme='dark'] .heroBanner {
+  --hero-glow: rgba(255, 160, 220, 0.4);
+}
+
+.heroDecor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse at center, #000 40%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 40%, transparent 75%);
+  opacity: 0.5;
 }
 
 .heroInner {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
+  gap: 2.5rem;
   flex-wrap: wrap;
   text-align: left;
+  position: relative;
+  z-index: 1;
+}
+
+.heroLogoWrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 128px;
+  height: 128px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroLogoWrap::before {
+  content: '';
+  position: absolute;
+  inset: -25%;
+  background: radial-gradient(circle, var(--hero-glow) 0%, transparent 65%);
+  filter: blur(8px);
+  z-index: 0;
 }
 
 .heroLogo {
-  width: 96px;
-  height: 96px;
-  flex-shrink: 0;
-  filter: brightness(0) invert(1);
+  width: 112px;
+  height: 112px;
+  position: relative;
+  z-index: 1;
+  filter: brightness(0) invert(1) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
 }
 
 .heroText {
   max-width: 640px;
+  animation: heroFadeUp 0.7s ease-out both;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.9;
+  margin-bottom: 0.6rem;
+  padding: 0.25rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.heroTitle {
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.heroSubtitle {
+  opacity: 0.88;
+  font-weight: 400;
 }
 
 .buttons {
@@ -34,7 +104,94 @@
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
-  margin-top: 1.5rem;
+  margin-top: 1.75rem;
+  animation: heroFadeUp 0.7s ease-out 0.15s both;
+}
+
+.primaryCta {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.primaryCta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+}
+
+.githubButton,
+.githubButton:hover,
+.githubButton:focus,
+.githubButton:active {
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.githubButton:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  transform: translateY(-2px);
+}
+
+.ghIcon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.metaChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  animation: heroFadeUp 0.7s ease-out 0.3s both;
+}
+
+.metaChip {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroText,
+  .buttons,
+  .metaChips {
+    animation: none;
+  }
+  .primaryCta,
+  .githubButton {
+    transition: none;
+  }
+  .primaryCta:hover,
+  .githubButton:hover {
+    transform: none;
+  }
 }
 
 .section {
@@ -82,7 +239,9 @@
   color: var(--ifm-font-color-base);
   font-size: 0.9rem;
   text-decoration: none;
-  transition: border-color 0.15s ease, color 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .chipLink:hover {
@@ -92,7 +251,7 @@
 }
 
 .magiBanner {
-  background: linear-gradient(135deg, var(--ifm-color-primary-darkest), var(--ifm-color-primary));
+  background: linear-gradient(135deg, #150a30, #2e1a4a);
   color: #fff;
   border-radius: 12px;
   padding: 2.5rem;
@@ -114,32 +273,44 @@
 
 .magiButton {
   background: #fff;
-  color: var(--ifm-color-primary-darkest);
+  color: #2e1a4a;
   border: none;
 }
 
 .magiButton:hover {
-  background: var(--ifm-color-emphasis-100);
-  color: var(--ifm-color-primary-darkest);
+  background: #2e1a4a;
+  color: #fff;
   text-decoration: none;
 }
 
 @media screen and (max-width: 996px) {
   .heroBanner {
-    padding: 2rem;
+    padding: 3rem 1rem;
   }
 
   .heroInner {
     text-align: center;
+    flex-direction: column;
+  }
+
+  .heroLogoWrap {
+    width: 96px;
+    height: 96px;
   }
 
   .heroLogo {
-    width: 72px;
-    height: 72px;
+    width: 80px;
+    height: 80px;
   }
 
-  .buttons {
+  .buttons,
+  .metaChips {
     justify-content: center;
+  }
+
+  .eyebrow {
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .section,
