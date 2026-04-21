@@ -127,10 +127,17 @@ import '@aioha/react-ui/dist/build.css'
 |`imageServer`|❌|Image server URL for user avatar.|https://images.hive.blog|
 |`explorerUrl`|❌|Hive block explorer URL.|https://hivehub.dev|
 |`forceShowProviders`|❌|List of `Providers` to force show as login option, which must be registered already. Clicking on unavailable providers displayed will open the URL of the provider landing page.|*[]*|
+|`language`|❌|Active locale code (e.g. `en`, `fr`, `ar`, `ja`). See [Localization](/docs/ui/i18n) for the list of bundled locales.|en|
+|`dir`|❌|Text direction: `ltr`, `rtl`, or `auto`. When `auto`, inferred from `document.dir` and the active locale. See [Localization](/docs/ui/i18n#right-to-left-rtl).|auto|
+|`messages`|❌|Custom [`Messages`](/docs/ui/i18n#the-messages-adapter) adapter to route translations through your own i18n framework (react-intl, lingui, i18next, ...). Defaults to the built-in adapter.|*undefined*|
 
 :::warning
 `hiveauth.cbWait` in `loginOptions` will be overriden as `AiohaModal` will handle the presentation of HiveAuth QR codes.
 :::
+
+## Localization
+
+The modal ships with English and translations for 15 additional languages loaded on demand, full ICU MessageFormat support, RTL direction handling, and a pluggable adapter for other i18n frameworks. See [Localization](/docs/ui/i18n).
 
 ## HiveSigner Callback Page
 
