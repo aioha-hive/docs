@@ -2,19 +2,18 @@
 
 Vue provider for Aioha that uses Vue's [provide/inject](https://vuejs.org/guide/components/provide-inject.html) to provide reactive states in your Vue components.
 
-## Installation[​](#installation "Direct link to Installation")
+## Installation
 
-```
+```sh
 pnpm i @aioha/providers @aioha/aioha
 ```
 
-## Usage[​](#usage "Direct link to Usage")
+## Usage
 
 1. Initialize Aioha and setup provider at the root of your application. This is usually done in `App.vue`.
 
-src/App.vue
-
-```
+```html
+<!-- src/App.vue -->
 <script setup lang="ts">
 import { AiohaProvider } from '@aioha/providers/vue'
 import { initAioha } from '@aioha/aioha'
@@ -32,9 +31,8 @@ const aioha = initAioha()
 
 2. Use Aioha anywhere within `AiohaProvider` through the `useAioha()` composable.
 
-src/components/AiohaPage.vue
-
-```
+```html
+<!-- src/components/AiohaPage.vue -->
 <script setup lang="ts">
 import { useAioha } from '@aioha/providers/vue'
 
@@ -51,9 +49,8 @@ const { aioha, user, provider, otherUsers } = useAioha()
 
 Alternatively using Vue's `inject()` function:
 
-src/components/AiohaPage.vue
-
-```
+```html
+<!-- src/components/AiohaPage.vue -->
 <script setup lang="ts">
 import { inject } from 'vue'
 import { AiohaCtx, UserCtx, ProviderCtx, OtherUsersCtx } from '@aioha/providers/vue'
@@ -72,13 +69,12 @@ const otherUsers = inject(OtherUsersCtx)
 </template>
 ```
 
-## Using Events[​](#using-events "Direct link to Using Events")
+## Using Events
 
 Listen for [events](https://aioha.dev/docs/core/jsonrpc#events) using lifecycle hooks within Vue's composition API.
 
-src/components/YourComponent.vue
-
-```
+```html
+<!-- src/components/YourComponent.vue -->
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
 import { useAioha } from '@aioha/providers/vue'
@@ -100,13 +96,12 @@ onUnmounted(() => {
 </script>
 ```
 
-## SSR Apps[​](#ssr-apps "Direct link to SSR Apps")
+## SSR Apps
 
 If you are using a framework that uses SSR (server-side rendering) such as Nuxt, you may need to setup Aioha separately in a `onMounted()`.
 
-src/App.vue
-
-```
+```html
+<!-- src/App.vue -->
 <script setup lang="ts">
 import { AiohaProvider } from '@aioha/providers/vue'
 import { Aioha } from '@aioha/aioha'

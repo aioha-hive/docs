@@ -2,39 +2,40 @@
 
 Aioha core may be installed through npm or imported through CDN using ES6 module import syntax.
 
-## NPM Installation[​](#npm-installation "Direct link to NPM Installation")
+## NPM Installation
 
-* npm
-* yarn
-* pnpm
+**npm:**
 
-```
+```sh
 npm i @aioha/aioha
 ```
 
-```
+**yarn:**
+
+```sh
 yarn add @aioha/aioha
 ```
 
-```
+**pnpm:**
+
+```sh
 pnpm i @aioha/aioha
 ```
 
-## CDN Import[​](#cdn-import "Direct link to CDN Import")
+## CDN Import
 
-index.html
-
-```
+```html
+<!-- index.html -->
 <script type="module">
   import { initAioha } from 'https://unpkg.com/@aioha/aioha@latest/dist/bundle.js'
 </script>
 ```
 
-## Usage Example[​](#usage-example "Direct link to Usage Example")
+## Usage Example
 
 Instantiating Aioha, logging in and transacting on Hive can be done with just one or two lines of code for each task. Most configuration are provider-specific.
 
-```
+```js
 import { initAioha, Asset, KeyTypes, Providers } from '@aioha/aioha'
 
 // Instantiation
@@ -74,36 +75,35 @@ const vote = await aioha.vote('author', 'permlink', 10000)
 const rewardClaim = await aioha.claimRewards()
 ```
 
-## HiveSigner Callback Page[​](#hivesigner-callback-page "Direct link to HiveSigner Callback Page")
+## HiveSigner Callback Page
 
 HiveSigner provider requires a callback page that stores the login and transaction results into `localStorage` which is then used as callback data for the application. The function is included in [`src/lib/hivesigner-cb.ts`](https://github.com/aioha-hive/aioha/blob/main/src/lib/hivesigner-cb.ts) file in Aioha core and may be used as such:
 
-* CDN
-* NPM Module
+**CDN:**
 
-```
+```html
 <script type="module">
   import { hivesignerCb } from 'https://unpkg.com/@aioha/aioha@latest/dist/hivesigner-cb.js'
   hivesignerCb()
 </script>
 ```
 
-```
+**NPM Module:**
+
+```js
 import { hivesignerCb } from '@aioha/aioha/build/lib/hivesigner-cb'
 
 hivesignerCb()
 ```
 
-## Environment defines[​](#environment-defines "Direct link to Environment defines")
+## Environment defines
 
 Aioha reads `process.env.NODE_DEBUG` from a transitive dependency. Define it as `false` in your bundler so the reference does not leak into the output.
 
-* Webpack
-* Vite
+**Webpack:**
 
-webpack.config.cjs
-
-```
+```js
+// webpack.config.cjs
 const { DefinePlugin } = require('webpack')
 
 module.exports = {
@@ -123,9 +123,10 @@ module.exports = {
 }
 ```
 
-vite.config.ts
+**Vite:**
 
-```
+```ts
+// vite.config.ts
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -136,15 +137,14 @@ export default defineConfig({
 })
 ```
 
-## Chunking[​](#chunking "Direct link to Chunking")
+## Chunking
 
 To keep the main bundle as lightweight as possible, enable chunking (or code splitting) in your bundler if not already by default.
 
-* Webpack
+**Webpack:**
 
-webpack.config.cjs
-
-```
+```js
+// webpack.config.cjs
 module.exports = {
   // ...
   optimization: {

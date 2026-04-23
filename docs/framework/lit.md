@@ -2,19 +2,18 @@
 
 Lit provider for Aioha that uses Lit's [context](https://lit.dev/docs/data/context) to provide reactive states in your Lit Element components.
 
-## Installation[​](#installation "Direct link to Installation")
+## Installation
 
-```
+```sh
 pnpm i @aioha/providers @aioha/aioha
 ```
 
-## Usage[​](#usage "Direct link to Usage")
+## Usage
 
 1. Initialize Aioha and setup provider at the root of your application. This is usually done at the entrypoint file (i.e. `index.ts` or `my-element.ts`).
 
-src/my-element.ts
-
-```
+```ts
+// src/my-element.ts
 import { LitElement, html } from 'lit'
 import { customElement } from 'lit/decorators.js'
 import { Aioha } from '@aioha/aioha'
@@ -43,9 +42,8 @@ export class MyElement extends LitElement {
 
 2. Use Aioha anywhere within `<aioha-provider>` through the `@consume` decorator.
 
-src/components/aioha-page.ts
-
-```
+```ts
+// src/components/aioha-page.ts
 import { LitElement, html } from 'lit'
 import { customElement, state } from 'lit/decorators.js'
 import { consume } from '@lit/context'
@@ -83,13 +81,12 @@ export class AiohaPage extends LitElement {
 }
 ```
 
-## Using Events[​](#using-events "Direct link to Using Events")
+## Using Events
 
 Listen for [events](/docs/core/jsonrpc.md#events) using lifecycle callbacks.
 
-src/components/some-element.ts
-
-```
+```ts
+// src/components/some-element.ts
 import { LitElement, html } from 'lit'
 import { customElement, state } from 'lit/decorators.js'
 import { consume } from '@lit/context'

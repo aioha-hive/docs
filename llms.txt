@@ -3,18 +3,18 @@
 > All-In-One Hive Authentication
 
 
-## docs
+## Docs
 
 Aioha (All-In-One Hive Authentication) is an API that provides a common interface for working with different Hive login providers. This allows easier integration of Hive login and transacting on the network with fewer code.
 
 - [Introduction](/docs.md): Aioha (All-In-One Hive Authentication) is an API that provides a common interface for working with different Hive login providers. This allows easier integration of Hive login and transacting on the network with fewer code.
 
-### category
+### Category Indexes
 
 - [Core API](/docs/category/core-api.md): The base library for Aioha.
 - [Magi](/docs/category/magi.md): Aioha-powered JavaScript/Typescript libraries for Magi network.
 
-### core
+### Core API
 
 - [Custom Provider](/docs/core/custom-provider.md): Besides the built-in providers, a custom defined provider that extends AiohaBaseProvider class may be registered as Providers.Custom provider. This may be useful for backend use or development of another browser provider.
 - [Get Started](/docs/core/get-started.md): Aioha core may be installed through npm or imported through CDN using ES6 module import syntax.
@@ -22,13 +22,13 @@ Aioha (All-In-One Hive Authentication) is an API that provides a common interfac
 - [Usage](/docs/core/usage.md): Configure and use Aioha in 5 minutes or less.
 - [Wax Signer](/docs/core/wax.md): Aioha may be used to sign transactions on Wax Typescript library.
 
-### faq
+### FAQ
 
 1. Why is plaintext private key login not supported?
 
 - [FAQ](/docs/faq.md): 1. Why is plaintext private key login not supported?
 
-### framework
+### Framework Libraries
 
 Framework-specific libraries that provide Aioha reactive states for ease of integration.
 
@@ -38,23 +38,23 @@ Framework-specific libraries that provide Aioha reactive states for ease of inte
 - [Svelte Provider](/docs/framework/svelte.md): Svelte provider for Aioha that uses Svelte's context API to provide reactive states in your Svelte components.
 - [Vue Provider](/docs/framework/vue.md): Vue provider for Aioha that uses Vue's provide/inject to provide reactive states in your Vue components.
 
-### magi
+### Magi
 
 - [Overview](/docs/magi/overview.md): Magi JS is JavaScript/TypeScript library for interacting with the Magi network with wallet interoperability features.
 - [Framework Providers](/docs/magi/providers.md): Reactive state providers for Magi JS, available for React, Vue, Svelte and Lit. These work similarly to the Aioha core framework providers but expose Magi-specific state.
 - [Usage](/docs/magi/usage.md): Configure and interact with Magi in 5 minutes or less.
 
-### media
+### Media
 
 Branding
 
 - [Media Resources](/docs/media.md): Branding
 
-### react
+### React UI
 
 - [React UI](/docs/react/ui.md): Opinionated React modal UI for Hive logins through Aioha, styled using Tailwind CSS. This provides a quick and easy way to bootstrap a React web app with ready to use Aioha-powered modal component.
 
-### ui
+### Ready Made UI
 
 Ready made modal containing all the UI components and logic required for Aioha.
 

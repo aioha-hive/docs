@@ -7,31 +7,30 @@ The providers automatically track:
 * `user` — the connected user address (updates on wallet switch, Hive account change, and EVM account change)
 * `wallet` — the active `Wallet` enum (`Wallet.Hive`, `Wallet.Ethereum`, `Wallet.Bitcoin`, or `Wallet.ViewOnly`)
 
-info
+> **Info**
+>
+> `MagiProvider` must be nested inside the corresponding [Aioha framework provider](/docs/framework.md) (e.g. `AiohaProvider`) so it can consume Hive wallet state automatically. For EVM wallet support, [Wagmi](https://wagmi.sh) integration is required — see each framework section below for details.
 
-`MagiProvider` must be nested inside the corresponding [Aioha framework provider](/docs/framework.md) (e.g. `AiohaProvider`) so it can consume Hive wallet state automatically. For EVM wallet support, [Wagmi](https://wagmi.sh) integration is required — see each framework section below for details.
+> **View-only wallets**
+>
+> View-only is driven imperatively on the shared `magi` instance — no provider prop. Call `magi.setViewOnly(did)` and `magi.setWallet(Wallet.ViewOnly)` at any time and the `user` / `wallet` context will update via the `wallet_changed` event. Calling `setViewOnly(newDid)` again while `Wallet.ViewOnly` is active also re-emits `wallet_changed`, so UI bindings pick up the new DID automatically.
 
-View-only wallets
+## Installation
 
-View-only is driven imperatively on the shared `magi` instance — no provider prop. Call `magi.setViewOnly(did)` and `magi.setWallet(Wallet.ViewOnly)` at any time and the `user` / `wallet` context will update via the `wallet_changed` event. Calling `setViewOnly(newDid)` again while `Wallet.ViewOnly` is active also re-emits `wallet_changed`, so UI bindings pick up the new DID automatically.
-
-## Installation[​](#installation "Direct link to Installation")
-
-```
+```sh
 pnpm i @aioha/providers @aioha/magi @aioha/aioha
 ```
 
 For EVM wallet support, also install [Wagmi](https://wagmi.sh/react/getting-started) and its dependencies for your framework.
 
-## React[​](#react "Direct link to React")
+## React
 
-### Setup[​](#setup "Direct link to Setup")
+### Setup
 
 Initialize Magi and wrap your app with `MagiProvider` inside both `AiohaProvider` and Wagmi's `WagmiProvider`.
 
-src/App.tsx
-
-```
+```tsx
+<!-- src/App.tsx -->
 import { initAioha } from '@aioha/aioha'
 import { Magi } from '@aioha/magi'
 import { AiohaProvider } from '@aioha/providers/react'
@@ -61,13 +60,12 @@ const App = () => {
 
 `MagiProvider` consumes `AiohaProvider` context for Hive wallet state and uses Wagmi's `useConnectorClient()` hook for EVM wallet state. See the [Wagmi React docs](https://wagmi.sh/react/getting-started) for `wagmiConfig` setup.
 
-### Consuming State[​](#consuming-state "Direct link to Consuming State")
+### Consuming State
 
 Use the `useMagi()` hook anywhere within the provider.
 
-src/components/MagiPage.tsx
-
-```
+```tsx
+<!-- src/components/MagiPage.tsx -->
 import { useMagi } from '@aioha/providers/magi/react'
 
 export const MagiPage = () => {
@@ -82,13 +80,12 @@ export const MagiPage = () => {
 }
 ```
 
-### SSR Apps[​](#ssr-apps "Direct link to SSR Apps")
+### SSR Apps
 
 For frameworks like Next.js, initialize Aioha inside a `useEffect()`.
 
-src/App.tsx
-
-```
+```tsx
+<!-- src/App.tsx -->
 import React, { useEffect } from 'react'
 import { Aioha } from '@aioha/aioha'
 import { Magi } from '@aioha/magi'
@@ -121,15 +118,14 @@ const App = () => {
 }
 ```
 
-## Vue[​](#vue "Direct link to Vue")
+## Vue
 
-### Setup[​](#setup-1 "Direct link to Setup")
+### Setup
 
 Initialize Magi and wrap your app with `MagiProvider` inside both `AiohaProvider` and Wagmi's Vue plugin.
 
-src/App.vue
-
-```
+```html
+<!-- src/App.vue -->
 <script setup lang="ts">
 import { initAioha } from '@aioha/aioha'
 import { Magi } from '@aioha/magi'
@@ -152,13 +148,12 @@ magi.setAioha(aioha)
 
 `MagiProvider` consumes `AiohaProvider` context for Hive wallet state and uses Wagmi's `useConnectorClient()` composable for EVM wallet state. See the [Wagmi Vue docs](https://wagmi.sh/vue/getting-started) for Wagmi plugin setup.
 
-### Consuming State[​](#consuming-state-1 "Direct link to Consuming State")
+### Consuming State
 
 Use the `useMagi()` composable.
 
-src/components/MagiPage.vue
-
-```
+```html
+<!-- src/components/MagiPage.vue -->
 <script setup lang="ts">
 import { useMagi } from '@aioha/providers/magi/vue'
 
@@ -173,9 +168,8 @@ const { magi, user, wallet } = useMagi()
 
 Alternatively, use Vue's `inject()` with the exported injection keys:
 
-src/components/MagiPage.vue
-
-```
+```html
+<!-- src/components/MagiPage.vue -->
 <script setup lang="ts">
 import { inject } from 'vue'
 import { MagiCtx, MagiUserCtx, MagiWalletCtx } from '@aioha/providers/magi/vue'
@@ -186,13 +180,12 @@ const wallet = inject(MagiWalletCtx)
 </script>
 ```
 
-### SSR Apps[​](#ssr-apps-1 "Direct link to SSR Apps")
+### SSR Apps
 
 For frameworks like Nuxt, initialize Aioha in `onMounted()`.
 
-src/App.vue
-
-```
+```html
+<!-- src/App.vue -->
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { Aioha } from '@aioha/aioha'
@@ -218,15 +211,14 @@ onMounted(() => {
 </template>
 ```
 
-## Svelte[​](#svelte "Direct link to Svelte")
+## Svelte
 
-### Setup[​](#setup-2 "Direct link to Setup")
+### Setup
 
 Initialize Magi and wrap your app with `MagiProvider` inside `AiohaProvider`. Pass `wagmiConfig` for EVM wallet support.
 
-src/App.svelte
-
-```
+```html
+<!-- src/App.svelte -->
 <script lang="ts">
   import { initAioha } from '@aioha/aioha'
   import { Magi } from '@aioha/magi'
@@ -247,13 +239,12 @@ src/App.svelte
 
 `MagiProvider` consumes `AiohaProvider` context for Hive wallet state. The optional `wagmiConfig` prop enables EVM wallet tracking via `@wagmi/core`. See the [Wagmi Core docs](https://wagmi.sh/core/getting-started) for config setup.
 
-### Consuming State[​](#consuming-state-2 "Direct link to Consuming State")
+### Consuming State
 
 Use Svelte's `getContext()` with the exported `MagiCtxKey`.
 
-src/components/MagiPage.svelte
-
-```
+```html
+<!-- src/components/MagiPage.svelte -->
 <script lang="ts">
   import { getContext } from 'svelte'
   import { MagiCtxKey, type MagiContext } from '@aioha/providers/magi/svelte'
@@ -265,13 +256,12 @@ src/components/MagiPage.svelte
 <p>Wallet: {ctx.wallet}</p>
 ```
 
-### SSR Apps[​](#ssr-apps-2 "Direct link to SSR Apps")
+### SSR Apps
 
 For frameworks like SvelteKit, initialize Aioha in `onMount()`.
 
-src/App.svelte
-
-```
+```html
+<!-- src/App.svelte -->
 <script lang="ts">
   import { onMount } from 'svelte'
   import { Aioha } from '@aioha/aioha'
@@ -295,15 +285,14 @@ src/App.svelte
 </AiohaProvider>
 ```
 
-## Lit[​](#lit "Direct link to Lit")
+## Lit
 
-### Setup[​](#setup-3 "Direct link to Setup")
+### Setup
 
 Initialize Magi and nest `<magi-provider>` inside `<aioha-provider>`. Pass `.wagmiConfig` for EVM wallet support.
 
-src/my-element.ts
-
-```
+```ts
+// src/my-element.ts
 import { LitElement, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { Aioha } from '@aioha/aioha'
@@ -340,13 +329,12 @@ export class MyElement extends LitElement {
 
 `<magi-provider>` consumes `<aioha-provider>` context for Hive wallet state. The optional `.wagmiConfig` property enables EVM wallet tracking via `@wagmi/core`. See the [Wagmi Core docs](https://wagmi.sh/core/getting-started) for config setup.
 
-### Consuming State[​](#consuming-state-3 "Direct link to Consuming State")
+### Consuming State
 
 Use the `@consume` decorator with the exported contexts.
 
-src/components/magi-page.ts
-
-```
+```ts
+// src/components/magi-page.ts
 import { LitElement, html } from 'lit'
 import { customElement, state } from 'lit/decorators.js'
 import { consume } from '@lit/context'
@@ -376,6 +364,6 @@ export class MagiPage extends LitElement {
 }
 ```
 
-note
-
-Use `subscribe: true` on `MagiUserCtx` and `MagiWalletCtx` to receive reactive updates when the user or wallet changes.
+> **Note**
+>
+> Use `subscribe: true` on `MagiUserCtx` and `MagiWalletCtx` to receive reactive updates when the user or wallet changes.

@@ -4,11 +4,11 @@ The JSON-RPC API for Hive wallet providers outlined in this page are implemented
 
 Any RPC methods not defined here shall be redirected to a Hive API node.
 
-## Aioha RPC Errors[​](#aioha-rpc-errors "Direct link to Aioha RPC Errors")
+## Aioha RPC Errors
 
 For every RPC method, the error returned (if any) shall follow the convention below:
 
-```
+```js
 {
   "message": "human readable error message",
   "code": 4001
@@ -17,9 +17,9 @@ For every RPC method, the error returned (if any) shall follow the convention be
 
 The error code returned are as follows, for Aioha-specific errors:
 
-info
-
-The application may use the error codes to provide a localized message to be displayed to the user.
+> **Info**
+>
+> The application may use the error codes to provide a localized message to be displayed to the user.
 
 | Error Code | Name                    | Description                                                              |
 | ---------- | ----------------------- | ------------------------------------------------------------------------ |
@@ -47,9 +47,9 @@ The application may use the error codes to provide a localized message to be dis
 | 5903       | Signature Request Error | Failed to obtain message/transaction signature from the device.          |
 | 5904       | Hash signing disabled   | Hash signing is not enabled on the device.                               |
 
-## Usage[​](#usage "Direct link to Usage")
+## Usage
 
-```
+```js
 import { initAioha, Providers } from '@aioha/aioha'
 import { AiohaJsonRpc } from '@aioha/aioha/build/extras/jsonrpc-request.js'
 
@@ -72,14 +72,13 @@ rpc.on('connect', () => console.log('connected'))
 aioha.on('connect', () => console.log('connected'))
 ```
 
-## Aioha RPC Methods[​](#aioha-rpc-methods "Direct link to Aioha RPC Methods")
+## Aioha RPC Methods
 
-### Decrypt Memo[​](#decrypt-memo "Direct link to Decrypt Memo")
+### Decrypt Memo
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.decrypt_memo",
   "params": {
@@ -89,18 +88,18 @@ aioha.on('connect', () => console.log('connected'))
 }
 ```
 
-string
+**Result:**
 
-```
+```string
+// string
 #Hello World
 ```
 
-### Sign Message[​](#sign-message "Direct link to Sign Message")
+### Sign Message
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.sign_message",
   "params": {
@@ -110,21 +109,21 @@ string
 }
 ```
 
-object
+**Result:**
 
-```
+```js
+// object
 {
   "signature": "2020647841097bca7d9e84c39df209ac2df9b42c5b194ee2a690304ce8c140690f5296566b5da0ae9d9950243871bf17fa26b34b671dc8284bf7fba767958a5508",
   "public_key": "STM5jruaymFQ93jwUp15r9SF5wPeaNvRKFE4nbbJv4vfHCk5a6zRu"
 }
 ```
 
-### Sign Transaction[​](#sign-transaction "Direct link to Sign Transaction")
+### Sign Transaction
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.sign_tx",
   "params": {
@@ -150,9 +149,10 @@ object
 }
 ```
 
-object
+**Result:**
 
-```
+```js
+// object
 {
   "ref_block_num": 27912,
   "ref_block_prefix": 1175138206,
@@ -175,12 +175,11 @@ object
 }
 ```
 
-### Sign and Broadcast Transaction[​](#sign-and-broadcast-transaction "Direct link to Sign and Broadcast Transaction")
+### Sign and Broadcast Transaction
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.sign_and_broadcast_tx",
   "params": {
@@ -197,90 +196,90 @@ object
 }
 ```
 
-string
+**Result:**
 
-```
+```string
+// string
 87c10767531071732fe15e6c34cf275900c342a3
 ```
 
-### Get Registered Providers[​](#get-registered-providers "Direct link to Get Registered Providers")
+### Get Registered Providers
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.get_registered_providers",
   "params": {}
 }
 ```
 
-array
+**Result:**
 
-```
+```js
+// array
 ["keychain", "peakvault", "ledger", "hiveauth", "hivesigner"]
 ```
 
-### Get Current Provider[​](#get-current-provider "Direct link to Get Current Provider")
+### Get Current Provider
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.get_current_provider",
   "params": {}
 }
 ```
 
-string
+**Result:**
 
-```
+```string
+// string
 hiveauth
 ```
 
-### Get Current User[​](#get-current-user "Direct link to Get Current User")
+### Get Current User
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.get_current_user",
   "params": {}
 }
 ```
 
-string
+**Result:**
 
-```
+```string
+// string
 aioha
 ```
 
-### Is Logged In[​](#is-logged-in "Direct link to Is Logged In")
+### Is Logged In
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.is_logged_in",
   "params": {}
 }
 ```
 
-boolean
+**Result:**
 
-```
+```bool
+// boolean
 true
 ```
 
-### Is Provider Registered[​](#is-provider-registered "Direct link to Is Provider Registered")
+### Is Provider Registered
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.is_provider_registered",
   "params": {
@@ -289,13 +288,14 @@ true
 }
 ```
 
-boolean
+**Result:**
 
-```
+```bool
+// boolean
 true
 ```
 
-## Events[​](#events "Direct link to Events")
+## Events
 
 Aioha provides several methods for listening to events:
 
@@ -303,23 +303,23 @@ Aioha provides several methods for listening to events:
 * `aioha.once(eventName, callback)`: Register a callback to listen for an event only once. The callback will be automatically unregistered after being called.
 * `aioha.off(eventName, callback)`: Unregister a specific callback for an event. If no callback is provided, all callbacks for the event will be unregistered.
 
-### Connected[​](#connected "Direct link to Connected")
+### Connected
 
 The `connect` event is emitted every time an account has been successfully authenticated, resulting in a transition from a **disconnected** state to a **connected** state.
 
-```
+```js
 aioha.on('connect', () => void)
 ```
 
-### Disconnected[​](#disconnected "Direct link to Disconnected")
+### Disconnected
 
 The `disconnect` event is emitted every time an account was logged out and no accounts remain active.
 
-```
+```js
 aioha.on('disconnect', () => void)
 ```
 
-### Account Changed[​](#account-changed "Direct link to Account Changed")
+### Account Changed
 
 The `account_changed` event is emitted every time the current logged in accounts changes, under the following circumstances:
 
@@ -328,62 +328,62 @@ The `account_changed` event is emitted every time the current logged in accounts
 3. An account has been disconnected while leaving another account remain connected.
 4. A connected but inactive account has been removed.
 
-```
+```js
 aioha.on('account_changed', () => void)
 ```
 
-### Login Request[​](#login-request "Direct link to Login Request")
+### Login Request
 
 The `login_request` event is emitted every time a login request has been made to the user's wallet (excluding HiveAuth, see [below](#hiveauth-login-request)).
 
-```
+```js
 aioha.on('login_request', () => void)
 ```
 
-### Memo Request[​](#memo-request "Direct link to Memo Request")
+### Memo Request
 
 The `memo_request` event is emitted every time a memo encryption or decryption request has been made to the user's wallet.
 
-```
+```js
 aioha.on('memo_request', () => void)
 ```
 
-### Message Signature Request[​](#message-signature-request "Direct link to Message Signature Request")
+### Message Signature Request
 
 The `sign_msg_request` event is emitted every time a message signature request has been made to the user's wallet.
 
-```
+```js
 aioha.on('sign_msg_request', () => void)
 ```
 
-### Transaction Signature Request[​](#transaction-signature-request "Direct link to Transaction Signature Request")
+### Transaction Signature Request
 
 The `sign_tx_request` event is emitted every time a transaction signature request has been made to the user's wallet.
 
-```
+```js
 aioha.on('sign_tx_request', () => void)
 ```
 
-### HiveAuth Login Request[​](#hiveauth-login-request "Direct link to HiveAuth Login Request")
+### HiveAuth Login Request
 
 The `hiveauth_login_request` event is emitted every time a new HiveAuth login request is created. This event contains the payload needed to display a QR code to be scanned using a HiveAuth compatible PKSA. Login request may be cancelled before timeout by calling `cancel()`.
 
-```
+```js
 aioha.on('hiveauth_login_request', (payload: string, evt: MessageType, cancel: () => void) => void)
 ```
 
-### HiveAuth Challenge Request[​](#hiveauth-challenge-request "Direct link to HiveAuth Challenge Request")
+### HiveAuth Challenge Request
 
 The `hiveauth_challenge_request` event is emitted every time a new HiveAuth message signature request is created. Challenge request may be cancelled before timeout by calling `cancel()`.
 
-```
+```js
 aioha.on('hiveauth_challenge_request', (payload: string, evt: MessageType, cancel: () => void) => void)
 ```
 
-### HiveAuth Sign Transaction Request[​](#hiveauth-sign-transaction-request "Direct link to HiveAuth Sign Transaction Request")
+### HiveAuth Sign Transaction Request
 
 The `hiveauth_sign_request` event is emitted every time a new HiveAuth transaction signature request is created. Signature request may be cancelled before timeout by calling `cancel()`.
 
-```
+```js
 aioha.on('hiveauth_sign_request', (payload: string, evt: MessageType, cancel: () => void) => void)
 ```

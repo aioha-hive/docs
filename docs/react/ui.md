@@ -2,23 +2,22 @@
 
 Opinionated React modal UI for Hive logins through Aioha, styled using [Tailwind CSS](https://tailwindcss.com). This provides a quick and easy way to bootstrap a React web app with ready to use Aioha-powered modal component.
 
-## Installation[​](#installation "Direct link to Installation")
+## Installation
 
-```
+```sh
 pnpm i @aioha/react-ui @aioha/aioha
 ```
 
-## Usage[​](#usage "Direct link to Usage")
+## Usage
 
 1. Initialize Aioha and setup the provider at the root of your application. This may be in index.jsx, index.tsx or App.tsx depending on the framework you use.
 
-info
+> **Info**
+>
+> If you are using a framework that uses SSR (i.e. Next.js), you may need to setup Aioha separately in `useEffect()` as outlined [here](/docs/framework/react.md#ssr-apps).
 
-If you are using a framework that uses SSR (i.e. Next.js), you may need to setup Aioha separately in `useEffect()` as outlined [here](/docs/framework/react.md#ssr-apps).
-
-src/App.tsx
-
-```
+```tsx
+<!-- src/App.tsx -->
 import { initAioha } from '@aioha/aioha'
 import { AiohaProvider } from '@aioha/react-ui'
 
@@ -36,9 +35,8 @@ const App = () => {
 
 2. Use the modal component and the [`useAioha()` hook](/docs/framework/react.md#usage) anywhere within `AiohaProvider`.
 
-src/components/AiohaPage.tsx
-
-```
+```tsx
+<!-- src/components/AiohaPage.tsx -->
 import { useState } from 'react'
 import { useAioha, AiohaModal } from '@aioha/react-ui'
 import { KeyTypes } from '@aioha/aioha'
@@ -69,26 +67,24 @@ export const AiohaPage = () => {
 }
 ```
 
-### Tailwind CSS v4[​](#tailwind-css-v4 "Direct link to Tailwind CSS v4")
+### Tailwind CSS v4
 
 When using the modal in a Tailwind CSS v4 project, add the following `@source` directive to your `index.css` file after the imports:
 
-src/index.css
-
-```
+```css
+// src/index.css
 @import 'tailwindcss';
 /* ...other imports */
 
 @source '../node_modules/@aioha/react-ui';
 ```
 
-### Tailwind CSS v3[​](#tailwind-css-v3 "Direct link to Tailwind CSS v3")
+### Tailwind CSS v3
 
 When using the modal in a Tailwind CSS v3 project, add the following `content` in `tailwind.config.js`:
 
-tailwind.config.js
-
-```
+```js
+// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -100,22 +96,22 @@ module.exports = {
 }
 ```
 
-### Other[​](#other "Direct link to Other")
+### Other
 
-note
-
-As this is a highly-opinionated component library, the appearance may or may not be different than expected due to potential CSS conflicts with the rest of your application.
+> **Note**
+>
+> As this is a highly-opinionated component library, the appearance may or may not be different than expected due to potential CSS conflicts with the rest of your application.
 
 When not using Tailwind CSS, add the following import to the file where the `AiohaModal` component is used:
 
-```
+```tsx
 import { AiohaModal } from '@aioha/react-ui'
 import '@aioha/react-ui/dist/build.css'
 
 // rest of your components that uses AiohaModal 
 ```
 
-## `AiohaModal` Component[​](#aiohamodal-component "Direct link to aiohamodal-component")
+## `AiohaModal` Component
 
 | Property             | Required? | Description                                                                                                                                                                                    | Default                    |
 | -------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
@@ -134,21 +130,20 @@ import '@aioha/react-ui/dist/build.css'
 | `dir`                | ❌        | Text direction: `ltr`, `rtl`, or `auto`. When `auto`, inferred from `document.dir` and the active locale. See [Localization](/docs/ui/i18n.md#right-to-left-rtl).                              | auto                       |
 | `messages`           | ❌        | Custom [`Messages`](/docs/ui/i18n.md#the-messages-adapter) adapter to route translations through your own i18n framework (react-intl, lingui, i18next, ...). Defaults to the built-in adapter. | *undefined*                |
 
-warning
+> **Warning**
+>
+> `hiveauth.cbWait` in `loginOptions` will be overriden as `AiohaModal` will handle the presentation of HiveAuth QR codes.
 
-`hiveauth.cbWait` in `loginOptions` will be overriden as `AiohaModal` will handle the presentation of HiveAuth QR codes.
-
-## Localization[​](#localization "Direct link to Localization")
+## Localization
 
 The modal ships with English and translations for 15 additional languages loaded on demand, full ICU MessageFormat support, RTL direction handling, and a pluggable adapter for other i18n frameworks. See [Localization](/docs/ui/i18n.md).
 
-## HiveSigner Callback Page[​](#hivesigner-callback-page "Direct link to HiveSigner Callback Page")
+## HiveSigner Callback Page
 
 The callback page has been provided as a component that you can use in a route, as such:
 
-src/Router.tsx
-
-```
+```tsx
+<!-- src/Router.tsx -->
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { HiveSignerCb } from '@aioha/react-ui'
 
@@ -175,7 +170,7 @@ const Router = () => {
 
 Then specify the path as the callback URL in `initAioha()`:
 
-```
+```ts
 const aioha = initAioha({
   hivesigner: {
     app: 'ipfsuploader.app',

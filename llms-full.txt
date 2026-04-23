@@ -3,18 +3,18 @@
 > All-In-One Hive Authentication
 
 
-## docs
+## Docs
 
 Aioha (All-In-One Hive Authentication) is an API that provides a common interface for working with different Hive login providers. This allows easier integration of Hive login and transacting on the network with fewer code.
 
 - [Introduction](/docs.md): Aioha (All-In-One Hive Authentication) is an API that provides a common interface for working with different Hive login providers. This allows easier integration of Hive login and transacting on the network with fewer code.
 
-### category
+### Category Indexes
 
 - [Core API](/docs/category/core-api.md): The base library for Aioha.
 - [Magi](/docs/category/magi.md): Aioha-powered JavaScript/Typescript libraries for Magi network.
 
-### core
+### Core API
 
 - [Custom Provider](/docs/core/custom-provider.md): Besides the built-in providers, a custom defined provider that extends AiohaBaseProvider class may be registered as Providers.Custom provider. This may be useful for backend use or development of another browser provider.
 - [Get Started](/docs/core/get-started.md): Aioha core may be installed through npm or imported through CDN using ES6 module import syntax.
@@ -22,13 +22,13 @@ Aioha (All-In-One Hive Authentication) is an API that provides a common interfac
 - [Usage](/docs/core/usage.md): Configure and use Aioha in 5 minutes or less.
 - [Wax Signer](/docs/core/wax.md): Aioha may be used to sign transactions on Wax Typescript library.
 
-### faq
+### FAQ
 
 1. Why is plaintext private key login not supported?
 
 - [FAQ](/docs/faq.md): 1. Why is plaintext private key login not supported?
 
-### framework
+### Framework Libraries
 
 Framework-specific libraries that provide Aioha reactive states for ease of integration.
 
@@ -38,23 +38,23 @@ Framework-specific libraries that provide Aioha reactive states for ease of inte
 - [Svelte Provider](/docs/framework/svelte.md): Svelte provider for Aioha that uses Svelte's context API to provide reactive states in your Svelte components.
 - [Vue Provider](/docs/framework/vue.md): Vue provider for Aioha that uses Vue's provide/inject to provide reactive states in your Vue components.
 
-### magi
+### Magi
 
 - [Overview](/docs/magi/overview.md): Magi JS is JavaScript/TypeScript library for interacting with the Magi network with wallet interoperability features.
 - [Framework Providers](/docs/magi/providers.md): Reactive state providers for Magi JS, available for React, Vue, Svelte and Lit. These work similarly to the Aioha core framework providers but expose Magi-specific state.
 - [Usage](/docs/magi/usage.md): Configure and interact with Magi in 5 minutes or less.
 
-### media
+### Media
 
 Branding
 
 - [Media Resources](/docs/media.md): Branding
 
-### react
+### React UI
 
 - [React UI](/docs/react/ui.md): Opinionated React modal UI for Hive logins through Aioha, styled using Tailwind CSS. This provides a quick and easy way to bootstrap a React web app with ready to use Aioha-powered modal component.
 
-### ui
+### Ready Made UI
 
 Ready made modal containing all the UI components and logic required for Aioha.
 
@@ -86,7 +86,7 @@ These are libraries that provide framework-specific conveniences for integrating
 
 Aioha can be used as a transaction signer for applications powered by [Wax Typescript](https://gitlab.syncad.com/hive/wax/-/tree/develop/ts?ref_type=heads).
 
-## Supported Providers[​](#supported-providers "Direct link to Supported Providers")
+## Supported Providers
 
 * [Keychain](https://hive-keychain.com)
 * [HiveAuth](https://hiveauth.com)
@@ -95,7 +95,7 @@ Aioha can be used as a transaction signer for applications powered by [Wax Types
 * [Peak Vault](https://vault.peakd.com)
 * [MetaMask Snap](https://snaps.metamask.io/snap/npm/hiveio/metamask-snap)
 
-## Supported Frameworks[​](#supported-frameworks "Direct link to Supported Frameworks")
+## Supported Frameworks
 
 * Universal Web Components ([Ready Made UI](/docs/ui/web-components.md))
 * Lit ([Provider](/docs/framework/lit.md), [Ready Made UI](/docs/ui/lit.md))
@@ -103,7 +103,7 @@ Aioha can be used as a transaction signer for applications powered by [Wax Types
 * Vue ([Provider](/docs/framework/vue.md))
 * Svelte ([Provider](/docs/framework/svelte.md))
 
-## Feature Matrix[​](#feature-matrix "Direct link to Feature Matrix")
+## Feature Matrix
 
 | Feature                     | Peak Vault | Keychain | HiveAuth | HiveSigner | Ledger | MetaMask |
 | --------------------------- | ---------- | -------- | -------- | ---------- | ------ | -------- |
@@ -119,13 +119,13 @@ Aioha can be used as a transaction signer for applications powered by [Wax Types
 
 1 A HiveSigner access token will be returned instead of an ECDSA signature.<br />2 Memo must be encrypted using `@hivesigner`'s public posting key.<br />3 While technically supported by the provider, the PKSA generates the transaction headers instead of using supplied values. This is unhelpful for signing multisig transactions.<br />4 Developer claims to be possible however this is not documented anywhere therefore not implemented in Aioha.<br />5 Only available in protocol 1.0 that doesn't seem to be deployed therefore not implemented in Aioha.<br />6 Possible with blind signing, however this is not implemented in Aioha.<br />7 No signatures will be created, an empty result will be returned.
 
-## Local Storage Reserved Keys[​](#local-storage-reserved-keys "Direct link to Local Storage Reserved Keys")
+## Local Storage Reserved Keys
 
 Aioha uses certain keys in browser `localStorage` to store persistent logins, and in the case of HiveSigner provider, pass info from callback URL.
 
-warning
-
-Do **not** modify any values for the local storage keys below outside Aioha core and HiveSigner callback page.
+> **Warning**
+>
+> Do **not** modify any values for the local storage keys below outside Aioha core and HiveSigner callback page.
 
 The following keys are reserved:
 
@@ -156,16 +156,40 @@ The following keys are reserved:
 
 Besides the [built-in providers](/docs.md#supported-providers), a custom defined provider that extends [`AiohaBaseProvider` class](https://github.com/aioha-hive/aioha/blob/main/src/providers/provider.ts) may be registered as `Providers.Custom` provider. This may be useful for backend use or development of another browser provider.
 
-## Usage[​](#usage "Direct link to Usage")
+## Beekeeper Signer
 
-The below demonstrates the registration of plaintext private key provider for use in Aioha. This is a common example of backend usage of Aioha.
+The recommended signer for backend usage is the [`BeekeeperProvider`](https://github.com/aioha-hive/aioha/blob/main/src/providers/custom/beekeeper.ts), which delegates key storage and signing to a [Beekeeper](https://gitlab.syncad.com/hive/beekeeper) wallet. Private keys never leave the wallet — the provider only holds public keys and passes digests to the wallet for signing.
 
+### Installation
+
+```sh
+pnpm i @aioha/aioha @hiveio/beekeeper
 ```
-import { Aioha, Providers } from '@aioha/aioha'
-import { PlaintextKeyProvider } from '@aioha/aioha/build/providers/custom/plaintext.js'
 
+### Usage
+
+```js
+import { Aioha, AiohaClient, Providers, KeyTypes } from '@aioha/aioha'
+import { BeekeeperProvider } from '@aioha/aioha/build/providers/custom/beekeeper.js'
+import { SimpleEventEmitter } from '@aioha/aioha/build/lib/event-emitter.js'
+import createBeekeeper from '@hiveio/beekeeper'
+
+// Initialize a beekeeper wallet and import the private key
+const bk = await createBeekeeper({ inMemory: true })
+const session = bk.createSession('some-salt')
+const { wallet } = await session.createWallet('my-wallet', 'password', true)
+const pubKey = await wallet.importKey('5somethingsomething')
+
+// Register the beekeeper provider with Aioha
 const aioha = new Aioha()
-aioha.registerCustomProvider(new PlaintextKeyProvider('5somethingsomething'))
+aioha.registerCustomProvider(
+  new BeekeeperProvider(
+    wallet,
+    { [KeyTypes.Posting]: pubKey, [KeyTypes.Active]: pubKey },
+    new AiohaClient(),
+    new SimpleEventEmitter()
+  )
+)
 
 // Login as usual
 const login = await aioha.login(Providers.Custom, 'your-username', { msg: 'Hello World' })
@@ -175,6 +199,32 @@ const claim = await aioha.claimRewards()
 console.log(claim)
 ```
 
+The `keys` map associates a [`KeyTypes`](https://github.com/aioha-hive/aioha/blob/main/src/types.ts) entry (`Posting`, `Active`, `Owner`, `Memo`) with the public key of the corresponding private key held in the wallet. Only key types present in the map can sign — attempting to use a missing key type throws.
+
+> **Custom sha-256 implementation**
+>
+> The constructor accepts an optional fifth argument to supply your own SHA-256 function (e.g. `sha256` from [`@noble/hashes`](https://github.com/paulmillr/noble-hashes)). If omitted, the browser-compatible default from Aioha is used.
+
+> **Persistent wallets**
+>
+> Use `inMemory: true` for ephemeral sessions only. For persistent storage, omit the flag and supply `storageRoot` — see the [Beekeeper docs](https://www.npmjs.com/package/@hiveio/beekeeper) for configuration.
+
+## Plaintext Private Key
+
+> **Deprecated**
+>
+> `PlaintextKeyProvider` is deprecated in favor of the [Beekeeper signer](#beekeeper-signer). It holds the WIF in memory and should not be used in new code.
+
+```js
+import { Aioha, Providers } from '@aioha/aioha'
+import { PlaintextKeyProvider } from '@aioha/aioha/build/providers/custom/plaintext.js'
+
+const aioha = new Aioha()
+aioha.registerCustomProvider(new PlaintextKeyProvider('5somethingsomething'))
+
+const login = await aioha.login(Providers.Custom, 'your-username', { msg: 'Hello World' })
+```
+
 
 ---
 
@@ -182,39 +232,40 @@ console.log(claim)
 
 Aioha core may be installed through npm or imported through CDN using ES6 module import syntax.
 
-## NPM Installation[​](#npm-installation "Direct link to NPM Installation")
+## NPM Installation
 
-* npm
-* yarn
-* pnpm
+**npm:**
 
-```
+```sh
 npm i @aioha/aioha
 ```
 
-```
+**yarn:**
+
+```sh
 yarn add @aioha/aioha
 ```
 
-```
+**pnpm:**
+
+```sh
 pnpm i @aioha/aioha
 ```
 
-## CDN Import[​](#cdn-import "Direct link to CDN Import")
+## CDN Import
 
-index.html
-
-```
+```html
+<!-- index.html -->
 <script type="module">
   import { initAioha } from 'https://unpkg.com/@aioha/aioha@latest/dist/bundle.js'
 </script>
 ```
 
-## Usage Example[​](#usage-example "Direct link to Usage Example")
+## Usage Example
 
 Instantiating Aioha, logging in and transacting on Hive can be done with just one or two lines of code for each task. Most configuration are provider-specific.
 
-```
+```js
 import { initAioha, Asset, KeyTypes, Providers } from '@aioha/aioha'
 
 // Instantiation
@@ -254,36 +305,35 @@ const vote = await aioha.vote('author', 'permlink', 10000)
 const rewardClaim = await aioha.claimRewards()
 ```
 
-## HiveSigner Callback Page[​](#hivesigner-callback-page "Direct link to HiveSigner Callback Page")
+## HiveSigner Callback Page
 
 HiveSigner provider requires a callback page that stores the login and transaction results into `localStorage` which is then used as callback data for the application. The function is included in [`src/lib/hivesigner-cb.ts`](https://github.com/aioha-hive/aioha/blob/main/src/lib/hivesigner-cb.ts) file in Aioha core and may be used as such:
 
-* CDN
-* NPM Module
+**CDN:**
 
-```
+```html
 <script type="module">
   import { hivesignerCb } from 'https://unpkg.com/@aioha/aioha@latest/dist/hivesigner-cb.js'
   hivesignerCb()
 </script>
 ```
 
-```
+**NPM Module:**
+
+```js
 import { hivesignerCb } from '@aioha/aioha/build/lib/hivesigner-cb'
 
 hivesignerCb()
 ```
 
-## Environment defines[​](#environment-defines "Direct link to Environment defines")
+## Environment defines
 
 Aioha reads `process.env.NODE_DEBUG` from a transitive dependency. Define it as `false` in your bundler so the reference does not leak into the output.
 
-* Webpack
-* Vite
+**Webpack:**
 
-webpack.config.cjs
-
-```
+```js
+// webpack.config.cjs
 const { DefinePlugin } = require('webpack')
 
 module.exports = {
@@ -303,9 +353,10 @@ module.exports = {
 }
 ```
 
-vite.config.ts
+**Vite:**
 
-```
+```ts
+// vite.config.ts
 import { defineConfig } from 'vite'
 
 export default defineConfig({
@@ -316,15 +367,14 @@ export default defineConfig({
 })
 ```
 
-## Chunking[​](#chunking "Direct link to Chunking")
+## Chunking
 
 To keep the main bundle as lightweight as possible, enable chunking (or code splitting) in your bundler if not already by default.
 
-* Webpack
+**Webpack:**
 
-webpack.config.cjs
-
-```
+```js
+// webpack.config.cjs
 module.exports = {
   // ...
   optimization: {
@@ -347,11 +397,11 @@ The JSON-RPC API for Hive wallet providers outlined in this page are implemented
 
 Any RPC methods not defined here shall be redirected to a Hive API node.
 
-## Aioha RPC Errors[​](#aioha-rpc-errors "Direct link to Aioha RPC Errors")
+## Aioha RPC Errors
 
 For every RPC method, the error returned (if any) shall follow the convention below:
 
-```
+```js
 {
   "message": "human readable error message",
   "code": 4001
@@ -360,9 +410,9 @@ For every RPC method, the error returned (if any) shall follow the convention be
 
 The error code returned are as follows, for Aioha-specific errors:
 
-info
-
-The application may use the error codes to provide a localized message to be displayed to the user.
+> **Info**
+>
+> The application may use the error codes to provide a localized message to be displayed to the user.
 
 | Error Code | Name                    | Description                                                              |
 | ---------- | ----------------------- | ------------------------------------------------------------------------ |
@@ -390,9 +440,9 @@ The application may use the error codes to provide a localized message to be dis
 | 5903       | Signature Request Error | Failed to obtain message/transaction signature from the device.          |
 | 5904       | Hash signing disabled   | Hash signing is not enabled on the device.                               |
 
-## Usage[​](#usage "Direct link to Usage")
+## Usage
 
-```
+```js
 import { initAioha, Providers } from '@aioha/aioha'
 import { AiohaJsonRpc } from '@aioha/aioha/build/extras/jsonrpc-request.js'
 
@@ -415,14 +465,13 @@ rpc.on('connect', () => console.log('connected'))
 aioha.on('connect', () => console.log('connected'))
 ```
 
-## Aioha RPC Methods[​](#aioha-rpc-methods "Direct link to Aioha RPC Methods")
+## Aioha RPC Methods
 
-### Decrypt Memo[​](#decrypt-memo "Direct link to Decrypt Memo")
+### Decrypt Memo
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.decrypt_memo",
   "params": {
@@ -432,18 +481,18 @@ aioha.on('connect', () => console.log('connected'))
 }
 ```
 
-string
+**Result:**
 
-```
+```string
+// string
 #Hello World
 ```
 
-### Sign Message[​](#sign-message "Direct link to Sign Message")
+### Sign Message
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.sign_message",
   "params": {
@@ -453,21 +502,21 @@ string
 }
 ```
 
-object
+**Result:**
 
-```
+```js
+// object
 {
   "signature": "2020647841097bca7d9e84c39df209ac2df9b42c5b194ee2a690304ce8c140690f5296566b5da0ae9d9950243871bf17fa26b34b671dc8284bf7fba767958a5508",
   "public_key": "STM5jruaymFQ93jwUp15r9SF5wPeaNvRKFE4nbbJv4vfHCk5a6zRu"
 }
 ```
 
-### Sign Transaction[​](#sign-transaction "Direct link to Sign Transaction")
+### Sign Transaction
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.sign_tx",
   "params": {
@@ -493,9 +542,10 @@ object
 }
 ```
 
-object
+**Result:**
 
-```
+```js
+// object
 {
   "ref_block_num": 27912,
   "ref_block_prefix": 1175138206,
@@ -518,12 +568,11 @@ object
 }
 ```
 
-### Sign and Broadcast Transaction[​](#sign-and-broadcast-transaction "Direct link to Sign and Broadcast Transaction")
+### Sign and Broadcast Transaction
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.sign_and_broadcast_tx",
   "params": {
@@ -540,90 +589,90 @@ object
 }
 ```
 
-string
+**Result:**
 
-```
+```string
+// string
 87c10767531071732fe15e6c34cf275900c342a3
 ```
 
-### Get Registered Providers[​](#get-registered-providers "Direct link to Get Registered Providers")
+### Get Registered Providers
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.get_registered_providers",
   "params": {}
 }
 ```
 
-array
+**Result:**
 
-```
+```js
+// array
 ["keychain", "peakvault", "ledger", "hiveauth", "hivesigner"]
 ```
 
-### Get Current Provider[​](#get-current-provider "Direct link to Get Current Provider")
+### Get Current Provider
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.get_current_provider",
   "params": {}
 }
 ```
 
-string
+**Result:**
 
-```
+```string
+// string
 hiveauth
 ```
 
-### Get Current User[​](#get-current-user "Direct link to Get Current User")
+### Get Current User
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.get_current_user",
   "params": {}
 }
 ```
 
-string
+**Result:**
 
-```
+```string
+// string
 aioha
 ```
 
-### Is Logged In[​](#is-logged-in "Direct link to Is Logged In")
+### Is Logged In
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.is_logged_in",
   "params": {}
 }
 ```
 
-boolean
+**Result:**
 
-```
+```bool
+// boolean
 true
 ```
 
-### Is Provider Registered[​](#is-provider-registered "Direct link to Is Provider Registered")
+### Is Provider Registered
 
-* Request
-* Result
+**Request:**
 
-```
+```js
 {
   "method": "aioha_api.is_provider_registered",
   "params": {
@@ -632,13 +681,14 @@ true
 }
 ```
 
-boolean
+**Result:**
 
-```
+```bool
+// boolean
 true
 ```
 
-## Events[​](#events "Direct link to Events")
+## Events
 
 Aioha provides several methods for listening to events:
 
@@ -646,23 +696,23 @@ Aioha provides several methods for listening to events:
 * `aioha.once(eventName, callback)`: Register a callback to listen for an event only once. The callback will be automatically unregistered after being called.
 * `aioha.off(eventName, callback)`: Unregister a specific callback for an event. If no callback is provided, all callbacks for the event will be unregistered.
 
-### Connected[​](#connected "Direct link to Connected")
+### Connected
 
 The `connect` event is emitted every time an account has been successfully authenticated, resulting in a transition from a **disconnected** state to a **connected** state.
 
-```
+```js
 aioha.on('connect', () => void)
 ```
 
-### Disconnected[​](#disconnected "Direct link to Disconnected")
+### Disconnected
 
 The `disconnect` event is emitted every time an account was logged out and no accounts remain active.
 
-```
+```js
 aioha.on('disconnect', () => void)
 ```
 
-### Account Changed[​](#account-changed "Direct link to Account Changed")
+### Account Changed
 
 The `account_changed` event is emitted every time the current logged in accounts changes, under the following circumstances:
 
@@ -671,63 +721,63 @@ The `account_changed` event is emitted every time the current logged in accounts
 3. An account has been disconnected while leaving another account remain connected.
 4. A connected but inactive account has been removed.
 
-```
+```js
 aioha.on('account_changed', () => void)
 ```
 
-### Login Request[​](#login-request "Direct link to Login Request")
+### Login Request
 
 The `login_request` event is emitted every time a login request has been made to the user's wallet (excluding HiveAuth, see [below](#hiveauth-login-request)).
 
-```
+```js
 aioha.on('login_request', () => void)
 ```
 
-### Memo Request[​](#memo-request "Direct link to Memo Request")
+### Memo Request
 
 The `memo_request` event is emitted every time a memo encryption or decryption request has been made to the user's wallet.
 
-```
+```js
 aioha.on('memo_request', () => void)
 ```
 
-### Message Signature Request[​](#message-signature-request "Direct link to Message Signature Request")
+### Message Signature Request
 
 The `sign_msg_request` event is emitted every time a message signature request has been made to the user's wallet.
 
-```
+```js
 aioha.on('sign_msg_request', () => void)
 ```
 
-### Transaction Signature Request[​](#transaction-signature-request "Direct link to Transaction Signature Request")
+### Transaction Signature Request
 
 The `sign_tx_request` event is emitted every time a transaction signature request has been made to the user's wallet.
 
-```
+```js
 aioha.on('sign_tx_request', () => void)
 ```
 
-### HiveAuth Login Request[​](#hiveauth-login-request "Direct link to HiveAuth Login Request")
+### HiveAuth Login Request
 
 The `hiveauth_login_request` event is emitted every time a new HiveAuth login request is created. This event contains the payload needed to display a QR code to be scanned using a HiveAuth compatible PKSA. Login request may be cancelled before timeout by calling `cancel()`.
 
-```
+```js
 aioha.on('hiveauth_login_request', (payload: string, evt: MessageType, cancel: () => void) => void)
 ```
 
-### HiveAuth Challenge Request[​](#hiveauth-challenge-request "Direct link to HiveAuth Challenge Request")
+### HiveAuth Challenge Request
 
 The `hiveauth_challenge_request` event is emitted every time a new HiveAuth message signature request is created. Challenge request may be cancelled before timeout by calling `cancel()`.
 
-```
+```js
 aioha.on('hiveauth_challenge_request', (payload: string, evt: MessageType, cancel: () => void) => void)
 ```
 
-### HiveAuth Sign Transaction Request[​](#hiveauth-sign-transaction-request "Direct link to HiveAuth Sign Transaction Request")
+### HiveAuth Sign Transaction Request
 
 The `hiveauth_sign_request` event is emitted every time a new HiveAuth transaction signature request is created. Signature request may be cancelled before timeout by calling `cancel()`.
 
-```
+```js
 aioha.on('hiveauth_sign_request', (payload: string, evt: MessageType, cancel: () => void) => void)
 ```
 
@@ -738,13 +788,13 @@ aioha.on('hiveauth_sign_request', (payload: string, evt: MessageType, cancel: ()
 
 Configure and use Aioha in 5 minutes or less.
 
-## Instantiation[​](#instantiation "Direct link to Instantiation")
+## Instantiation
 
 Create an instance of Aioha. All providers are registered by default excluding HiveSigner, which is only registered when HiveSigner config is specified. This step also loads any persistent logins stored in `localStorage` (if available). Returns an `Aioha` object.
 
 Provider-specific configs are **optional** with exception of HiveSigner which is required to register HiveSigner provider.
 
-```
+```js
 import { initAioha, Asset, KeyTypes, Providers, VscStakeType } from '@aioha/aioha'
 
 const aioha = initAioha({
@@ -760,14 +810,15 @@ const aioha = initAioha({
 })
 ```
 
-### Configuration[​](#configuration "Direct link to Configuration")
+### Configuration
 
-* HiveAuth
-* HiveSigner
+**HiveAuth:**
 
-- `name`: Short name of the app. Default: `Aioha Generic App`
-- `description` *(optional)*: App description
-- `icon` *(optional)*: URL to app icon
+* `name`: Short name of the app. Default: `Aioha Generic App`
+* `description` *(optional)*: App description
+* `icon` *(optional)*: URL to app icon
+
+**HiveSigner:**
 
 Refer to the [official documentation](https://www.npmjs.com/package/hivesigner#init-client) for complete details.
 
@@ -775,15 +826,13 @@ Refer to the [official documentation](https://www.npmjs.com/package/hivesigner#i
 * `callbackURL`: Callback URL. An example HTML page may be found [here](https://github.com/aioha-hive/aioha/blob/main/snippets/hivesigner.html).
 * `scope`: Authorized operations HiveSigner may perform on behalf of the user using the access token. A HiveSigner popup window will be shown when performing any operation outside the specified scope.
 
-## Enums[​](#enums "Direct link to Enums")
+## Enums
 
-* Providers
-* KeyTypes
-* Asset
+**Providers:**
 
 The `Providers` enum exported are as follows:
 
-```
+```js
 export enum Providers {
   Keychain = 'keychain',
   HiveSigner = 'hivesigner',
@@ -796,9 +845,11 @@ export enum Providers {
 }
 ```
 
+**KeyTypes:**
+
 The `KeyTypes` enum exported are as follows:
 
-```
+```js
 export enum KeyTypes {
   Posting = 'posting',
   Active = 'active',
@@ -807,27 +858,28 @@ export enum KeyTypes {
 }
 ```
 
+**Asset:**
+
 The `Asset` enum exported are as follows:
 
-```
+```js
 export enum Asset {
   HIVE = 'HIVE',
   HBD = 'HBD'
 }
 ```
 
-## Login[​](#login "Direct link to Login")
+## Login
 
-info
-
-Also known as **Connect Wallet**.
+> **Info**
+>
+> Also known as **Connect Wallet**.
 
 Login with specified provider and username. A signature request will be made to sign message `msg` using `keyType` key that is associated with the Hive account.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 const login = await aioha.login(Providers.Keychain, 'hiveusername', {
   msg: 'Hello World',
   keyType: KeyTypes.Posting,
@@ -853,11 +905,13 @@ const login = await aioha.login(Providers.Keychain, 'hiveusername', {
 * `metamask.accountIdx` *(optional)*: Account index to use for the MetaMask Snap connection. Defaults to 0.
 * `metamask.validateUser` *(optional)*: Whether to validate that the Hive account is associated with the public key derived by the MetaMask Snap. Defaults to false.
 
-warning
+> **Warning**
+>
+> The `hiveauth.cbWait` callback function is deprecated and will be removed in Aioha v2. Please use the [`hiveauth_login_request` event](/docs/core/jsonrpc.md#hiveauth-login-request) instead.
 
-The `hiveauth.cbWait` callback function is deprecated and will be removed in Aioha v2. Please use the [`hiveauth_login_request` event](/docs/core/jsonrpc.md#hiveauth-login-request) instead.
+**Result:**
 
-```
+```js
 {
   "provider": "keychain",
   "success": true,
@@ -874,18 +928,17 @@ The `hiveauth.cbWait` callback function is deprecated and will be removed in Aio
 * `publicKey`: Public key used to sign the message (*undefined* for HiveSigner provider)
 * `username`: Logged in username
 
-## Login and Decrypt Memo[​](#login-and-decrypt-memo "Direct link to Login and Decrypt Memo")
+## Login and Decrypt Memo
 
-Not Recommended
-
-Login with signatures [above](#login) are preferred than with memo decryption due to limited support of memo cryptography [in certain providers](/docs.md#feature-matrix).
+> **Not recommended**
+>
+> Login with signatures [above](#login) are preferred than with memo decryption due to limited support of memo cryptography [in certain providers](/docs.md#feature-matrix).
 
 Login with specified provider and username by decrypting a memo.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 const login = await aioha.loginAndDecryptMemo(Providers.Keychain, 'hiveusername', {
   msg: 'Hello World',
   keyType: KeyTypes.Posting
@@ -895,7 +948,9 @@ const login = await aioha.loginAndDecryptMemo(Providers.Keychain, 'hiveusername'
 * `msg`: Memo to be decrypted
 * `keyType`: Key type to be used to decrypt the message
 
-```
+**Result:**
+
+```js
 {
   "provider": "keychain",
   "success": true,
@@ -910,15 +965,15 @@ const login = await aioha.loginAndDecryptMemo(Providers.Keychain, 'hiveusername'
 * `result`: Decrypted message
 * `username`: Logged in username
 
-## Login Non-Interactively[​](#login-non-interactively "Direct link to Login Non-Interactively")
+## Login Non-Interactively
 
 May be used when authentication info (i.e. access token) is already available. This is especially useful for one-click login.
 
-note
+> **Note**
+>
+> Only available in **HiveSigner**.
 
-Only available in **HiveSigner**.
-
-```
+```js
 const loginResult = aioha.loginNonInteractive(Providers.HiveSigner, url.searchParams.get('username')!, {
   ignorePersistence: false, // optional, set to true to overwrite persistent logins already stored
   hivesigner: {
@@ -928,58 +983,59 @@ const loginResult = aioha.loginNonInteractive(Providers.HiveSigner, url.searchPa
 })
 ```
 
-## Logout[​](#logout "Direct link to Logout")
+## Logout
 
-info
+> **Info**
+>
+> Also known as **Disconnect Wallet**.
 
-Also known as **Disconnect Wallet**.
-
-* Current User
-* All Users
+**Current User:**
 
 Logout the current authenticated user.
 
-```
+```js
 await aioha.logout()
 ```
 
+**All Users:**
+
 Logout the all authenticated users.
 
-```
+```js
 await aioha.logoutAll()
 ```
 
-## Switch User[​](#switch-user "Direct link to Switch User")
+## Switch User
 
 Switch the active user to another authenticated user listed [here](#list-other-users). Returns a boolean of whether the operation is successful. If failed, the user will be removed from the list and have to be reauthenticated.
 
-```
+```js
 aioha.switchUser('user2')
 ```
 
-## Remove User[​](#remove-user "Direct link to Remove User")
+## Remove User
 
 Remove a user listed [here](#list-other-users). Returns the authentication details of the user removed. Throws an error when the user does not exist.
 
-```
+```js
 aioha.removeOtherLogin('user2')
 ```
 
-## Discover Accounts[​](#discover-accounts "Direct link to Discover Accounts")
+## Discover Accounts
 
 Search the wallet provider for available accounts. Returns a map of username to account details which are dependent on the selected provider. Options include specifying roles to search accounts.
 
 Optionally a callback function may be provided to stream discovered accounts. The stop function may be called to halt account discovery and return all accounts discovered so far.
 
-* Usage
-* Result
-* Stream
+**Usage:**
 
-```
+```js
 const discovered = await aioha.discoverAccounts(Providers.Ledger, (stream, stop) => void, { roles: [KeyTypes.Active, KeyTypes.Posting] })
 ```
 
-```
+**Result:**
+
+```json
 {
   "success": true,
   "result": {
@@ -1021,7 +1077,9 @@ const discovered = await aioha.discoverAccounts(Providers.Ledger, (stream, stop)
 }
 ```
 
-```
+**Stream:**
+
+```json
 {
   "username": "techcoder",
   "pubkey": "STM6b69oq8QeQU68CYiPYDskvoVnZzL2kyia9L8TiccGU9K7DBZjD",
@@ -1030,45 +1088,48 @@ const discovered = await aioha.discoverAccounts(Providers.Ledger, (stream, stop)
 }
 ```
 
-## View Only Mode[​](#view-only-mode "Direct link to View Only Mode")
+## View Only Mode
 
 View only mode allows logging in with any username to observe any account without signing capabilities. To enable, register the view only provider:
 
-```
+```js
 aioha.registerViewOnly()
 ```
 
 Then login as usual:
 
-```
+```js
 const login = await aioha.login(Providers.ViewOnly, 'alice', {})
 ```
 
-## Encrypt Memo[​](#encrypt-memo "Direct link to Encrypt Memo")
+## Encrypt Memo
 
 Encrypt a message with the Hive public key of the recipient and the private key of the sender.
 
-* Encrypt
-* Encrypt With Keys
-* Result
-* Result With Keys
+**Encrypt:**
 
-```
+```js
 const encrypted = await aioha.encryptMemo('#secret message', KeyTypes.Posting, 'bob')
 ```
 
-```
+**Encrypt With Keys:**
+
+```js
 const encrypted = await aioha.encryptMemoWithKeys('#secret message', KeyTypes.Posting, ['STM7KP2BCau71s1ihTqBtGiF4VeVWnJevxreNceDyisxGdt1baS4B', 'STM5jruaymFQ93jwUp15r9SF5wPeaNvRKFE4nbbJv4vfHCk5a6zRu'])
 ```
 
-```
+**Result:**
+
+```json
 {
   "success": true,
   "result": "#Epz5g29x2Wqt5upn7UkuC4tFrR2zzDMaNFFt1KHFBkTAXnTLcK2jBRCX7FmM3bm3YV2FAShXVXkMY2idqRaDJ2KSLyGPJmYyXoY1JbEoKCLsncRssTxcmLkFiMSiyLeoa"
 }
 ```
 
-```
+**Result With Keys:**
+
+```json
 {
   "success": true,
   "result": {
@@ -1078,20 +1139,21 @@ const encrypted = await aioha.encryptMemoWithKeys('#secret message', KeyTypes.Po
 }
 ```
 
-## Decrypt Memo[​](#decrypt-memo "Direct link to Decrypt Memo")
+## Decrypt Memo
 
 Decrypt a Hive memo or message.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 const decrypted = await aioha.decryptMemo('#encryptedmessage', KeyTypes.Posting)
 ```
 
 Required arguments include the encrypted message starting with `#` and the `KeyTypes` enum for the key type to be used.
 
-```
+**Result:**
+
+```js
 {
   "success": true,
   "result": "#Hello World"
@@ -1102,20 +1164,21 @@ Required arguments include the encrypted message starting with `#` and the `KeyT
 * `error`: Error message, if any
 * `result`: Decrypted message
 
-## Sign Message[​](#sign-message "Direct link to Sign Message")
+## Sign Message
 
 Retrieve an ECDSA signature for a message.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 const signed = await aioha.signMessage('Message to sign', KeyTypes.Posting)
 ```
 
 Required arguments include the message to sign and the `KeyTypes` enum for the key type to be used.
 
-```
+**Result:**
+
+```js
 {
   "success": true,
   "result": "205a8bf065ada352d309c546012b17b4e88f19fdeb704d9a26abe46f1c2f9bce3f4a4b05ffc4777e5005fc5c4b37cd7412a934b7170654df7761310e45cbf6483c",
@@ -1128,14 +1191,13 @@ Required arguments include the message to sign and the `KeyTypes` enum for the k
 * `result`: ECDSA signature
 * `publicKey`: Public key used to sign the message
 
-## Sign Transaction[​](#sign-transaction "Direct link to Sign Transaction")
+## Sign Transaction
 
 Sign a Hive transaction without broadcasting it.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 const signed = await aioha.signTx({
   "ref_block_num": 27912,
   "ref_block_prefix": 1175138206,
@@ -1157,11 +1219,13 @@ const signed = await aioha.signTx({
 
 Required arguments include the message to sign and the `KeyTypes` enum for the key type to be used (must not be `KeyTypes.Memo`).
 
-important
+> **Important**
+>
+> Due to strict authority checks in HF28, the appropriate `KeyTypes` must be specified for the transaction so that the signature will be created using the correct key. For example, `KeyTypes.Active` must be specified for a transaction containing a transfer operation.
 
-Due to strict authority checks in HF28, the appropriate `KeyTypes` must be specified for the transaction so that the signature will be created using the correct key. For example, `KeyTypes.Active` must be specified for a transaction containing a transfer operation.
+**Result:**
 
-```
+```js
 {
   "success": true,
   "result": {
@@ -1191,14 +1255,13 @@ Due to strict authority checks in HF28, the appropriate `KeyTypes` must be speci
 * `error`: Error message, if any
 * `result`: Full signed transaction
 
-## Sign and Broadcast Transaction[​](#sign-and-broadcast-transaction "Direct link to Sign and Broadcast Transaction")
+## Sign and Broadcast Transaction
 
 Sign and broadcast a Hive transaction.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 const result = aioha.signAndBroadcastTx([
   ['vote', {
     author: 'sagarkothari88',
@@ -1211,11 +1274,13 @@ const result = aioha.signAndBroadcastTx([
 
 Required arguments include an array of operations for the transaction and the `KeyTypes` enum for the key type to be used (must not be `KeyTypes.Memo`).
 
-important
+> **Important**
+>
+> Due to strict authority checks in HF28, the appropriate `KeyTypes` must be specified for the transaction so that the signature will be created using the correct key. For example, `KeyTypes.Posting` must be specified for a transaction containing a vote operation.
 
-Due to strict authority checks in HF28, the appropriate `KeyTypes` must be specified for the transaction so that the signature will be created using the correct key. For example, `KeyTypes.Posting` must be specified for a transaction containing a vote operation.
+**Result:**
 
-```
+```js
 {
   "success": true,
   "result": "87c10767531071732fe15e6c34cf275900c342a3"
@@ -1226,20 +1291,21 @@ Due to strict authority checks in HF28, the appropriate `KeyTypes` must be speci
 * `error`: Error message, if any
 * `result`: Transaction ID
 
-## Sign and Broadcast Hive URI[​](#sign-and-broadcast-hive-uri "Direct link to Sign and Broadcast Hive URI")
+## Sign and Broadcast Hive URI
 
 Sign and broadcast a [hive-uri](https://gitlab.syncad.com/hive/hive-uri) encoded transaction.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 const result = aioha.signAndBroadcastUri('hive://sign/ops/W1sidm90ZSIseyJhdXRob3IiOiJzYWdhcmtvdGhhcmk4OCIsInBlcm1saW5rIjoiMjAyNC0wNi0wNS1kYWlseS11cGRhdGVzLWZyb20tc2FnYXJrb3RoYXJpODgiLCJ2b3RlciI6InRlY2hjb2RlcngiLCJ3ZWlnaHQiOjEwMDAwfV1d', KeyTypes.Posting)
 ```
 
 Required arguments include `hive://` prefixed URI and the `KeyTypes` enum for the key type to be used (must not be `KeyTypes.Memo`).
 
-```
+**Result:**
+
+```js
 {
   "success": true,
   "result": "87c10767531071732fe15e6c34cf275900c342a3"
@@ -1250,105 +1316,106 @@ Required arguments include `hive://` prefixed URI and the `KeyTypes` enum for th
 * `error`: Error message, if any
 * `result`: Transaction ID
 
-## Getters[​](#getters "Direct link to Getters")
+## Getters
 
-### Registered Providers[​](#registered-providers "Direct link to Registered Providers")
+### Registered Providers
 
 List all registered providers.
 
-```
+```js
 aioha.getProviders() // ['keychain', 'peakvault', 'ledger', 'hiveauth', 'hivesigner']
 ```
 
-### Current Provider[​](#current-provider "Direct link to Current Provider")
+### Current Provider
 
 Returns one of the providers above that the user logs in with.
 
-```
+```js
 aioha.getCurrentProvider()
 ```
 
-### Current User[​](#current-user "Direct link to Current User")
+### Current User
 
 Returns logged in Hive username.
 
-```
+```js
 aioha.getCurrentUser()
 ```
 
-### Is Logged In[​](#is-logged-in "Direct link to Is Logged In")
+### Is Logged In
 
 Returns a boolean of whether a user is logged in or not.
 
-```
+```js
 aioha.isLoggedIn()
 ```
 
-### Is Provider Registered[​](#is-provider-registered "Direct link to Is Provider Registered")
+### Is Provider Registered
 
 Returns a boolean of whether the specified provider is registered. This does not indicate that the said provider is available to the user (i.e. due to required browser extension not installed).
 
-```
+```js
 aioha.isProviderRegistered(Providers.HiveAuth)
 ```
 
-### Is Provider Enabled[​](#is-provider-enabled "Direct link to Is Provider Enabled")
+### Is Provider Enabled
 
 Returns a boolean of whether the specified provider is registered and available for use by the user.
 
-```
+```js
 aioha.isProviderEnabled(Providers.HiveAuth)
 ```
 
-### List Other Users[​](#list-other-users "Direct link to List Other Users")
+### List Other Users
 
 Returns a list of other authenticated users and the corresponding provider that are currently inactive.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 aioha.getOtherLogins()
 ```
 
-```
+**Result:**
+
+```json
 {
   "user1": "keychain",
   "user2": "peakvault"
 }
 ```
 
-### Get Login Expiration[​](#get-login-expiration "Direct link to Get Login Expiration")
+### Get Login Expiration
 
 Retrieve the login expiration timestamp (in epoch milliseconds) for a username.
 
-info
+> **Info**
+>
+> This is for **HiveAuth** and **HiveSigner** providers as the authentication expires. This method will return `undefined` for other providers that do not expire.
 
-This is for **HiveAuth** and **HiveSigner** providers as the authentication expires. This method will return `undefined` for other providers that do not expire.
-
-```
+```js
 aioha.getLoginExpiration('someone')
 ```
 
-### Get Hive Chain ID[​](#get-hive-chain-id "Direct link to Get Hive Chain ID")
+### Get Hive Chain ID
 
 Retrieve the current Hive chain ID used to sign transactions.
 
-note
+> **Note**
+>
+> Currently only **Ledger** and **MetaMask Snaps** providers respect this setting. Hive Keychain uses the chain ID of the API node set by the user in the extension.
 
-Currently only **Ledger** and **MetaMask Snaps** providers respect this setting. Hive Keychain uses the chain ID of the API node set by the user in the extension.
-
-```
+```js
 aioha.getChainId()
 ```
 
-## Setters[​](#setters "Direct link to Setters")
+## Setters
 
-### Set Hive API[​](#set-hive-api "Direct link to Set Hive API")
+### Set Hive API
 
 Set a Hive API node for RPC calls made by Aioha (i.e. HIVE/VEST calculation, broadcast transaction)
 
-```
+```js
 aioha.setApi('https://techcoderx.com', [
   'https://api.hive.blog',
   'https://api.openhive.network',
@@ -1356,40 +1423,36 @@ aioha.setApi('https://techcoderx.com', [
 ])
 ```
 
-### Set Hive Chain ID[​](#set-hive-chain-id "Direct link to Set Hive Chain ID")
+### Set Hive Chain ID
 
 Set a custom Hive chain ID when signing transactions for testnets.
 
-note
+> **Note**
+>
+> Currently only **Ledger** and **MetaMask Snaps** providers respect this setting. Hive Keychain uses the chain ID of the API node set by the user in the extension.
 
-Currently only **Ledger** and **MetaMask Snaps** providers respect this setting. Hive Keychain uses the chain ID of the API node set by the user in the extension.
-
-```
+```js
 // default testnet
 aioha.setChainId('18dcf0a285365fc58b71f18b3d3fec954aa0c141c44e4e5cb4cf777b9eab274e')
 ```
 
-### Set Magi Network ID[​](#set-magi-network-id "Direct link to Set Magi Network ID")
+### Set Magi Network ID
 
 Set Magi network ID for Magi related functions.
 
-```
+```js
 aioha.vscSetNetId('vsc-mainnet')
 ```
 
-## Operations[​](#operations "Direct link to Operations")
+## Operations
 
 The return value for these method calls will be equivalent to sign and broadcast transaction result [above](#sign-and-broadcast-transaction).
 
-### Social[​](#social "Direct link to Social")
+### Social
 
-* Vote
-* Comment
-* Delete Comment
-* Reblog
-* Follow/Ignore
+**Vote:**
 
-```
+```js
 const vote = await aioha.vote('author', 'permlink', 10000)
 const voteMany = await aioha.voteMany([
   {
@@ -1405,7 +1468,9 @@ const voteMany = await aioha.voteMany([
 ])
 ```
 
-```
+**Comment:**
+
+```js
 const comment = await aioha.comment('pa', 'pp', 'permlink', 'title', 'body', { foo: 'bar' })
 const commentWithOptions = await aioha.comment('pa', 'pp', 'permlink', 'title', 'body', { foo: 'bar' }, {
   author: aioha.getCurrentUser(),
@@ -1428,47 +1493,52 @@ const commentWithOptions = await aioha.comment('pa', 'pp', 'permlink', 'title', 
 })
 ```
 
+**Delete Comment:**
+
 The post or comment must contain no child comments or positive rshares.
 
-```
+```js
 const deleted = await aioha.deleteComment('permlinktodel')
 ```
 
-```
+**Reblog:**
+
+```js
 const reblog = await aioha.reblog('author', 'permlink', true)
 const removeReblog = await aioha.reblog('author', 'permlink', false)
 ```
 
-```
+**Follow/Ignore:**
+
+```js
 const follow = await aioha.follow('author', true)
 const unfollow = await aioha.follow('author', false)
 const ignored = await aioha.ignore('authortoignore')
 ```
 
-### Custom JSON[​](#custom-json "Direct link to Custom JSON")
+### Custom JSON
 
 Publish an arbitrary JSON data.
 
-```
+```js
 const customJson = await aioha.customJSON(KeyTypes.Posting, 'my-id', { foo: 'bar' }, 'Display Title')
 ```
 
-### Claim Rewards[​](#claim-rewards "Direct link to Claim Rewards")
+### Claim Rewards
 
 Claim Hive rewards that have paid out from content reward pool.
 
-```
+```js
 const rewardClaim = await aioha.claimRewards()
 ```
 
-### Transfer[​](#transfer "Direct link to Transfer")
+### Transfer
 
 Transfer HIVE/HBD to another account.
 
-* One Time
-* Recurrent
+**One Time:**
 
-```
+```js
 // transfer 1 HIVE with memo
 const xfer = await aioha.transfer('recipient', 1, Asset.HIVE, 'Transferred using Aioha with memo')
 
@@ -1476,7 +1546,9 @@ const xfer = await aioha.transfer('recipient', 1, Asset.HIVE, 'Transferred using
 const xferNoMemo = await aioha.transfer('recipient2', 1, Asset.HBD)
 ```
 
-```
+**Recurrent:**
+
+```js
 // start recurrent transfer of 1 HIVE every 24 hours for 7 days to 'bob'
 const recurrentXfer = await aioha.recurrentTransfer('bob', 1, Asset.HIVE, 24, 7, 'Transferred using Aioha with memo')
 
@@ -1484,13 +1556,11 @@ const recurrentXfer = await aioha.recurrentTransfer('bob', 1, Asset.HIVE, 24, 7,
 const cancelRecurrentXfer = await aioha.cancelRecurrentTransfer('bob', Asset.HIVE, 'Another memo for cancel recurrent transfer')
 ```
 
-### HIVE staking[​](#hive-staking "Direct link to HIVE staking")
+### HIVE staking
 
-* Stake
-* Unstake
-* Delegate
+**Stake:**
 
-```
+```js
 // stake 1000 HIVE to itself
 const stake = await aioha.stakeHive(1000)
 
@@ -1498,7 +1568,9 @@ const stake = await aioha.stakeHive(1000)
 const stakeToOtherAccount = await aioha.stakeHive(1000, 'anotheraccount')
 ```
 
-```
+**Unstake:**
+
+```js
 // unstake 1000 HIVE of vesting shares
 const unstake = await aioha.unstakeHive(1000)
 
@@ -1509,7 +1581,9 @@ const unstakeByVests = await aioha.unstakeHiveByVests(1000000)
 const cancelUnstake = await aioha.unstakeHive(0)
 ```
 
-```
+**Delegate:**
+
+```js
 // delegate 1000 HIVE of vesting shares
 const delegate = await aioha.delegateStakedHive('delegatee', 1000)
 
@@ -1520,33 +1594,34 @@ const delegateByVests = await aioha.delegateVests('delegatee', 1000000)
 const undelegate = await aioha.delegateStakedHive('delegatee', 0)
 ```
 
-### Governance[​](#governance "Direct link to Governance")
+### Governance
 
-* Vote Witness
-* Vote Proposals
-* Set/Clear Proxy
+**Vote Witness:**
 
-```
+```js
 const voteWitness = await aioha.voteWitness('thewitness', true)
 const unvoteWitness = await aioha.voteWitness('thewitness', false)
 ```
 
-```
+**Vote Proposals:**
+
+```js
 const voteProposals = await aioha.voteProposals([0], true)
 const unvoteProposals = await aioha.voteProposals([0], false)
 ```
 
-```
+**Set/Clear Proxy:**
+
+```js
 const setProxy = await aioha.setProxy('proxiedacc')
 const clearProxy = await aioha.clearProxy()
 ```
 
-### Authority[​](#authority "Direct link to Authority")
+### Authority
 
-* Account Auths
-* Key Auths
+**Account Auths:**
 
-```
+```js
 // Add 'aioha' account to posting auths with weight 1
 const addAccount = await aioha.addAccountAuthority('aioha', KeyTypes.Posting, 1)
 
@@ -1554,7 +1629,9 @@ const addAccount = await aioha.addAccountAuthority('aioha', KeyTypes.Posting, 1)
 const rmAccount = await aioha.removeAccountAuthority('aioha', KeyTypes.Posting)
 ```
 
-```
+**Key Auths:**
+
+```js
 // Add 'STMxxxx' public key to posting auths with weight 1
 const addKey = await aioha.addKeyAuthority('STMxxxx', KeyTypes.Posting, 1)
 
@@ -1562,29 +1639,29 @@ const addKey = await aioha.addKeyAuthority('STMxxxx', KeyTypes.Posting, 1)
 const rmKey = await aioha.removeKeyAuthority('STMxxxx', KeyTypes.Posting)
 ```
 
-### Magi Call[​](#magi-call "Direct link to Magi Call")
+### Magi Call
 
 Transact on Magi from L1, such as calling a smart contract, transfer or withdraw L2 balances.
 
-warning
+> **Warning**
+>
+> These methods will be moved to the upcoming Magi TypeScript library and will be removed from Aioha core in v2.
 
-These methods will be moved to the upcoming Magi TypeScript library and will be removed from Aioha core in v2.
+**Transfer:**
 
-* Transfer
-* Withdraw
-* Stake
-* Unstake
-* Call Contract
-
-```
+```js
 const transfer = await aioha.vscTransfer('hive:bob', 1, Asset.HIVE, 'Optional memo')
 ```
 
-```
+**Withdraw:**
+
+```js
 const transfer = await aioha.vscWithdraw('hive:charlie', 1, Asset.HIVE, 'Optional memo')
 ```
 
-```
+**Stake:**
+
+```js
 // Stake 2,000 HIVE for consensus
 const consensusStake = await aioha.vscStake(VscStakeType.Consensus, 2000)
 
@@ -1592,7 +1669,9 @@ const consensusStake = await aioha.vscStake(VscStakeType.Consensus, 2000)
 const hbdStake = await aioha.vscStake(VscStakeType.HBD, 100)
 ```
 
-```
+**Unstake:**
+
+```js
 // Unstake 2,000 HIVE from consensus
 const consensusStake = await aioha.vscUnstake(VscStakeType.Consensus, 2000)
 
@@ -1600,7 +1679,9 @@ const consensusStake = await aioha.vscUnstake(VscStakeType.Consensus, 2000)
 const hbdStake = await aioha.vscUnstake(VscStakeType.HBD, 100)
 ```
 
-```
+**Call Contract:**
+
+```js
 // Call testLog at contract vsc1Bp8y... with 100 RC limit, no intents, signed with active authority
 const contractCall = await aioha.vscCallContract('vsc1Bp8ykBKDT74vYrZShhfEhp8Mn8bG2ChiAf', 'testLog', 'tx payload', 100, [], KeyTypes.Active)
 ```
@@ -1612,13 +1693,13 @@ const contractCall = await aioha.vscCallContract('vsc1Bp8ykBKDT74vYrZShhfEhp8Mn8
 
 Aioha may be used to sign transactions on [Wax Typescript](https://gitlab.syncad.com/hive/wax/-/tree/develop/ts?ref_type=heads) library.
 
-note
+> **Note**
+>
+> ***Wax*** here refers to the feature-rich multi-language [library](https://gitlab.syncad.com/hive/wax) for [Hive](https://hive.io). Not to be confused with the competing L1 blockchain forked from EOS.
 
-***Wax*** here refers to the feature-rich multi-language [library](https://gitlab.syncad.com/hive/wax) for [Hive](https://hive.io). Not to be confused with the competing L1 blockchain forked from EOS.
+## Usage
 
-## Usage[​](#usage "Direct link to Usage")
-
-```
+```js
 import { createHiveChain } from '@hiveio/wax'
 import { initAioha, KeyTypes, WaxAiohaSigner } from '@aioha/aioha'
 
@@ -1633,7 +1714,7 @@ await provider.signTransaction(tx)
 await chain.broadcast(tx)
 ```
 
-## Caveats[​](#caveats "Direct link to Caveats")
+## Caveats
 
 Currently most providers produce signatures using the legacy serialization method, while Wax prefers the newer method supported as of HF26 which saves 4 bytes per asset/NAI value in the transaction.
 
@@ -1644,11 +1725,11 @@ In addition, Aioha primarily uses the legacy transaction JSON format (array tupl
 
 # FAQ
 
-## 1. Why is plaintext private key login not supported?[​](#1-why-is-plaintext-private-key-login-not-supported "Direct link to 1. Why is plaintext private key login not supported?")
+## 1. Why is plaintext private key login not supported?
 
 Plaintext private keys are (and should be) a thing of the past, the closest provider would be HiveSigner. Even in web2 passkeys have replaced passwords.
 
-With that said there is a [PlaintextKeyProvider](https://github.com/aioha-hive/aioha/blob/main/src/providers/custom/plaintext.ts) ([usage](/docs/core/custom-provider.md)) but it should only be used for backends.
+With that said there is a [BeekeeperProvider](https://github.com/aioha-hive/aioha/blob/main/src/providers/custom/beekeeper.ts) ([usage](/docs/core/custom-provider.md#beekeeper-signer)) but it should only be used for backends.
 
 
 ---
@@ -1664,19 +1745,18 @@ With that said there is a [PlaintextKeyProvider](https://github.com/aioha-hive/a
 
 Lit provider for Aioha that uses Lit's [context](https://lit.dev/docs/data/context) to provide reactive states in your Lit Element components.
 
-## Installation[​](#installation "Direct link to Installation")
+## Installation
 
-```
+```sh
 pnpm i @aioha/providers @aioha/aioha
 ```
 
-## Usage[​](#usage "Direct link to Usage")
+## Usage
 
 1. Initialize Aioha and setup provider at the root of your application. This is usually done at the entrypoint file (i.e. `index.ts` or `my-element.ts`).
 
-src/my-element.ts
-
-```
+```ts
+// src/my-element.ts
 import { LitElement, html } from 'lit'
 import { customElement } from 'lit/decorators.js'
 import { Aioha } from '@aioha/aioha'
@@ -1705,9 +1785,8 @@ export class MyElement extends LitElement {
 
 2. Use Aioha anywhere within `<aioha-provider>` through the `@consume` decorator.
 
-src/components/aioha-page.ts
-
-```
+```ts
+// src/components/aioha-page.ts
 import { LitElement, html } from 'lit'
 import { customElement, state } from 'lit/decorators.js'
 import { consume } from '@lit/context'
@@ -1745,13 +1824,12 @@ export class AiohaPage extends LitElement {
 }
 ```
 
-## Using Events[​](#using-events "Direct link to Using Events")
+## Using Events
 
 Listen for [events](/docs/core/jsonrpc.md#events) using lifecycle callbacks.
 
-src/components/some-element.ts
-
-```
+```ts
+// src/components/some-element.ts
 import { LitElement, html } from 'lit'
 import { customElement, state } from 'lit/decorators.js'
 import { consume } from '@lit/context'
@@ -1791,23 +1869,22 @@ export class SomeElement extends LitElement {
 
 For React apps that are **not** using the [ready-made UI](/docs/react/ui.md).
 
-note
+> **Note**
+>
+> This module is used and provided in the ready-made UI so there is no need to install this separately.
 
-This module is used and provided in the ready-made UI so there is no need to install this separately.
+## Installation
 
-## Installation[​](#installation "Direct link to Installation")
-
-```
+```sh
 pnpm i @aioha/providers @aioha/aioha
 ```
 
-## Usage[​](#usage "Direct link to Usage")
+## Usage
 
 1. Initialize Aioha and setup the provider at the root of your application. This may be in `index.jsx`, `index.tsx` or `App.tsx` depending on the framework you use.
 
-src/App.tsx
-
-```
+```tsx
+<!-- src/App.tsx -->
 import { initAioha } from '@aioha/aioha'
 import { AiohaProvider } from '@aioha/providers/react'
 
@@ -1825,9 +1902,8 @@ const App = () => {
 
 2. Use Aioha anywhere within `AiohaProvider` through `useAioha()`.
 
-src/components/AiohaPage.tsx
-
-```
+```tsx
+<!-- src/components/AiohaPage.tsx -->
 import { useAioha } from '@aioha/providers/react'
 
 export const AiohaPage = () => {
@@ -1839,13 +1915,12 @@ export const AiohaPage = () => {
 
 Logged in username and provider may be retrieved through `user` and `provider` variables. Other authenticated accounts can be retrieved through `otherUsers` variable.
 
-## Using Events[​](#using-events "Direct link to Using Events")
+## Using Events
 
 Listen for [events](/docs/core/jsonrpc.md#events) in `useEffect` hook.
 
-src/components/YourComponent.tsx
-
-```
+```tsx
+<!-- src/components/YourComponent.tsx -->
 import { useEffect } from 'react'
 import { useAioha } from '@aioha/providers/react'
 
@@ -1864,13 +1939,12 @@ export const YourComponent = () => {
 }
 ```
 
-## SSR Apps[​](#ssr-apps "Direct link to SSR Apps")
+## SSR Apps
 
 If you are using a framework that uses SSR (server-side rendering) such as Next.js, you may need to setup Aioha separately in a `useEffect()`.
 
-src/App.tsx
-
-```
+```tsx
+<!-- src/App.tsx -->
 import React, { useEffect } from 'react'
 import { Aioha } from '@aioha/aioha'
 import { AiohaProvider } from '@aioha/providers/react'
@@ -1890,20 +1964,20 @@ const App = () => {
 }
 ```
 
-## Migrating to >=1.8.0[​](#migrating-to-180 "Direct link to Migrating to >=1.8.0")
+## Migrating to >=1.8.0
 
 The React provider is now part of a single unified package that consists of all framework providers.
 
 Uninstall the old React provider and install the new package:
 
-```
+```sh
 pnpm un @aioha/react-provider
 pnpm i @aioha/providers
 ```
 
 Update the imports accordingly:
 
-```
+```ts
 // From:
 import { AiohaProvider, useAioha } from '@aioha/react-provider'
 
@@ -1918,19 +1992,18 @@ import { AiohaProvider, useAioha } from '@aioha/providers/react'
 
 Svelte provider for Aioha that uses Svelte's [context API](https://svelte.dev/docs/svelte/context) to provide reactive states in your Svelte components.
 
-## Installation[​](#installation "Direct link to Installation")
+## Installation
 
-```
+```sh
 pnpm i @aioha/providers @aioha/aioha
 ```
 
-## Usage[​](#usage "Direct link to Usage")
+## Usage
 
 1. Initialize Aioha and setup provider at the root of your application. This is usually done in `App.svelte`.
 
-src/App.svelte
-
-```
+```html
+<!-- src/App.svelte -->
 <script lang="ts">
   import { AiohaProvider } from '@aioha/providers/svelte'
   import { initAioha } from '@aioha/aioha'
@@ -1946,9 +2019,8 @@ src/App.svelte
 
 2. Use Aioha anywhere within `AiohaProvider` through Svelte's `getContext()` function.
 
-src/components/AiohaPage.svelte
-
-```
+```html
+<!-- src/components/AiohaPage.svelte -->
 <script lang="ts">
   import { getContext } from 'svelte'
   import { AiohaCtxKey, type AiohaContext } from '@aioha/providers/svelte'
@@ -1964,13 +2036,12 @@ src/components/AiohaPage.svelte
 {/each}
 ```
 
-## Using Events[​](#using-events "Direct link to Using Events")
+## Using Events
 
 Listen for [events](/docs/core/jsonrpc.md#events) using lifecycle functions within Svelte components.
 
-src/components/YourComponent.svelte
-
-```
+```html
+<!-- src/components/YourComponent.svelte -->
 <script lang="ts">
   import { getContext, onMount } from 'svelte'
   import { AiohaCtxKey, type AiohaContext } from '@aioha/providers/svelte'
@@ -1990,13 +2061,12 @@ src/components/YourComponent.svelte
 </script>
 ```
 
-## SSR Apps[​](#ssr-apps "Direct link to SSR Apps")
+## SSR Apps
 
 If you are using a framework that uses SSR (server-side rendering) such as SvelteKit, you may need to setup Aioha separately in a `onMount()`.
 
-src/App.svelte
-
-```
+```html
+<!-- src/App.svelte -->
 <script lang="ts">
   import { AiohaProvider } from '@aioha/providers/svelte'
   import { Aioha } from '@aioha/aioha'
@@ -2022,19 +2092,18 @@ src/App.svelte
 
 Vue provider for Aioha that uses Vue's [provide/inject](https://vuejs.org/guide/components/provide-inject.html) to provide reactive states in your Vue components.
 
-## Installation[​](#installation "Direct link to Installation")
+## Installation
 
-```
+```sh
 pnpm i @aioha/providers @aioha/aioha
 ```
 
-## Usage[​](#usage "Direct link to Usage")
+## Usage
 
 1. Initialize Aioha and setup provider at the root of your application. This is usually done in `App.vue`.
 
-src/App.vue
-
-```
+```html
+<!-- src/App.vue -->
 <script setup lang="ts">
 import { AiohaProvider } from '@aioha/providers/vue'
 import { initAioha } from '@aioha/aioha'
@@ -2052,9 +2121,8 @@ const aioha = initAioha()
 
 2. Use Aioha anywhere within `AiohaProvider` through the `useAioha()` composable.
 
-src/components/AiohaPage.vue
-
-```
+```html
+<!-- src/components/AiohaPage.vue -->
 <script setup lang="ts">
 import { useAioha } from '@aioha/providers/vue'
 
@@ -2071,9 +2139,8 @@ const { aioha, user, provider, otherUsers } = useAioha()
 
 Alternatively using Vue's `inject()` function:
 
-src/components/AiohaPage.vue
-
-```
+```html
+<!-- src/components/AiohaPage.vue -->
 <script setup lang="ts">
 import { inject } from 'vue'
 import { AiohaCtx, UserCtx, ProviderCtx, OtherUsersCtx } from '@aioha/providers/vue'
@@ -2092,13 +2159,12 @@ const otherUsers = inject(OtherUsersCtx)
 </template>
 ```
 
-## Using Events[​](#using-events "Direct link to Using Events")
+## Using Events
 
 Listen for [events](https://aioha.dev/docs/core/jsonrpc#events) using lifecycle hooks within Vue's composition API.
 
-src/components/YourComponent.vue
-
-```
+```html
+<!-- src/components/YourComponent.vue -->
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
 import { useAioha } from '@aioha/providers/vue'
@@ -2120,13 +2186,12 @@ onUnmounted(() => {
 </script>
 ```
 
-## SSR Apps[​](#ssr-apps "Direct link to SSR Apps")
+## SSR Apps
 
 If you are using a framework that uses SSR (server-side rendering) such as Nuxt, you may need to setup Aioha separately in a `onMounted()`.
 
-src/App.vue
-
-```
+```html
+<!-- src/App.vue -->
 <script setup lang="ts">
 import { AiohaProvider } from '@aioha/providers/vue'
 import { Aioha } from '@aioha/aioha'
@@ -2154,34 +2219,36 @@ onMounted(() => {
 
 Magi JS is JavaScript/TypeScript library for interacting with the [Magi network](https://magi.eco) with wallet interoperability features.
 
-## Supported Wallet Types[​](#supported-wallet-types "Direct link to Supported Wallet Types")
+## Supported Wallet Types
 
 * Hive (through [Aioha](/docs.md))
 * Ethereum (through [Viem](https://viem.sh))
 * Bitcoin (any wallet exposing `signMessage`, e.g. [Leather](https://leather.io), [Xverse](https://www.xverse.app), [UniSat](https://unisat.io))
 * View-only (read account state without any signer; signing operations return an error)
 
-## Installation[​](#installation "Direct link to Installation")
+## Installation
 
-* npm
-* yarn
-* pnpm
+**npm:**
 
-```
+```sh
 npm i @aioha/magi @aioha/aioha viem
 ```
 
-```
+**yarn:**
+
+```sh
 yarn add @aioha/magi @aioha/aioha viem
 ```
 
-```
+**pnpm:**
+
+```sh
 pnpm i @aioha/magi @aioha/aioha viem
 ```
 
-## Usage Example[​](#usage-example "Direct link to Usage Example")
+## Usage Example
 
-```
+```js
 import { Magi, Wallet, Asset } from '@aioha/magi'
 import { createWalletClient, http } from 'viem'
 import { initAioha } from '@aioha/aioha'
@@ -2245,31 +2312,30 @@ The providers automatically track:
 * `user` — the connected user address (updates on wallet switch, Hive account change, and EVM account change)
 * `wallet` — the active `Wallet` enum (`Wallet.Hive`, `Wallet.Ethereum`, `Wallet.Bitcoin`, or `Wallet.ViewOnly`)
 
-info
+> **Info**
+>
+> `MagiProvider` must be nested inside the corresponding [Aioha framework provider](/docs/framework.md) (e.g. `AiohaProvider`) so it can consume Hive wallet state automatically. For EVM wallet support, [Wagmi](https://wagmi.sh) integration is required — see each framework section below for details.
 
-`MagiProvider` must be nested inside the corresponding [Aioha framework provider](/docs/framework.md) (e.g. `AiohaProvider`) so it can consume Hive wallet state automatically. For EVM wallet support, [Wagmi](https://wagmi.sh) integration is required — see each framework section below for details.
+> **View-only wallets**
+>
+> View-only is driven imperatively on the shared `magi` instance — no provider prop. Call `magi.setViewOnly(did)` and `magi.setWallet(Wallet.ViewOnly)` at any time and the `user` / `wallet` context will update via the `wallet_changed` event. Calling `setViewOnly(newDid)` again while `Wallet.ViewOnly` is active also re-emits `wallet_changed`, so UI bindings pick up the new DID automatically.
 
-View-only wallets
+## Installation
 
-View-only is driven imperatively on the shared `magi` instance — no provider prop. Call `magi.setViewOnly(did)` and `magi.setWallet(Wallet.ViewOnly)` at any time and the `user` / `wallet` context will update via the `wallet_changed` event. Calling `setViewOnly(newDid)` again while `Wallet.ViewOnly` is active also re-emits `wallet_changed`, so UI bindings pick up the new DID automatically.
-
-## Installation[​](#installation "Direct link to Installation")
-
-```
+```sh
 pnpm i @aioha/providers @aioha/magi @aioha/aioha
 ```
 
 For EVM wallet support, also install [Wagmi](https://wagmi.sh/react/getting-started) and its dependencies for your framework.
 
-## React[​](#react "Direct link to React")
+## React
 
-### Setup[​](#setup "Direct link to Setup")
+### Setup
 
 Initialize Magi and wrap your app with `MagiProvider` inside both `AiohaProvider` and Wagmi's `WagmiProvider`.
 
-src/App.tsx
-
-```
+```tsx
+<!-- src/App.tsx -->
 import { initAioha } from '@aioha/aioha'
 import { Magi } from '@aioha/magi'
 import { AiohaProvider } from '@aioha/providers/react'
@@ -2299,13 +2365,12 @@ const App = () => {
 
 `MagiProvider` consumes `AiohaProvider` context for Hive wallet state and uses Wagmi's `useConnectorClient()` hook for EVM wallet state. See the [Wagmi React docs](https://wagmi.sh/react/getting-started) for `wagmiConfig` setup.
 
-### Consuming State[​](#consuming-state "Direct link to Consuming State")
+### Consuming State
 
 Use the `useMagi()` hook anywhere within the provider.
 
-src/components/MagiPage.tsx
-
-```
+```tsx
+<!-- src/components/MagiPage.tsx -->
 import { useMagi } from '@aioha/providers/magi/react'
 
 export const MagiPage = () => {
@@ -2320,13 +2385,12 @@ export const MagiPage = () => {
 }
 ```
 
-### SSR Apps[​](#ssr-apps "Direct link to SSR Apps")
+### SSR Apps
 
 For frameworks like Next.js, initialize Aioha inside a `useEffect()`.
 
-src/App.tsx
-
-```
+```tsx
+<!-- src/App.tsx -->
 import React, { useEffect } from 'react'
 import { Aioha } from '@aioha/aioha'
 import { Magi } from '@aioha/magi'
@@ -2359,15 +2423,14 @@ const App = () => {
 }
 ```
 
-## Vue[​](#vue "Direct link to Vue")
+## Vue
 
-### Setup[​](#setup-1 "Direct link to Setup")
+### Setup
 
 Initialize Magi and wrap your app with `MagiProvider` inside both `AiohaProvider` and Wagmi's Vue plugin.
 
-src/App.vue
-
-```
+```html
+<!-- src/App.vue -->
 <script setup lang="ts">
 import { initAioha } from '@aioha/aioha'
 import { Magi } from '@aioha/magi'
@@ -2390,13 +2453,12 @@ magi.setAioha(aioha)
 
 `MagiProvider` consumes `AiohaProvider` context for Hive wallet state and uses Wagmi's `useConnectorClient()` composable for EVM wallet state. See the [Wagmi Vue docs](https://wagmi.sh/vue/getting-started) for Wagmi plugin setup.
 
-### Consuming State[​](#consuming-state-1 "Direct link to Consuming State")
+### Consuming State
 
 Use the `useMagi()` composable.
 
-src/components/MagiPage.vue
-
-```
+```html
+<!-- src/components/MagiPage.vue -->
 <script setup lang="ts">
 import { useMagi } from '@aioha/providers/magi/vue'
 
@@ -2411,9 +2473,8 @@ const { magi, user, wallet } = useMagi()
 
 Alternatively, use Vue's `inject()` with the exported injection keys:
 
-src/components/MagiPage.vue
-
-```
+```html
+<!-- src/components/MagiPage.vue -->
 <script setup lang="ts">
 import { inject } from 'vue'
 import { MagiCtx, MagiUserCtx, MagiWalletCtx } from '@aioha/providers/magi/vue'
@@ -2424,13 +2485,12 @@ const wallet = inject(MagiWalletCtx)
 </script>
 ```
 
-### SSR Apps[​](#ssr-apps-1 "Direct link to SSR Apps")
+### SSR Apps
 
 For frameworks like Nuxt, initialize Aioha in `onMounted()`.
 
-src/App.vue
-
-```
+```html
+<!-- src/App.vue -->
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { Aioha } from '@aioha/aioha'
@@ -2456,15 +2516,14 @@ onMounted(() => {
 </template>
 ```
 
-## Svelte[​](#svelte "Direct link to Svelte")
+## Svelte
 
-### Setup[​](#setup-2 "Direct link to Setup")
+### Setup
 
 Initialize Magi and wrap your app with `MagiProvider` inside `AiohaProvider`. Pass `wagmiConfig` for EVM wallet support.
 
-src/App.svelte
-
-```
+```html
+<!-- src/App.svelte -->
 <script lang="ts">
   import { initAioha } from '@aioha/aioha'
   import { Magi } from '@aioha/magi'
@@ -2485,13 +2544,12 @@ src/App.svelte
 
 `MagiProvider` consumes `AiohaProvider` context for Hive wallet state. The optional `wagmiConfig` prop enables EVM wallet tracking via `@wagmi/core`. See the [Wagmi Core docs](https://wagmi.sh/core/getting-started) for config setup.
 
-### Consuming State[​](#consuming-state-2 "Direct link to Consuming State")
+### Consuming State
 
 Use Svelte's `getContext()` with the exported `MagiCtxKey`.
 
-src/components/MagiPage.svelte
-
-```
+```html
+<!-- src/components/MagiPage.svelte -->
 <script lang="ts">
   import { getContext } from 'svelte'
   import { MagiCtxKey, type MagiContext } from '@aioha/providers/magi/svelte'
@@ -2503,13 +2561,12 @@ src/components/MagiPage.svelte
 <p>Wallet: {ctx.wallet}</p>
 ```
 
-### SSR Apps[​](#ssr-apps-2 "Direct link to SSR Apps")
+### SSR Apps
 
 For frameworks like SvelteKit, initialize Aioha in `onMount()`.
 
-src/App.svelte
-
-```
+```html
+<!-- src/App.svelte -->
 <script lang="ts">
   import { onMount } from 'svelte'
   import { Aioha } from '@aioha/aioha'
@@ -2533,15 +2590,14 @@ src/App.svelte
 </AiohaProvider>
 ```
 
-## Lit[​](#lit "Direct link to Lit")
+## Lit
 
-### Setup[​](#setup-3 "Direct link to Setup")
+### Setup
 
 Initialize Magi and nest `<magi-provider>` inside `<aioha-provider>`. Pass `.wagmiConfig` for EVM wallet support.
 
-src/my-element.ts
-
-```
+```ts
+// src/my-element.ts
 import { LitElement, html } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { Aioha } from '@aioha/aioha'
@@ -2578,13 +2634,12 @@ export class MyElement extends LitElement {
 
 `<magi-provider>` consumes `<aioha-provider>` context for Hive wallet state. The optional `.wagmiConfig` property enables EVM wallet tracking via `@wagmi/core`. See the [Wagmi Core docs](https://wagmi.sh/core/getting-started) for config setup.
 
-### Consuming State[​](#consuming-state-3 "Direct link to Consuming State")
+### Consuming State
 
 Use the `@consume` decorator with the exported contexts.
 
-src/components/magi-page.ts
-
-```
+```ts
+// src/components/magi-page.ts
 import { LitElement, html } from 'lit'
 import { customElement, state } from 'lit/decorators.js'
 import { consume } from '@lit/context'
@@ -2614,9 +2669,9 @@ export class MagiPage extends LitElement {
 }
 ```
 
-note
-
-Use `subscribe: true` on `MagiUserCtx` and `MagiWalletCtx` to receive reactive updates when the user or wallet changes.
+> **Note**
+>
+> Use `subscribe: true` on `MagiUserCtx` and `MagiWalletCtx` to receive reactive updates when the user or wallet changes.
 
 
 ---
@@ -2625,25 +2680,23 @@ Use `subscribe: true` on `MagiUserCtx` and `MagiWalletCtx` to receive reactive u
 
 Configure and interact with Magi in 5 minutes or less.
 
-## Instantiation[​](#instantiation "Direct link to Instantiation")
+## Instantiation
 
 Create an instance of Magi. Returns a `Magi` object.
 
-```
+```js
 import { Magi } from '@aioha/magi'
 
 const magi = new Magi()
 ```
 
-## Enums[​](#enums "Direct link to Enums")
+## Enums
 
-* Wallet
-* Asset
-* KeyTypes
+**Wallet:**
 
 The `Wallet` enum exported are as follows:
 
-```
+```js
 export enum Wallet {
   Hive = 'hive',
   Ethereum = 'evm',
@@ -2652,9 +2705,11 @@ export enum Wallet {
 }
 ```
 
+**Asset:**
+
 The `Asset` enum exported are as follows:
 
-```
+```js
 export enum Asset {
   hive = 'hive',
   hbd = 'hbd',
@@ -2662,37 +2717,39 @@ export enum Asset {
 }
 ```
 
+**KeyTypes:**
+
 The `KeyTypes` enum exported are as follows:
 
-```
+```js
 export enum KeyTypes {
   Posting = 'posting',
   Active = 'active'
 }
 ```
 
-note
+> **Note**
+>
+> `KeyTypes` is only applicable for Hive wallets. Ethereum and Bitcoin wallets always sign with the account's key.
 
-`KeyTypes` is only applicable for Hive wallets. Ethereum and Bitcoin wallets always sign with the account's key.
+## Register Wallets
 
-## Register Wallets[​](#register-wallets "Direct link to Register Wallets")
-
-### Hive Wallet[​](#hive-wallet "Direct link to Hive Wallet")
+### Hive Wallet
 
 Register a Hive wallet using an [Aioha](https://aioha.dev) instance.
 
-```
+```js
 import { initAioha } from '@aioha/aioha'
 
 const aioha = initAioha()
 magi.setAioha(aioha)
 ```
 
-### Ethereum Wallet[​](#ethereum-wallet "Direct link to Ethereum Wallet")
+### Ethereum Wallet
 
 Register an Ethereum wallet using a [Viem](https://viem.sh) wallet client.
 
-```
+```js
 import { createWalletClient, http } from 'viem'
 
 const viemClient = createWalletClient({
@@ -2702,17 +2759,17 @@ const viemClient = createWalletClient({
 magi.setViem(viemClient)
 ```
 
-### Bitcoin Wallet[​](#bitcoin-wallet "Direct link to Bitcoin Wallet")
+### Bitcoin Wallet
 
 Register a Bitcoin wallet by providing a `BtcClient` object. This is a minimal interface that any Bitcoin wallet can implement.
 
-```
+```js
 import { BtcClient } from '@aioha/magi'
 ```
 
 The `BtcClient` interface:
 
-```
+```ts
 interface BtcClient {
   address: string
   signMessage(message: string): Promise<string>
@@ -2722,11 +2779,11 @@ interface BtcClient {
 * `address` — Bitcoin address (P2PKH `1...`, P2SH-P2WPKH `3...`, or P2WPKH `bc1q...`)
 * `signMessage` — Signs a message string and returns a base64-encoded signature (BIP-137 or BIP-322)
 
-note
+> **Note**
+>
+> Taproot (`bc1p...`) addresses are not currently supported.
 
-Taproot (`bc1p...`) addresses are not currently supported.
-
-```
+```js
 magi.setBitcoin({
   address: 'bc1qYourAddress',
   signMessage: (msg) => myBtcWallet.signMessage(msg)
@@ -2737,7 +2794,7 @@ Example: Reown AppKit
 
 If you use [Reown AppKit](https://reown.com/appkit) with the [Bitcoin adapter](https://docs.reown.com/appkit/bitcoin/core/installation), you can create a `BtcClient` from the AppKit modal:
 
-```
+```js
 import { createAppKit } from '@reown/appkit'
 import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
 
@@ -2761,7 +2818,7 @@ magi.setBitcoin({
 
 Example: UniSat
 
-```
+```js
 const unisat = window.unisat
 const accounts = await unisat.requestAccounts()
 
@@ -2771,11 +2828,11 @@ magi.setBitcoin({
 })
 ```
 
-### View-only Wallet[​](#view-only-wallet "Direct link to View-only Wallet")
+### View-only Wallet
 
 Register a view-only wallet by passing a prefixed DID. This lets you display an account's state without ever holding a signer — useful for dashboards, block explorers, or preview UIs.
 
-```
+```js
 // Hive account
 magi.setViewOnly('hive:alice')
 
@@ -2796,15 +2853,15 @@ The prefix determines the chain:
 
 Any other input throws an `Error`.
 
-note
+> **Note**
+>
+> All signing and broadcast operations on a view-only wallet return an `OperationError` with code `4200` and the message `Cannot sign or transact in view only mode`. `getUser()`, `isConnected()`, and `getWallet()` work as usual.
 
-All signing and broadcast operations on a view-only wallet return an `OperationError` with code `4200` and the message `Cannot sign or transact in view only mode`. `getUser()`, `isConnected()`, and `getWallet()` work as usual.
-
-## Set Active Wallet[​](#set-active-wallet "Direct link to Set Active Wallet")
+## Set Active Wallet
 
 Set the wallet type to use for transactions. This must be called before performing any operations.
 
-```
+```js
 import { Wallet } from '@aioha/magi'
 
 magi.setWallet(Wallet.Ethereum)
@@ -2816,13 +2873,13 @@ magi.setWallet(Wallet.Bitcoin)
 magi.setWallet(Wallet.ViewOnly)
 ```
 
-## Setters[​](#setters "Direct link to Setters")
+## Setters
 
-### Set Magi API[​](#set-magi-api "Direct link to Set Magi API")
+### Set Magi API
 
 Set the Magi GraphQL API URL. An optional array of fallback API URLs may be provided.
 
-```
+```js
 magi.setApi('https://vsc.techcoderx.com/api/v1/graphql', [
   'https://api.vsc.eco/api/v1/graphql',
   'https://vsc.atexoras.com:2087/api/v1/graphql'
@@ -2831,40 +2888,40 @@ magi.setApi('https://vsc.techcoderx.com/api/v1/graphql', [
 
 The URL must start with `http://` or `https://`. The default API is `https://vsc.techcoderx.com/api/v1/graphql` with built-in fallback nodes.
 
-### Set Network ID[​](#set-network-id "Direct link to Set Network ID")
+### Set Network ID
 
 Set the Magi network ID. Defaults to `vsc-mainnet`.
 
-```
+```js
 magi.setNetId('vsc-mainnet')
 
 // For testnet
 magi.setNetId('vsc-testnet')
 ```
 
-## Getters[​](#getters "Direct link to Getters")
+## Getters
 
-### Get API[​](#get-api "Direct link to Get API")
+### Get API
 
 Returns an array of API endpoints, where the first item is the main endpoint and the remaining are fallbacks.
 
-```
+```js
 magi.getApi() // ['https://vsc.techcoderx.com/api/v1/graphql', ...]
 ```
 
-### Get Network ID[​](#get-network-id "Direct link to Get Network ID")
+### Get Network ID
 
 Returns the current Magi network ID.
 
-```
+```js
 magi.getNetId() // 'vsc-mainnet'
 ```
 
-### Get Connected User[​](#get-connected-user "Direct link to Get Connected User")
+### Get Connected User
 
 Returns the connected user address, or `undefined` if not connected.
 
-```
+```js
 // Without prefix
 magi.getUser() // 'alice', '0xYourAddress', or 'bc1q...'
 
@@ -2875,30 +2932,29 @@ magi.getUser(true)
 // 'did:pkh:bip122:000000000019d6689c085ae165831e93:bc1q...'
 ```
 
-### Get Active Wallet[​](#get-active-wallet "Direct link to Get Active Wallet")
+### Get Active Wallet
 
 Returns the `Wallet` enum of the wallet type currently in use, or `undefined` if not set.
 
-```
+```js
 magi.getWallet() // Wallet.Hive, Wallet.Ethereum, Wallet.Bitcoin, or Wallet.ViewOnly
 ```
 
-### Is Connected[​](#is-connected "Direct link to Is Connected")
+### Is Connected
 
 Returns a boolean of whether a wallet is connected.
 
-```
+```js
 magi.isConnected() // true or false
 ```
 
-## Sign and Broadcast Transaction[​](#sign-and-broadcast-transaction "Direct link to Sign and Broadcast Transaction")
+## Sign and Broadcast Transaction
 
 Sign and broadcast a Magi transaction consisting of one or more operations.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 const result = await magi.signAndBroadcastTx([
   {
     type: 'call',
@@ -2916,7 +2972,9 @@ const result = await magi.signAndBroadcastTx([
 * `tx`: Array of `MagiOperation` objects
 * `keyType` *(optional)*: `KeyTypes.Active` or `KeyTypes.Posting` — only applicable for Hive wallets, defaults to `KeyTypes.Active`
 
-```
+**Result:**
+
+```js
 {
   "success": true,
   "result": "bafyreib5af..."
@@ -2927,15 +2985,15 @@ const result = await magi.signAndBroadcastTx([
 * `error`: Error message, if any
 * `result`: Transaction CID
 
-## Operations[​](#operations "Direct link to Operations")
+## Operations
 
 The return value for these method calls will be equivalent to sign and broadcast transaction result [above](#sign-and-broadcast-transaction).
 
-### Call Contract[​](#call-contract "Direct link to Call Contract")
+### Call Contract
 
 Call a Magi smart contract.
 
-```
+```js
 // Call testLog at contract vsc1Bp8y... with 100 RC limit, no intents
 const result = await magi.call('vsc1Bp8ykBKDT74vYrZShhfEhp8Mn8bG2ChiAf', 'testLog', { foo: 'bar' }, 100, [])
 
@@ -2950,11 +3008,11 @@ const result = await magi.call('vsc1Bp8ykBKDT74vYrZShhfEhp8Mn8bG2ChiAf', 'testLo
 * `intents`: Array of transaction intents
 * `keyType` *(optional)*: Key type for Hive wallets
 
-### Transfer[​](#transfer "Direct link to Transfer")
+### Transfer
 
 Transfer tokens to another Magi account.
 
-```
+```js
 // Transfer 1 HIVE to a Hive account
 const xfer = await magi.transfer('hive:bob', 1, Asset.hive)
 
@@ -2967,11 +3025,11 @@ const xferWithMemo = await magi.transfer('did:pkh:eip155:1:0xRecipient', 1, Asse
 * `currency`: `Asset.hive` or `Asset.hbd`
 * `memo` *(optional)*: Transfer memo
 
-### Unmap[​](#unmap "Direct link to Unmap")
+### Unmap
 
 Unmap tokens from Magi.
 
-```
+```js
 // Unmap 1 HIVE
 const wd = await magi.unmap('hive:charlie', 1, Asset.hive)
 
@@ -2984,11 +3042,11 @@ const wdWithMemo = await magi.unmap('hive:charlie', 50, Asset.hbd, 'Optional mem
 * `currency`: `Asset.hive` or `Asset.hbd`
 * `memo` *(optional)*: Withdrawal memo
 
-### Stake[​](#stake "Direct link to Stake")
+### Stake
 
 Stake tokens on Magi.
 
-```
+```js
 import { VscStakeType } from '@aioha/aioha'
 
 // Stake 2,000 HIVE for consensus (to self)
@@ -3006,11 +3064,11 @@ const hbdStake = await magi.stake(VscStakeType.HBD, 100)
 * `to` *(optional)*: Recipient address — defaults to the connected account
 * `memo` *(optional)*: Stake memo
 
-### Unstake[​](#unstake "Direct link to Unstake")
+### Unstake
 
 Unstake tokens on Magi.
 
-```
+```js
 import { VscStakeType } from '@aioha/aioha'
 
 // Unstake 2,000 HIVE from consensus
@@ -3025,13 +3083,13 @@ const hbdUnstake = await magi.unstake(VscStakeType.HBD, 100)
 * `to` *(optional)*: Recipient address — defaults to the connected account
 * `memo` *(optional)*: Unstake memo
 
-## Events[​](#events "Direct link to Events")
+## Events
 
 Subscribe to Magi events using the `on`, `once`, and `off` methods.
 
-### Subscribe[​](#subscribe "Direct link to Subscribe")
+### Subscribe
 
-```
+```js
 magi.on('wallet_changed', () => {
   console.log('Wallet type changed to:', magi.getWallet())
 })
@@ -3041,19 +3099,19 @@ magi.on('sign_tx_request', () => {
 })
 ```
 
-### Subscribe Once[​](#subscribe-once "Direct link to Subscribe Once")
+### Subscribe Once
 
 The listener will be called only on the next emission of the event.
 
-```
+```js
 magi.once('sign_tx_request', () => {
   console.log('This fires only once')
 })
 ```
 
-### Unsubscribe[​](#unsubscribe "Direct link to Unsubscribe")
+### Unsubscribe
 
-```
+```js
 const handler = () => console.log('wallet changed')
 magi.on('wallet_changed', handler)
 
@@ -3064,7 +3122,7 @@ magi.off('wallet_changed', handler)
 magi.off('wallet_changed')
 ```
 
-### Event Reference[​](#event-reference "Direct link to Event Reference")
+### Event Reference
 
 | Event             | Description                                                                                                                                            |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -3076,13 +3134,13 @@ magi.off('wallet_changed')
 
 # Media Resources
 
-## Branding[​](#branding "Direct link to Branding")
+## Branding
 
 * [Logo SVG](https://aioha.dev/img/logo.svg)
 * [Social Card](https://aioha.dev/img/aioha-social-card.png) (used in [initial announcement post](https://peakd.com/hive-139531/@aioha/aioha-all-in-one-hive-authentication))
 * [Roboto Mono font](https://fonts.google.com/specimen/Roboto+Mono) used in code snippets in Keynotes
 
-## Keynote Slides[​](#keynote-slides "Direct link to Keynote Slides")
+## Keynote Slides
 
 * [HiveFest 9](https://drive.google.com/file/d/17qDTJBQl287PLlHrGSZ8dfL9ZWsDZQWN/view?usp=sharing)
 * [HiveFest 10](https://drive.google.com/file/d/1sEIkr0cUQAx9Eqg0XYksLt2Sh0Zvw5KC/view?usp=sharing)
@@ -3094,23 +3152,22 @@ magi.off('wallet_changed')
 
 Opinionated React modal UI for Hive logins through Aioha, styled using [Tailwind CSS](https://tailwindcss.com). This provides a quick and easy way to bootstrap a React web app with ready to use Aioha-powered modal component.
 
-## Installation[​](#installation "Direct link to Installation")
+## Installation
 
-```
+```sh
 pnpm i @aioha/react-ui @aioha/aioha
 ```
 
-## Usage[​](#usage "Direct link to Usage")
+## Usage
 
 1. Initialize Aioha and setup the provider at the root of your application. This may be in index.jsx, index.tsx or App.tsx depending on the framework you use.
 
-info
+> **Info**
+>
+> If you are using a framework that uses SSR (i.e. Next.js), you may need to setup Aioha separately in `useEffect()` as outlined [here](/docs/framework/react.md#ssr-apps).
 
-If you are using a framework that uses SSR (i.e. Next.js), you may need to setup Aioha separately in `useEffect()` as outlined [here](/docs/framework/react.md#ssr-apps).
-
-src/App.tsx
-
-```
+```tsx
+<!-- src/App.tsx -->
 import { initAioha } from '@aioha/aioha'
 import { AiohaProvider } from '@aioha/react-ui'
 
@@ -3128,9 +3185,8 @@ const App = () => {
 
 2. Use the modal component and the [`useAioha()` hook](/docs/framework/react.md#usage) anywhere within `AiohaProvider`.
 
-src/components/AiohaPage.tsx
-
-```
+```tsx
+<!-- src/components/AiohaPage.tsx -->
 import { useState } from 'react'
 import { useAioha, AiohaModal } from '@aioha/react-ui'
 import { KeyTypes } from '@aioha/aioha'
@@ -3161,26 +3217,24 @@ export const AiohaPage = () => {
 }
 ```
 
-### Tailwind CSS v4[​](#tailwind-css-v4 "Direct link to Tailwind CSS v4")
+### Tailwind CSS v4
 
 When using the modal in a Tailwind CSS v4 project, add the following `@source` directive to your `index.css` file after the imports:
 
-src/index.css
-
-```
+```css
+// src/index.css
 @import 'tailwindcss';
 /* ...other imports */
 
 @source '../node_modules/@aioha/react-ui';
 ```
 
-### Tailwind CSS v3[​](#tailwind-css-v3 "Direct link to Tailwind CSS v3")
+### Tailwind CSS v3
 
 When using the modal in a Tailwind CSS v3 project, add the following `content` in `tailwind.config.js`:
 
-tailwind.config.js
-
-```
+```js
+// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -3192,22 +3246,22 @@ module.exports = {
 }
 ```
 
-### Other[​](#other "Direct link to Other")
+### Other
 
-note
-
-As this is a highly-opinionated component library, the appearance may or may not be different than expected due to potential CSS conflicts with the rest of your application.
+> **Note**
+>
+> As this is a highly-opinionated component library, the appearance may or may not be different than expected due to potential CSS conflicts with the rest of your application.
 
 When not using Tailwind CSS, add the following import to the file where the `AiohaModal` component is used:
 
-```
+```tsx
 import { AiohaModal } from '@aioha/react-ui'
 import '@aioha/react-ui/dist/build.css'
 
 // rest of your components that uses AiohaModal 
 ```
 
-## `AiohaModal` Component[​](#aiohamodal-component "Direct link to aiohamodal-component")
+## `AiohaModal` Component
 
 | Property             | Required? | Description                                                                                                                                                                                    | Default                    |
 | -------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
@@ -3226,21 +3280,20 @@ import '@aioha/react-ui/dist/build.css'
 | `dir`                | ❌        | Text direction: `ltr`, `rtl`, or `auto`. When `auto`, inferred from `document.dir` and the active locale. See [Localization](/docs/ui/i18n.md#right-to-left-rtl).                              | auto                       |
 | `messages`           | ❌        | Custom [`Messages`](/docs/ui/i18n.md#the-messages-adapter) adapter to route translations through your own i18n framework (react-intl, lingui, i18next, ...). Defaults to the built-in adapter. | *undefined*                |
 
-warning
+> **Warning**
+>
+> `hiveauth.cbWait` in `loginOptions` will be overriden as `AiohaModal` will handle the presentation of HiveAuth QR codes.
 
-`hiveauth.cbWait` in `loginOptions` will be overriden as `AiohaModal` will handle the presentation of HiveAuth QR codes.
-
-## Localization[​](#localization "Direct link to Localization")
+## Localization
 
 The modal ships with English and translations for 15 additional languages loaded on demand, full ICU MessageFormat support, RTL direction handling, and a pluggable adapter for other i18n frameworks. See [Localization](/docs/ui/i18n.md).
 
-## HiveSigner Callback Page[​](#hivesigner-callback-page "Direct link to HiveSigner Callback Page")
+## HiveSigner Callback Page
 
 The callback page has been provided as a component that you can use in a route, as such:
 
-src/Router.tsx
-
-```
+```tsx
+<!-- src/Router.tsx -->
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { HiveSignerCb } from '@aioha/react-ui'
 
@@ -3267,7 +3320,7 @@ const Router = () => {
 
 Then specify the path as the callback URL in `initAioha()`:
 
-```
+```ts
 const aioha = initAioha({
   hivesigner: {
     app: 'ipfsuploader.app',
@@ -3292,23 +3345,22 @@ const aioha = initAioha({
 
 `@aioha/react-ui` and `@aioha/lit-ui` share a single canonical message catalog published as `@aioha/i18n-keys`. The catalog exposes namespaced message IDs, an English default, a framework-neutral `Messages` adapter, ICU MessageFormat support for pluralization and interpolation, a pseudo-locale for testing, RTL direction detection, and bundled translations for 16 languages.
 
-## Installation[​](#installation "Direct link to Installation")
+## Installation
 
-```
+```sh
 pnpm i @aioha/i18n-keys
 ```
 
 Already installed transitively by `@aioha/react-ui` and `@aioha/lit-ui` — you only need to add it directly if you build your own adapter.
 
-## Usage[​](#usage "Direct link to Usage")
+## Usage
 
-### Switching language[​](#switching-language "Direct link to Switching language")
+### Switching language
 
 `<AiohaModal>` (React) and `<aioha-modal>` (Lit) both accept a `language` prop/attribute. The default English catalog ships bundled; additional locales are loaded on demand.
 
-src/App.tsx
-
-```
+```tsx
+<!-- src/App.tsx -->
 import { AiohaModal, defaultMessages } from '@aioha/react-ui'
 
 // Load a non-English catalog once at startup
@@ -3319,9 +3371,8 @@ await defaultMessages.loadLocale('fr', (lng) =>
 <AiohaModal language="fr" displayed={modalDisplayed} loginOptions={...} onClose={setModalDisplayed} />
 ```
 
-aioha-page.ts
-
-```
+```ts
+// aioha-page.ts
 import { defaultMessages } from '@aioha/lit-ui'
 
 await defaultMessages.loadLocale('fr', (lng) =>
@@ -3332,7 +3383,7 @@ await defaultMessages.loadLocale('fr', (lng) =>
 html`<aioha-modal language="fr" ...></aioha-modal>`
 ```
 
-### Bundled locales[​](#bundled-locales "Direct link to Bundled locales")
+### Bundled locales
 
 The package ships translation JSON for the following locales. Load each with dynamic import — English is always available without loading.
 
@@ -3355,11 +3406,11 @@ The package ships translation JSON for the following locales. Load each with dyn
 | `zh-CN` | Chinese (Simplified)  |
 | `zh-TW` | Chinese (Traditional) |
 
-### Bring your own translations[​](#bring-your-own-translations "Direct link to Bring your own translations")
+### Bring your own translations
 
 Pass a `Partial<Catalog>` to `defaultMessages.addCatalog(locale, catalog)` to extend or replace the shipped strings. Any subset is acceptable — unspecified keys fall back to English.
 
-```
+```ts
 import { defaultMessages } from '@aioha/react-ui'
 
 defaultMessages.addCatalog('en', {
@@ -3367,7 +3418,7 @@ defaultMessages.addCatalog('en', {
 })
 ```
 
-## Right-to-left (RTL)[​](#right-to-left-rtl "Direct link to Right-to-left (RTL)")
+## Right-to-left (RTL)
 
 Both packages emit `dir="rtl"` on the modal root when the resolved direction is RTL, and use logical CSS properties (`ms-*`, `me-*`, `ps-*`, `pe-*`, `inset-x-*`) so layout mirrors automatically. Directional icons (back button, forward chevron) are flipped with `rtl:-scale-x-100`.
 
@@ -3377,29 +3428,29 @@ The direction is resolved in this order:
 2. If `'auto'`: `document.dir` if set to `rtl`.
 3. Otherwise: the active locale's direction (Arabic, Hebrew, Persian, Urdu, and related languages resolve to `rtl`).
 
-```
+```tsx
 <AiohaModal dir="rtl" language="ar" ... />
 ```
 
-```
+```html
 <aioha-modal direction="rtl" language="ar" ...></aioha-modal>
 ```
 
-## Pseudo-locale testing[​](#pseudo-locale-testing "Direct link to Pseudo-locale testing")
+## Pseudo-locale testing
 
 A built-in `en-XA` locale wraps every English value with accented characters: `[!! Çóññéçţ Ŵàľľéţ !!]`. Use it to catch hardcoded strings, string-concatenation bugs, and layout truncation during development.
 
-```
+```tsx
 <AiohaModal language="en-XA" ... />
 ```
 
 ICU placeholders (`{user}`, `{count, plural, one {...} other {...}}`) are preserved.
 
-## The `Messages` adapter[​](#the-messages-adapter "Direct link to the-messages-adapter")
+## The `Messages` adapter
 
 If your app already ships an i18n framework, implement the `Messages` interface and pass it as `messages` on the modal. This lets translators manage Aioha's strings alongside yours, and keeps only one i18n runtime in your bundle.
 
-```
+```ts
 import type { Messages } from '@aioha/i18n-keys'
 
 interface Messages {
@@ -3411,23 +3462,22 @@ interface Messages {
 }
 ```
 
-```
+```tsx
 <AiohaModal messages={myMessages} ... />
 ```
 
-```
+```html
 <aioha-modal .messages=${myMessages} ...></aioha-modal>
 ```
 
 The examples below show how to wire Aioha's 38 message IDs to a handful of popular frameworks. In every case, import the JSON catalogs from `@aioha/i18n-keys/build/locales/<lng>.json` — the framework becomes responsible only for formatting.
 
-### react-intl (FormatJS)[​](#react-intl-formatjs "Direct link to react-intl (FormatJS)")
+### react-intl (FormatJS)
 
 `react-intl` uses the same ICU MessageFormat syntax as Aioha's default adapter, so translations drop in unchanged.
 
-src/aioha-messages.ts
-
-```
+```tsx
+<!-- src/aioha-messages.ts -->
 import { createIntl, createIntlCache } from 'react-intl'
 import type { Messages } from '@aioha/i18n-keys'
 import en from '@aioha/i18n-keys/build/locales/en.json'
@@ -3452,9 +3502,8 @@ export const aiohaMessages: Messages = {
 }
 ```
 
-src/App.tsx
-
-```
+```tsx
+<!-- src/App.tsx -->
 import { AiohaModal } from '@aioha/react-ui'
 import { aiohaMessages } from './aioha-messages'
 
@@ -3463,13 +3512,12 @@ import { aiohaMessages } from './aioha-messages'
 
 If you already have an `<IntlProvider>` in your tree, pass its `intl` object instead of creating a second one — then `t` simply becomes `(id, vars) => providedIntl.formatMessage({ id }, vars)`.
 
-### i18next[​](#i18next "Direct link to i18next")
+### i18next
 
 `i18next` uses `{{var}}` interpolation by default, but Aioha's catalogs use ICU `{var}`. Install [`i18next-icu`](https://github.com/i18next/i18next-icu) to parse them natively.
 
-src/aioha-messages.ts
-
-```
+```ts
+// src/aioha-messages.ts
 import i18next from 'i18next'
 import ICU from 'i18next-icu'
 import type { Messages } from '@aioha/i18n-keys'
@@ -3502,13 +3550,12 @@ export const aiohaMessages: Messages = {
 }
 ```
 
-### LinguiJS[​](#linguijs "Direct link to LinguiJS")
+### LinguiJS
 
 Lingui compiles ICU messages to a function map. Use the runtime `i18n` singleton and point it at Aioha's JSON:
 
-src/aioha-messages.ts
-
-```
+```ts
+// src/aioha-messages.ts
 import { i18n } from '@lingui/core'
 import type { Messages } from '@aioha/i18n-keys'
 import en from '@aioha/i18n-keys/build/locales/en.json'
@@ -3531,13 +3578,12 @@ export const aiohaMessages: Messages = {
 }
 ```
 
-### Vue I18n[​](#vue-i18n "Direct link to Vue I18n")
+### Vue I18n
 
 For Vue apps, wrap an existing `createI18n()` instance:
 
-src/aioha-messages.ts
-
-```
+```ts
+// src/aioha-messages.ts
 import { watch } from 'vue'
 import type { Messages } from '@aioha/i18n-keys'
 import i18n from './i18n' // your existing Vue i18n instance
@@ -3562,15 +3608,14 @@ export const aiohaMessages: Messages = {
 
 Vue I18n supports ICU via the [`@intlify/core`](https://vue-i18n.intlify.dev/guide/essentials/syntax.html#message-format-syntax) engine — Aioha's `{var}` placeholders work out of the box.
 
-### @lit/localize[​](#litlocalize "Direct link to @lit/localize")
+### @lit/localize
 
 `@lit/localize` is a compile-time extraction system — it expects you to author `msg()` calls in source, uses positional (not named) placeholders, and does not parse [ICU MessageFormat](https://formatjs.io/docs/intl-messageformat). Routing Aioha's pre-built ICU catalog through `msg()` fights the library.
 
 The idiomatic integration is to **share locale state only**: let `@lit/localize` drive locale switching for your own strings, and keep Aioha's built-in ICU formatter for Aioha's strings. The adapter below forwards `setLocale` to `@lit/localize` and listens for `lit-localize-status` to stay in sync.
 
-src/aioha-messages.ts
-
-```
+```ts
+// src/aioha-messages.ts
 import { configureLocalization, getLocale, setLocale } from '@lit/localize'
 import { createDefaultMessages, resolveDir } from '@aioha/i18n-keys'
 import type { Messages } from '@aioha/i18n-keys'
@@ -3611,27 +3656,26 @@ export const aiohaMessages: Messages = {
 }
 ```
 
-my-element.ts
-
-```
+```ts
+// my-element.ts
 html`<aioha-modal .messages=${aiohaMessages} ...></aioha-modal>`
 ```
 
 Now one call to `setLocale('fr')` switches both your `msg()` output and Aioha's modal.
 
-### Rolling your own[​](#rolling-your-own "Direct link to Rolling your own")
+### Rolling your own
 
 For any framework that isn't listed, the contract is only four responsibilities: format, read the current locale, switch it, and notify subscribers. Under the hood the built-in adapter uses [`intl-messageformat`](https://formatjs.io/docs/intl-messageformat) (FormatJS) — you can use it directly as a minimal formatter if your i18n layer doesn't ship an ICU parser.
 
-## Message IDs[​](#message-ids "Direct link to Message IDs")
+## Message IDs
 
 See the [`@aioha/i18n-keys` README](https://github.com/aioha-hive/i18n-keys#message-ids) for the full list of the 38 message IDs, their English defaults, and ICU variables.
 
-## Catalog versioning[​](#catalog-versioning "Direct link to Catalog versioning")
+## Catalog versioning
 
 The catalog schema is versioned. Consumers can guard against drift:
 
-```
+```ts
 import { CATALOG_VERSION } from '@aioha/i18n-keys'
 if (CATALOG_VERSION !== 1) console.warn('Aioha catalog changed; review translations')
 ```
@@ -3645,29 +3689,27 @@ The version bumps on any key addition, removal, or rename.
 
 Opinionated Lit modal UI for Hive logins through Aioha, styled using [Tailwind CSS](https://tailwindcss.com). This provides a quick and easy way to bootstrap a Lit web app with ready to use Aioha-powered modal component.
 
-## Installation[​](#installation "Direct link to Installation")
+## Installation
 
-```
+```sh
 pnpm i @aioha/lit-ui @aioha/aioha
 ```
 
-## CDN Import[​](#cdn-import "Direct link to CDN Import")
+## CDN Import
 
-index.html
-
-```
+```html
+<!-- index.html -->
 <script type="module">
   import { initModal } from 'https://unpkg.com/@aioha/lit-ui@latest/dist/bundle.min.js'
 </script>
 ```
 
-## Usage[​](#usage "Direct link to Usage")
+## Usage
 
 1. Initialize Aioha and setup the provider at the root of your application. This is usually done at the entrypoint file (i.e. `index.ts` or `my-element.ts`).
 
-my-element.ts
-
-```
+```ts
+// my-element.ts
 import { LitElement, html } from 'lit'
 import { customElement } from 'lit/decorators.js'
 import { Aioha } from '@aioha/aioha'
@@ -3696,9 +3738,8 @@ export class MyElement extends LitElement {
 
 2. Use the modal component and consume the [Lit context](/docs/framework/lit.md#usage) anywhere within `<aioha-provider>`.
 
-aioha-page.ts
-
-```
+```ts
+// aioha-page.ts
 import { UserCtx } from '@aioha/providers/lit'
 import { KeyTypes } from '@aioha/aioha'
 import type { LoginResult } from '@aioha/aioha/build/types.js'
@@ -3749,11 +3790,11 @@ export class Homepage extends LitElement {
 
 The list of `<aioha-modal>` component properties may be found [here](/docs/ui/web-components.md#initmodal-options).
 
-## Localization[​](#localization "Direct link to Localization")
+## Localization
 
 The modal ships with English and translations for 15 additional languages loaded on demand, full ICU MessageFormat support, RTL direction handling, and a pluggable adapter for other i18n frameworks. See [Localization](/docs/ui/i18n.md).
 
-## Universal Web Component[​](#universal-web-component "Direct link to Universal Web Component")
+## Universal Web Component
 
 The Lit modal UI can be used as a universal web component on vanilla HTML/JS or any other web framework. Details [here](/docs/ui/web-components.md).
 
@@ -3764,17 +3805,16 @@ The Lit modal UI can be used as a universal web component on vanilla HTML/JS or 
 
 The ready made modal UI is available as a framework agnostic web component that can be integrated on vanilla HTML/JS or any web framework.
 
-## Installation[​](#installation "Direct link to Installation")
+## Installation
 
-```
+```sh
 pnpm i @aioha/lit-ui @aioha/aioha
 ```
 
-## CDN Import[​](#cdn-import "Direct link to CDN Import")
+## CDN Import
 
-index.html
-
-```
+```html
+<!-- index.html -->
 <script type="importmap">
   {
     "imports": {
@@ -3785,11 +3825,10 @@ index.html
 </script>
 ```
 
-## Usage[​](#usage "Direct link to Usage")
+## Usage
 
-index.html
-
-```
+```html
+<!-- index.html -->
 <html>
   <body>
     <button id="connectButton" type="button">Connect Wallet</button>
@@ -3817,7 +3856,7 @@ index.html
 
 Full example usage may be found [here](https://github.com/aioha-hive/lit-ui/blob/main/examples/index.html).
 
-### `initModal` options[​](#initmodal-options "Direct link to initmodal-options")
+### `initModal` options
 
 | Property             | Description                                                                                                                                                                      | Default                    |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
@@ -3837,21 +3876,21 @@ Full example usage may be found [here](https://github.com/aioha-hive/lit-ui/blob
 | `direction`          | Text direction: `ltr`, `rtl`, or `auto`. When `auto`, inferred from `document.dir` and the active locale.                                                                        | auto                       |
 | `messages`           | Custom [`Messages`](/docs/ui/i18n.md#the-messages-adapter) adapter for routing translations through your own i18n framework. Defaults to the built-in adapter.                   | *undefined*                |
 
-note
+> **Note**
+>
+> `hiveauth.cbWait` in `loginOptions` will be overriden as `AiohaModal` will handle the presentation of HiveAuth QR codes.
 
-`hiveauth.cbWait` in `loginOptions` will be overriden as `AiohaModal` will handle the presentation of HiveAuth QR codes.
-
-info
-
-When `displayed` is specified to a reactive state, use the `onClose` method to set that reactive state to `false` to properly close the modal.
+> **Info**
+>
+> When `displayed` is specified to a reactive state, use the `onClose` method to set that reactive state to `false` to properly close the modal.
 
 All properties are optional except `loginOptions`.
 
-## HiveSigner Callback[​](#hivesigner-callback "Direct link to HiveSigner Callback")
+## HiveSigner Callback
 
 The HiveSigner callback component has been provided that you can use in a page, as such:
 
-```
+```html
 <hivesigner-cb></hivesigner-cb>
 ```
 

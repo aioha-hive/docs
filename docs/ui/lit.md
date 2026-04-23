@@ -2,29 +2,27 @@
 
 Opinionated Lit modal UI for Hive logins through Aioha, styled using [Tailwind CSS](https://tailwindcss.com). This provides a quick and easy way to bootstrap a Lit web app with ready to use Aioha-powered modal component.
 
-## Installation[​](#installation "Direct link to Installation")
+## Installation
 
-```
+```sh
 pnpm i @aioha/lit-ui @aioha/aioha
 ```
 
-## CDN Import[​](#cdn-import "Direct link to CDN Import")
+## CDN Import
 
-index.html
-
-```
+```html
+<!-- index.html -->
 <script type="module">
   import { initModal } from 'https://unpkg.com/@aioha/lit-ui@latest/dist/bundle.min.js'
 </script>
 ```
 
-## Usage[​](#usage "Direct link to Usage")
+## Usage
 
 1. Initialize Aioha and setup the provider at the root of your application. This is usually done at the entrypoint file (i.e. `index.ts` or `my-element.ts`).
 
-my-element.ts
-
-```
+```ts
+// my-element.ts
 import { LitElement, html } from 'lit'
 import { customElement } from 'lit/decorators.js'
 import { Aioha } from '@aioha/aioha'
@@ -53,9 +51,8 @@ export class MyElement extends LitElement {
 
 2. Use the modal component and consume the [Lit context](/docs/framework/lit.md#usage) anywhere within `<aioha-provider>`.
 
-aioha-page.ts
-
-```
+```ts
+// aioha-page.ts
 import { UserCtx } from '@aioha/providers/lit'
 import { KeyTypes } from '@aioha/aioha'
 import type { LoginResult } from '@aioha/aioha/build/types.js'
@@ -106,10 +103,10 @@ export class Homepage extends LitElement {
 
 The list of `<aioha-modal>` component properties may be found [here](/docs/ui/web-components.md#initmodal-options).
 
-## Localization[​](#localization "Direct link to Localization")
+## Localization
 
 The modal ships with English and translations for 15 additional languages loaded on demand, full ICU MessageFormat support, RTL direction handling, and a pluggable adapter for other i18n frameworks. See [Localization](/docs/ui/i18n.md).
 
-## Universal Web Component[​](#universal-web-component "Direct link to Universal Web Component")
+## Universal Web Component
 
 The Lit modal UI can be used as a universal web component on vanilla HTML/JS or any other web framework. Details [here](/docs/ui/web-components.md).

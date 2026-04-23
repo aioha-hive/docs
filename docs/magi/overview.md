@@ -2,34 +2,36 @@
 
 Magi JS is JavaScript/TypeScript library for interacting with the [Magi network](https://magi.eco) with wallet interoperability features.
 
-## Supported Wallet Types[​](#supported-wallet-types "Direct link to Supported Wallet Types")
+## Supported Wallet Types
 
 * Hive (through [Aioha](/docs.md))
 * Ethereum (through [Viem](https://viem.sh))
 * Bitcoin (any wallet exposing `signMessage`, e.g. [Leather](https://leather.io), [Xverse](https://www.xverse.app), [UniSat](https://unisat.io))
 * View-only (read account state without any signer; signing operations return an error)
 
-## Installation[​](#installation "Direct link to Installation")
+## Installation
 
-* npm
-* yarn
-* pnpm
+**npm:**
 
-```
+```sh
 npm i @aioha/magi @aioha/aioha viem
 ```
 
-```
+**yarn:**
+
+```sh
 yarn add @aioha/magi @aioha/aioha viem
 ```
 
-```
+**pnpm:**
+
+```sh
 pnpm i @aioha/magi @aioha/aioha viem
 ```
 
-## Usage Example[​](#usage-example "Direct link to Usage Example")
+## Usage Example
 
-```
+```js
 import { Magi, Wallet, Asset } from '@aioha/magi'
 import { createWalletClient, http } from 'viem'
 import { initAioha } from '@aioha/aioha'

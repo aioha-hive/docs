@@ -2,17 +2,16 @@
 
 The ready made modal UI is available as a framework agnostic web component that can be integrated on vanilla HTML/JS or any web framework.
 
-## Installation[​](#installation "Direct link to Installation")
+## Installation
 
-```
+```sh
 pnpm i @aioha/lit-ui @aioha/aioha
 ```
 
-## CDN Import[​](#cdn-import "Direct link to CDN Import")
+## CDN Import
 
-index.html
-
-```
+```html
+<!-- index.html -->
 <script type="importmap">
   {
     "imports": {
@@ -23,11 +22,10 @@ index.html
 </script>
 ```
 
-## Usage[​](#usage "Direct link to Usage")
+## Usage
 
-index.html
-
-```
+```html
+<!-- index.html -->
 <html>
   <body>
     <button id="connectButton" type="button">Connect Wallet</button>
@@ -55,7 +53,7 @@ index.html
 
 Full example usage may be found [here](https://github.com/aioha-hive/lit-ui/blob/main/examples/index.html).
 
-### `initModal` options[​](#initmodal-options "Direct link to initmodal-options")
+### `initModal` options
 
 | Property             | Description                                                                                                                                                                      | Default                    |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
@@ -75,21 +73,21 @@ Full example usage may be found [here](https://github.com/aioha-hive/lit-ui/blob
 | `direction`          | Text direction: `ltr`, `rtl`, or `auto`. When `auto`, inferred from `document.dir` and the active locale.                                                                        | auto                       |
 | `messages`           | Custom [`Messages`](/docs/ui/i18n.md#the-messages-adapter) adapter for routing translations through your own i18n framework. Defaults to the built-in adapter.                   | *undefined*                |
 
-note
+> **Note**
+>
+> `hiveauth.cbWait` in `loginOptions` will be overriden as `AiohaModal` will handle the presentation of HiveAuth QR codes.
 
-`hiveauth.cbWait` in `loginOptions` will be overriden as `AiohaModal` will handle the presentation of HiveAuth QR codes.
-
-info
-
-When `displayed` is specified to a reactive state, use the `onClose` method to set that reactive state to `false` to properly close the modal.
+> **Info**
+>
+> When `displayed` is specified to a reactive state, use the `onClose` method to set that reactive state to `false` to properly close the modal.
 
 All properties are optional except `loginOptions`.
 
-## HiveSigner Callback[​](#hivesigner-callback "Direct link to HiveSigner Callback")
+## HiveSigner Callback
 
 The HiveSigner callback component has been provided that you can use in a page, as such:
 
-```
+```html
 <hivesigner-cb></hivesigner-cb>
 ```
 

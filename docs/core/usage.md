@@ -2,13 +2,13 @@
 
 Configure and use Aioha in 5 minutes or less.
 
-## Instantiation[​](#instantiation "Direct link to Instantiation")
+## Instantiation
 
 Create an instance of Aioha. All providers are registered by default excluding HiveSigner, which is only registered when HiveSigner config is specified. This step also loads any persistent logins stored in `localStorage` (if available). Returns an `Aioha` object.
 
 Provider-specific configs are **optional** with exception of HiveSigner which is required to register HiveSigner provider.
 
-```
+```js
 import { initAioha, Asset, KeyTypes, Providers, VscStakeType } from '@aioha/aioha'
 
 const aioha = initAioha({
@@ -24,14 +24,15 @@ const aioha = initAioha({
 })
 ```
 
-### Configuration[​](#configuration "Direct link to Configuration")
+### Configuration
 
-* HiveAuth
-* HiveSigner
+**HiveAuth:**
 
-- `name`: Short name of the app. Default: `Aioha Generic App`
-- `description` *(optional)*: App description
-- `icon` *(optional)*: URL to app icon
+* `name`: Short name of the app. Default: `Aioha Generic App`
+* `description` *(optional)*: App description
+* `icon` *(optional)*: URL to app icon
+
+**HiveSigner:**
 
 Refer to the [official documentation](https://www.npmjs.com/package/hivesigner#init-client) for complete details.
 
@@ -39,15 +40,13 @@ Refer to the [official documentation](https://www.npmjs.com/package/hivesigner#i
 * `callbackURL`: Callback URL. An example HTML page may be found [here](https://github.com/aioha-hive/aioha/blob/main/snippets/hivesigner.html).
 * `scope`: Authorized operations HiveSigner may perform on behalf of the user using the access token. A HiveSigner popup window will be shown when performing any operation outside the specified scope.
 
-## Enums[​](#enums "Direct link to Enums")
+## Enums
 
-* Providers
-* KeyTypes
-* Asset
+**Providers:**
 
 The `Providers` enum exported are as follows:
 
-```
+```js
 export enum Providers {
   Keychain = 'keychain',
   HiveSigner = 'hivesigner',
@@ -60,9 +59,11 @@ export enum Providers {
 }
 ```
 
+**KeyTypes:**
+
 The `KeyTypes` enum exported are as follows:
 
-```
+```js
 export enum KeyTypes {
   Posting = 'posting',
   Active = 'active',
@@ -71,27 +72,28 @@ export enum KeyTypes {
 }
 ```
 
+**Asset:**
+
 The `Asset` enum exported are as follows:
 
-```
+```js
 export enum Asset {
   HIVE = 'HIVE',
   HBD = 'HBD'
 }
 ```
 
-## Login[​](#login "Direct link to Login")
+## Login
 
-info
-
-Also known as **Connect Wallet**.
+> **Info**
+>
+> Also known as **Connect Wallet**.
 
 Login with specified provider and username. A signature request will be made to sign message `msg` using `keyType` key that is associated with the Hive account.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 const login = await aioha.login(Providers.Keychain, 'hiveusername', {
   msg: 'Hello World',
   keyType: KeyTypes.Posting,
@@ -117,11 +119,13 @@ const login = await aioha.login(Providers.Keychain, 'hiveusername', {
 * `metamask.accountIdx` *(optional)*: Account index to use for the MetaMask Snap connection. Defaults to 0.
 * `metamask.validateUser` *(optional)*: Whether to validate that the Hive account is associated with the public key derived by the MetaMask Snap. Defaults to false.
 
-warning
+> **Warning**
+>
+> The `hiveauth.cbWait` callback function is deprecated and will be removed in Aioha v2. Please use the [`hiveauth_login_request` event](/docs/core/jsonrpc.md#hiveauth-login-request) instead.
 
-The `hiveauth.cbWait` callback function is deprecated and will be removed in Aioha v2. Please use the [`hiveauth_login_request` event](/docs/core/jsonrpc.md#hiveauth-login-request) instead.
+**Result:**
 
-```
+```js
 {
   "provider": "keychain",
   "success": true,
@@ -138,18 +142,17 @@ The `hiveauth.cbWait` callback function is deprecated and will be removed in Aio
 * `publicKey`: Public key used to sign the message (*undefined* for HiveSigner provider)
 * `username`: Logged in username
 
-## Login and Decrypt Memo[​](#login-and-decrypt-memo "Direct link to Login and Decrypt Memo")
+## Login and Decrypt Memo
 
-Not Recommended
-
-Login with signatures [above](#login) are preferred than with memo decryption due to limited support of memo cryptography [in certain providers](/docs.md#feature-matrix).
+> **Not recommended**
+>
+> Login with signatures [above](#login) are preferred than with memo decryption due to limited support of memo cryptography [in certain providers](/docs.md#feature-matrix).
 
 Login with specified provider and username by decrypting a memo.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 const login = await aioha.loginAndDecryptMemo(Providers.Keychain, 'hiveusername', {
   msg: 'Hello World',
   keyType: KeyTypes.Posting
@@ -159,7 +162,9 @@ const login = await aioha.loginAndDecryptMemo(Providers.Keychain, 'hiveusername'
 * `msg`: Memo to be decrypted
 * `keyType`: Key type to be used to decrypt the message
 
-```
+**Result:**
+
+```js
 {
   "provider": "keychain",
   "success": true,
@@ -174,15 +179,15 @@ const login = await aioha.loginAndDecryptMemo(Providers.Keychain, 'hiveusername'
 * `result`: Decrypted message
 * `username`: Logged in username
 
-## Login Non-Interactively[​](#login-non-interactively "Direct link to Login Non-Interactively")
+## Login Non-Interactively
 
 May be used when authentication info (i.e. access token) is already available. This is especially useful for one-click login.
 
-note
+> **Note**
+>
+> Only available in **HiveSigner**.
 
-Only available in **HiveSigner**.
-
-```
+```js
 const loginResult = aioha.loginNonInteractive(Providers.HiveSigner, url.searchParams.get('username')!, {
   ignorePersistence: false, // optional, set to true to overwrite persistent logins already stored
   hivesigner: {
@@ -192,58 +197,59 @@ const loginResult = aioha.loginNonInteractive(Providers.HiveSigner, url.searchPa
 })
 ```
 
-## Logout[​](#logout "Direct link to Logout")
+## Logout
 
-info
+> **Info**
+>
+> Also known as **Disconnect Wallet**.
 
-Also known as **Disconnect Wallet**.
-
-* Current User
-* All Users
+**Current User:**
 
 Logout the current authenticated user.
 
-```
+```js
 await aioha.logout()
 ```
 
+**All Users:**
+
 Logout the all authenticated users.
 
-```
+```js
 await aioha.logoutAll()
 ```
 
-## Switch User[​](#switch-user "Direct link to Switch User")
+## Switch User
 
 Switch the active user to another authenticated user listed [here](#list-other-users). Returns a boolean of whether the operation is successful. If failed, the user will be removed from the list and have to be reauthenticated.
 
-```
+```js
 aioha.switchUser('user2')
 ```
 
-## Remove User[​](#remove-user "Direct link to Remove User")
+## Remove User
 
 Remove a user listed [here](#list-other-users). Returns the authentication details of the user removed. Throws an error when the user does not exist.
 
-```
+```js
 aioha.removeOtherLogin('user2')
 ```
 
-## Discover Accounts[​](#discover-accounts "Direct link to Discover Accounts")
+## Discover Accounts
 
 Search the wallet provider for available accounts. Returns a map of username to account details which are dependent on the selected provider. Options include specifying roles to search accounts.
 
 Optionally a callback function may be provided to stream discovered accounts. The stop function may be called to halt account discovery and return all accounts discovered so far.
 
-* Usage
-* Result
-* Stream
+**Usage:**
 
-```
+```js
 const discovered = await aioha.discoverAccounts(Providers.Ledger, (stream, stop) => void, { roles: [KeyTypes.Active, KeyTypes.Posting] })
 ```
 
-```
+**Result:**
+
+```json
 {
   "success": true,
   "result": {
@@ -285,7 +291,9 @@ const discovered = await aioha.discoverAccounts(Providers.Ledger, (stream, stop)
 }
 ```
 
-```
+**Stream:**
+
+```json
 {
   "username": "techcoder",
   "pubkey": "STM6b69oq8QeQU68CYiPYDskvoVnZzL2kyia9L8TiccGU9K7DBZjD",
@@ -294,45 +302,48 @@ const discovered = await aioha.discoverAccounts(Providers.Ledger, (stream, stop)
 }
 ```
 
-## View Only Mode[​](#view-only-mode "Direct link to View Only Mode")
+## View Only Mode
 
 View only mode allows logging in with any username to observe any account without signing capabilities. To enable, register the view only provider:
 
-```
+```js
 aioha.registerViewOnly()
 ```
 
 Then login as usual:
 
-```
+```js
 const login = await aioha.login(Providers.ViewOnly, 'alice', {})
 ```
 
-## Encrypt Memo[​](#encrypt-memo "Direct link to Encrypt Memo")
+## Encrypt Memo
 
 Encrypt a message with the Hive public key of the recipient and the private key of the sender.
 
-* Encrypt
-* Encrypt With Keys
-* Result
-* Result With Keys
+**Encrypt:**
 
-```
+```js
 const encrypted = await aioha.encryptMemo('#secret message', KeyTypes.Posting, 'bob')
 ```
 
-```
+**Encrypt With Keys:**
+
+```js
 const encrypted = await aioha.encryptMemoWithKeys('#secret message', KeyTypes.Posting, ['STM7KP2BCau71s1ihTqBtGiF4VeVWnJevxreNceDyisxGdt1baS4B', 'STM5jruaymFQ93jwUp15r9SF5wPeaNvRKFE4nbbJv4vfHCk5a6zRu'])
 ```
 
-```
+**Result:**
+
+```json
 {
   "success": true,
   "result": "#Epz5g29x2Wqt5upn7UkuC4tFrR2zzDMaNFFt1KHFBkTAXnTLcK2jBRCX7FmM3bm3YV2FAShXVXkMY2idqRaDJ2KSLyGPJmYyXoY1JbEoKCLsncRssTxcmLkFiMSiyLeoa"
 }
 ```
 
-```
+**Result With Keys:**
+
+```json
 {
   "success": true,
   "result": {
@@ -342,20 +353,21 @@ const encrypted = await aioha.encryptMemoWithKeys('#secret message', KeyTypes.Po
 }
 ```
 
-## Decrypt Memo[​](#decrypt-memo "Direct link to Decrypt Memo")
+## Decrypt Memo
 
 Decrypt a Hive memo or message.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 const decrypted = await aioha.decryptMemo('#encryptedmessage', KeyTypes.Posting)
 ```
 
 Required arguments include the encrypted message starting with `#` and the `KeyTypes` enum for the key type to be used.
 
-```
+**Result:**
+
+```js
 {
   "success": true,
   "result": "#Hello World"
@@ -366,20 +378,21 @@ Required arguments include the encrypted message starting with `#` and the `KeyT
 * `error`: Error message, if any
 * `result`: Decrypted message
 
-## Sign Message[​](#sign-message "Direct link to Sign Message")
+## Sign Message
 
 Retrieve an ECDSA signature for a message.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 const signed = await aioha.signMessage('Message to sign', KeyTypes.Posting)
 ```
 
 Required arguments include the message to sign and the `KeyTypes` enum for the key type to be used.
 
-```
+**Result:**
+
+```js
 {
   "success": true,
   "result": "205a8bf065ada352d309c546012b17b4e88f19fdeb704d9a26abe46f1c2f9bce3f4a4b05ffc4777e5005fc5c4b37cd7412a934b7170654df7761310e45cbf6483c",
@@ -392,14 +405,13 @@ Required arguments include the message to sign and the `KeyTypes` enum for the k
 * `result`: ECDSA signature
 * `publicKey`: Public key used to sign the message
 
-## Sign Transaction[​](#sign-transaction "Direct link to Sign Transaction")
+## Sign Transaction
 
 Sign a Hive transaction without broadcasting it.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 const signed = await aioha.signTx({
   "ref_block_num": 27912,
   "ref_block_prefix": 1175138206,
@@ -421,11 +433,13 @@ const signed = await aioha.signTx({
 
 Required arguments include the message to sign and the `KeyTypes` enum for the key type to be used (must not be `KeyTypes.Memo`).
 
-important
+> **Important**
+>
+> Due to strict authority checks in HF28, the appropriate `KeyTypes` must be specified for the transaction so that the signature will be created using the correct key. For example, `KeyTypes.Active` must be specified for a transaction containing a transfer operation.
 
-Due to strict authority checks in HF28, the appropriate `KeyTypes` must be specified for the transaction so that the signature will be created using the correct key. For example, `KeyTypes.Active` must be specified for a transaction containing a transfer operation.
+**Result:**
 
-```
+```js
 {
   "success": true,
   "result": {
@@ -455,14 +469,13 @@ Due to strict authority checks in HF28, the appropriate `KeyTypes` must be speci
 * `error`: Error message, if any
 * `result`: Full signed transaction
 
-## Sign and Broadcast Transaction[​](#sign-and-broadcast-transaction "Direct link to Sign and Broadcast Transaction")
+## Sign and Broadcast Transaction
 
 Sign and broadcast a Hive transaction.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 const result = aioha.signAndBroadcastTx([
   ['vote', {
     author: 'sagarkothari88',
@@ -475,11 +488,13 @@ const result = aioha.signAndBroadcastTx([
 
 Required arguments include an array of operations for the transaction and the `KeyTypes` enum for the key type to be used (must not be `KeyTypes.Memo`).
 
-important
+> **Important**
+>
+> Due to strict authority checks in HF28, the appropriate `KeyTypes` must be specified for the transaction so that the signature will be created using the correct key. For example, `KeyTypes.Posting` must be specified for a transaction containing a vote operation.
 
-Due to strict authority checks in HF28, the appropriate `KeyTypes` must be specified for the transaction so that the signature will be created using the correct key. For example, `KeyTypes.Posting` must be specified for a transaction containing a vote operation.
+**Result:**
 
-```
+```js
 {
   "success": true,
   "result": "87c10767531071732fe15e6c34cf275900c342a3"
@@ -490,20 +505,21 @@ Due to strict authority checks in HF28, the appropriate `KeyTypes` must be speci
 * `error`: Error message, if any
 * `result`: Transaction ID
 
-## Sign and Broadcast Hive URI[​](#sign-and-broadcast-hive-uri "Direct link to Sign and Broadcast Hive URI")
+## Sign and Broadcast Hive URI
 
 Sign and broadcast a [hive-uri](https://gitlab.syncad.com/hive/hive-uri) encoded transaction.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 const result = aioha.signAndBroadcastUri('hive://sign/ops/W1sidm90ZSIseyJhdXRob3IiOiJzYWdhcmtvdGhhcmk4OCIsInBlcm1saW5rIjoiMjAyNC0wNi0wNS1kYWlseS11cGRhdGVzLWZyb20tc2FnYXJrb3RoYXJpODgiLCJ2b3RlciI6InRlY2hjb2RlcngiLCJ3ZWlnaHQiOjEwMDAwfV1d', KeyTypes.Posting)
 ```
 
 Required arguments include `hive://` prefixed URI and the `KeyTypes` enum for the key type to be used (must not be `KeyTypes.Memo`).
 
-```
+**Result:**
+
+```js
 {
   "success": true,
   "result": "87c10767531071732fe15e6c34cf275900c342a3"
@@ -514,105 +530,106 @@ Required arguments include `hive://` prefixed URI and the `KeyTypes` enum for th
 * `error`: Error message, if any
 * `result`: Transaction ID
 
-## Getters[​](#getters "Direct link to Getters")
+## Getters
 
-### Registered Providers[​](#registered-providers "Direct link to Registered Providers")
+### Registered Providers
 
 List all registered providers.
 
-```
+```js
 aioha.getProviders() // ['keychain', 'peakvault', 'ledger', 'hiveauth', 'hivesigner']
 ```
 
-### Current Provider[​](#current-provider "Direct link to Current Provider")
+### Current Provider
 
 Returns one of the providers above that the user logs in with.
 
-```
+```js
 aioha.getCurrentProvider()
 ```
 
-### Current User[​](#current-user "Direct link to Current User")
+### Current User
 
 Returns logged in Hive username.
 
-```
+```js
 aioha.getCurrentUser()
 ```
 
-### Is Logged In[​](#is-logged-in "Direct link to Is Logged In")
+### Is Logged In
 
 Returns a boolean of whether a user is logged in or not.
 
-```
+```js
 aioha.isLoggedIn()
 ```
 
-### Is Provider Registered[​](#is-provider-registered "Direct link to Is Provider Registered")
+### Is Provider Registered
 
 Returns a boolean of whether the specified provider is registered. This does not indicate that the said provider is available to the user (i.e. due to required browser extension not installed).
 
-```
+```js
 aioha.isProviderRegistered(Providers.HiveAuth)
 ```
 
-### Is Provider Enabled[​](#is-provider-enabled "Direct link to Is Provider Enabled")
+### Is Provider Enabled
 
 Returns a boolean of whether the specified provider is registered and available for use by the user.
 
-```
+```js
 aioha.isProviderEnabled(Providers.HiveAuth)
 ```
 
-### List Other Users[​](#list-other-users "Direct link to List Other Users")
+### List Other Users
 
 Returns a list of other authenticated users and the corresponding provider that are currently inactive.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 aioha.getOtherLogins()
 ```
 
-```
+**Result:**
+
+```json
 {
   "user1": "keychain",
   "user2": "peakvault"
 }
 ```
 
-### Get Login Expiration[​](#get-login-expiration "Direct link to Get Login Expiration")
+### Get Login Expiration
 
 Retrieve the login expiration timestamp (in epoch milliseconds) for a username.
 
-info
+> **Info**
+>
+> This is for **HiveAuth** and **HiveSigner** providers as the authentication expires. This method will return `undefined` for other providers that do not expire.
 
-This is for **HiveAuth** and **HiveSigner** providers as the authentication expires. This method will return `undefined` for other providers that do not expire.
-
-```
+```js
 aioha.getLoginExpiration('someone')
 ```
 
-### Get Hive Chain ID[​](#get-hive-chain-id "Direct link to Get Hive Chain ID")
+### Get Hive Chain ID
 
 Retrieve the current Hive chain ID used to sign transactions.
 
-note
+> **Note**
+>
+> Currently only **Ledger** and **MetaMask Snaps** providers respect this setting. Hive Keychain uses the chain ID of the API node set by the user in the extension.
 
-Currently only **Ledger** and **MetaMask Snaps** providers respect this setting. Hive Keychain uses the chain ID of the API node set by the user in the extension.
-
-```
+```js
 aioha.getChainId()
 ```
 
-## Setters[​](#setters "Direct link to Setters")
+## Setters
 
-### Set Hive API[​](#set-hive-api "Direct link to Set Hive API")
+### Set Hive API
 
 Set a Hive API node for RPC calls made by Aioha (i.e. HIVE/VEST calculation, broadcast transaction)
 
-```
+```js
 aioha.setApi('https://techcoderx.com', [
   'https://api.hive.blog',
   'https://api.openhive.network',
@@ -620,40 +637,36 @@ aioha.setApi('https://techcoderx.com', [
 ])
 ```
 
-### Set Hive Chain ID[​](#set-hive-chain-id "Direct link to Set Hive Chain ID")
+### Set Hive Chain ID
 
 Set a custom Hive chain ID when signing transactions for testnets.
 
-note
+> **Note**
+>
+> Currently only **Ledger** and **MetaMask Snaps** providers respect this setting. Hive Keychain uses the chain ID of the API node set by the user in the extension.
 
-Currently only **Ledger** and **MetaMask Snaps** providers respect this setting. Hive Keychain uses the chain ID of the API node set by the user in the extension.
-
-```
+```js
 // default testnet
 aioha.setChainId('18dcf0a285365fc58b71f18b3d3fec954aa0c141c44e4e5cb4cf777b9eab274e')
 ```
 
-### Set Magi Network ID[​](#set-magi-network-id "Direct link to Set Magi Network ID")
+### Set Magi Network ID
 
 Set Magi network ID for Magi related functions.
 
-```
+```js
 aioha.vscSetNetId('vsc-mainnet')
 ```
 
-## Operations[​](#operations "Direct link to Operations")
+## Operations
 
 The return value for these method calls will be equivalent to sign and broadcast transaction result [above](#sign-and-broadcast-transaction).
 
-### Social[​](#social "Direct link to Social")
+### Social
 
-* Vote
-* Comment
-* Delete Comment
-* Reblog
-* Follow/Ignore
+**Vote:**
 
-```
+```js
 const vote = await aioha.vote('author', 'permlink', 10000)
 const voteMany = await aioha.voteMany([
   {
@@ -669,7 +682,9 @@ const voteMany = await aioha.voteMany([
 ])
 ```
 
-```
+**Comment:**
+
+```js
 const comment = await aioha.comment('pa', 'pp', 'permlink', 'title', 'body', { foo: 'bar' })
 const commentWithOptions = await aioha.comment('pa', 'pp', 'permlink', 'title', 'body', { foo: 'bar' }, {
   author: aioha.getCurrentUser(),
@@ -692,47 +707,52 @@ const commentWithOptions = await aioha.comment('pa', 'pp', 'permlink', 'title', 
 })
 ```
 
+**Delete Comment:**
+
 The post or comment must contain no child comments or positive rshares.
 
-```
+```js
 const deleted = await aioha.deleteComment('permlinktodel')
 ```
 
-```
+**Reblog:**
+
+```js
 const reblog = await aioha.reblog('author', 'permlink', true)
 const removeReblog = await aioha.reblog('author', 'permlink', false)
 ```
 
-```
+**Follow/Ignore:**
+
+```js
 const follow = await aioha.follow('author', true)
 const unfollow = await aioha.follow('author', false)
 const ignored = await aioha.ignore('authortoignore')
 ```
 
-### Custom JSON[​](#custom-json "Direct link to Custom JSON")
+### Custom JSON
 
 Publish an arbitrary JSON data.
 
-```
+```js
 const customJson = await aioha.customJSON(KeyTypes.Posting, 'my-id', { foo: 'bar' }, 'Display Title')
 ```
 
-### Claim Rewards[​](#claim-rewards "Direct link to Claim Rewards")
+### Claim Rewards
 
 Claim Hive rewards that have paid out from content reward pool.
 
-```
+```js
 const rewardClaim = await aioha.claimRewards()
 ```
 
-### Transfer[​](#transfer "Direct link to Transfer")
+### Transfer
 
 Transfer HIVE/HBD to another account.
 
-* One Time
-* Recurrent
+**One Time:**
 
-```
+```js
 // transfer 1 HIVE with memo
 const xfer = await aioha.transfer('recipient', 1, Asset.HIVE, 'Transferred using Aioha with memo')
 
@@ -740,7 +760,9 @@ const xfer = await aioha.transfer('recipient', 1, Asset.HIVE, 'Transferred using
 const xferNoMemo = await aioha.transfer('recipient2', 1, Asset.HBD)
 ```
 
-```
+**Recurrent:**
+
+```js
 // start recurrent transfer of 1 HIVE every 24 hours for 7 days to 'bob'
 const recurrentXfer = await aioha.recurrentTransfer('bob', 1, Asset.HIVE, 24, 7, 'Transferred using Aioha with memo')
 
@@ -748,13 +770,11 @@ const recurrentXfer = await aioha.recurrentTransfer('bob', 1, Asset.HIVE, 24, 7,
 const cancelRecurrentXfer = await aioha.cancelRecurrentTransfer('bob', Asset.HIVE, 'Another memo for cancel recurrent transfer')
 ```
 
-### HIVE staking[​](#hive-staking "Direct link to HIVE staking")
+### HIVE staking
 
-* Stake
-* Unstake
-* Delegate
+**Stake:**
 
-```
+```js
 // stake 1000 HIVE to itself
 const stake = await aioha.stakeHive(1000)
 
@@ -762,7 +782,9 @@ const stake = await aioha.stakeHive(1000)
 const stakeToOtherAccount = await aioha.stakeHive(1000, 'anotheraccount')
 ```
 
-```
+**Unstake:**
+
+```js
 // unstake 1000 HIVE of vesting shares
 const unstake = await aioha.unstakeHive(1000)
 
@@ -773,7 +795,9 @@ const unstakeByVests = await aioha.unstakeHiveByVests(1000000)
 const cancelUnstake = await aioha.unstakeHive(0)
 ```
 
-```
+**Delegate:**
+
+```js
 // delegate 1000 HIVE of vesting shares
 const delegate = await aioha.delegateStakedHive('delegatee', 1000)
 
@@ -784,33 +808,34 @@ const delegateByVests = await aioha.delegateVests('delegatee', 1000000)
 const undelegate = await aioha.delegateStakedHive('delegatee', 0)
 ```
 
-### Governance[​](#governance "Direct link to Governance")
+### Governance
 
-* Vote Witness
-* Vote Proposals
-* Set/Clear Proxy
+**Vote Witness:**
 
-```
+```js
 const voteWitness = await aioha.voteWitness('thewitness', true)
 const unvoteWitness = await aioha.voteWitness('thewitness', false)
 ```
 
-```
+**Vote Proposals:**
+
+```js
 const voteProposals = await aioha.voteProposals([0], true)
 const unvoteProposals = await aioha.voteProposals([0], false)
 ```
 
-```
+**Set/Clear Proxy:**
+
+```js
 const setProxy = await aioha.setProxy('proxiedacc')
 const clearProxy = await aioha.clearProxy()
 ```
 
-### Authority[​](#authority "Direct link to Authority")
+### Authority
 
-* Account Auths
-* Key Auths
+**Account Auths:**
 
-```
+```js
 // Add 'aioha' account to posting auths with weight 1
 const addAccount = await aioha.addAccountAuthority('aioha', KeyTypes.Posting, 1)
 
@@ -818,7 +843,9 @@ const addAccount = await aioha.addAccountAuthority('aioha', KeyTypes.Posting, 1)
 const rmAccount = await aioha.removeAccountAuthority('aioha', KeyTypes.Posting)
 ```
 
-```
+**Key Auths:**
+
+```js
 // Add 'STMxxxx' public key to posting auths with weight 1
 const addKey = await aioha.addKeyAuthority('STMxxxx', KeyTypes.Posting, 1)
 
@@ -826,29 +853,29 @@ const addKey = await aioha.addKeyAuthority('STMxxxx', KeyTypes.Posting, 1)
 const rmKey = await aioha.removeKeyAuthority('STMxxxx', KeyTypes.Posting)
 ```
 
-### Magi Call[​](#magi-call "Direct link to Magi Call")
+### Magi Call
 
 Transact on Magi from L1, such as calling a smart contract, transfer or withdraw L2 balances.
 
-warning
+> **Warning**
+>
+> These methods will be moved to the upcoming Magi TypeScript library and will be removed from Aioha core in v2.
 
-These methods will be moved to the upcoming Magi TypeScript library and will be removed from Aioha core in v2.
+**Transfer:**
 
-* Transfer
-* Withdraw
-* Stake
-* Unstake
-* Call Contract
-
-```
+```js
 const transfer = await aioha.vscTransfer('hive:bob', 1, Asset.HIVE, 'Optional memo')
 ```
 
-```
+**Withdraw:**
+
+```js
 const transfer = await aioha.vscWithdraw('hive:charlie', 1, Asset.HIVE, 'Optional memo')
 ```
 
-```
+**Stake:**
+
+```js
 // Stake 2,000 HIVE for consensus
 const consensusStake = await aioha.vscStake(VscStakeType.Consensus, 2000)
 
@@ -856,7 +883,9 @@ const consensusStake = await aioha.vscStake(VscStakeType.Consensus, 2000)
 const hbdStake = await aioha.vscStake(VscStakeType.HBD, 100)
 ```
 
-```
+**Unstake:**
+
+```js
 // Unstake 2,000 HIVE from consensus
 const consensusStake = await aioha.vscUnstake(VscStakeType.Consensus, 2000)
 
@@ -864,7 +893,9 @@ const consensusStake = await aioha.vscUnstake(VscStakeType.Consensus, 2000)
 const hbdStake = await aioha.vscUnstake(VscStakeType.HBD, 100)
 ```
 
-```
+**Call Contract:**
+
+```js
 // Call testLog at contract vsc1Bp8y... with 100 RC limit, no intents, signed with active authority
 const contractCall = await aioha.vscCallContract('vsc1Bp8ykBKDT74vYrZShhfEhp8Mn8bG2ChiAf', 'testLog', 'tx payload', 100, [], KeyTypes.Active)
 ```

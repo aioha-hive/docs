@@ -2,16 +2,40 @@
 
 Besides the [built-in providers](/docs.md#supported-providers), a custom defined provider that extends [`AiohaBaseProvider` class](https://github.com/aioha-hive/aioha/blob/main/src/providers/provider.ts) may be registered as `Providers.Custom` provider. This may be useful for backend use or development of another browser provider.
 
-## Usage[​](#usage "Direct link to Usage")
+## Beekeeper Signer
 
-The below demonstrates the registration of plaintext private key provider for use in Aioha. This is a common example of backend usage of Aioha.
+The recommended signer for backend usage is the [`BeekeeperProvider`](https://github.com/aioha-hive/aioha/blob/main/src/providers/custom/beekeeper.ts), which delegates key storage and signing to a [Beekeeper](https://gitlab.syncad.com/hive/beekeeper) wallet. Private keys never leave the wallet — the provider only holds public keys and passes digests to the wallet for signing.
 
+### Installation
+
+```sh
+pnpm i @aioha/aioha @hiveio/beekeeper
 ```
-import { Aioha, Providers } from '@aioha/aioha'
-import { PlaintextKeyProvider } from '@aioha/aioha/build/providers/custom/plaintext.js'
 
+### Usage
+
+```js
+import { Aioha, AiohaClient, Providers, KeyTypes } from '@aioha/aioha'
+import { BeekeeperProvider } from '@aioha/aioha/build/providers/custom/beekeeper.js'
+import { SimpleEventEmitter } from '@aioha/aioha/build/lib/event-emitter.js'
+import createBeekeeper from '@hiveio/beekeeper'
+
+// Initialize a beekeeper wallet and import the private key
+const bk = await createBeekeeper({ inMemory: true })
+const session = bk.createSession('some-salt')
+const { wallet } = await session.createWallet('my-wallet', 'password', true)
+const pubKey = await wallet.importKey('5somethingsomething')
+
+// Register the beekeeper provider with Aioha
 const aioha = new Aioha()
-aioha.registerCustomProvider(new PlaintextKeyProvider('5somethingsomething'))
+aioha.registerCustomProvider(
+  new BeekeeperProvider(
+    wallet,
+    { [KeyTypes.Posting]: pubKey, [KeyTypes.Active]: pubKey },
+    new AiohaClient(),
+    new SimpleEventEmitter()
+  )
+)
 
 // Login as usual
 const login = await aioha.login(Providers.Custom, 'your-username', { msg: 'Hello World' })
@@ -19,4 +43,30 @@ const login = await aioha.login(Providers.Custom, 'your-username', { msg: 'Hello
 // Claim rewards
 const claim = await aioha.claimRewards()
 console.log(claim)
+```
+
+The `keys` map associates a [`KeyTypes`](https://github.com/aioha-hive/aioha/blob/main/src/types.ts) entry (`Posting`, `Active`, `Owner`, `Memo`) with the public key of the corresponding private key held in the wallet. Only key types present in the map can sign — attempting to use a missing key type throws.
+
+> **Custom sha-256 implementation**
+>
+> The constructor accepts an optional fifth argument to supply your own SHA-256 function (e.g. `sha256` from [`@noble/hashes`](https://github.com/paulmillr/noble-hashes)). If omitted, the browser-compatible default from Aioha is used.
+
+> **Persistent wallets**
+>
+> Use `inMemory: true` for ephemeral sessions only. For persistent storage, omit the flag and supply `storageRoot` — see the [Beekeeper docs](https://www.npmjs.com/package/@hiveio/beekeeper) for configuration.
+
+## Plaintext Private Key
+
+> **Deprecated**
+>
+> `PlaintextKeyProvider` is deprecated in favor of the [Beekeeper signer](#beekeeper-signer). It holds the WIF in memory and should not be used in new code.
+
+```js
+import { Aioha, Providers } from '@aioha/aioha'
+import { PlaintextKeyProvider } from '@aioha/aioha/build/providers/custom/plaintext.js'
+
+const aioha = new Aioha()
+aioha.registerCustomProvider(new PlaintextKeyProvider('5somethingsomething'))
+
+const login = await aioha.login(Providers.Custom, 'your-username', { msg: 'Hello World' })
 ```

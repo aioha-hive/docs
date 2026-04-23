@@ -2,25 +2,23 @@
 
 Configure and interact with Magi in 5 minutes or less.
 
-## Instantiation[​](#instantiation "Direct link to Instantiation")
+## Instantiation
 
 Create an instance of Magi. Returns a `Magi` object.
 
-```
+```js
 import { Magi } from '@aioha/magi'
 
 const magi = new Magi()
 ```
 
-## Enums[​](#enums "Direct link to Enums")
+## Enums
 
-* Wallet
-* Asset
-* KeyTypes
+**Wallet:**
 
 The `Wallet` enum exported are as follows:
 
-```
+```js
 export enum Wallet {
   Hive = 'hive',
   Ethereum = 'evm',
@@ -29,9 +27,11 @@ export enum Wallet {
 }
 ```
 
+**Asset:**
+
 The `Asset` enum exported are as follows:
 
-```
+```js
 export enum Asset {
   hive = 'hive',
   hbd = 'hbd',
@@ -39,37 +39,39 @@ export enum Asset {
 }
 ```
 
+**KeyTypes:**
+
 The `KeyTypes` enum exported are as follows:
 
-```
+```js
 export enum KeyTypes {
   Posting = 'posting',
   Active = 'active'
 }
 ```
 
-note
+> **Note**
+>
+> `KeyTypes` is only applicable for Hive wallets. Ethereum and Bitcoin wallets always sign with the account's key.
 
-`KeyTypes` is only applicable for Hive wallets. Ethereum and Bitcoin wallets always sign with the account's key.
+## Register Wallets
 
-## Register Wallets[​](#register-wallets "Direct link to Register Wallets")
-
-### Hive Wallet[​](#hive-wallet "Direct link to Hive Wallet")
+### Hive Wallet
 
 Register a Hive wallet using an [Aioha](https://aioha.dev) instance.
 
-```
+```js
 import { initAioha } from '@aioha/aioha'
 
 const aioha = initAioha()
 magi.setAioha(aioha)
 ```
 
-### Ethereum Wallet[​](#ethereum-wallet "Direct link to Ethereum Wallet")
+### Ethereum Wallet
 
 Register an Ethereum wallet using a [Viem](https://viem.sh) wallet client.
 
-```
+```js
 import { createWalletClient, http } from 'viem'
 
 const viemClient = createWalletClient({
@@ -79,17 +81,17 @@ const viemClient = createWalletClient({
 magi.setViem(viemClient)
 ```
 
-### Bitcoin Wallet[​](#bitcoin-wallet "Direct link to Bitcoin Wallet")
+### Bitcoin Wallet
 
 Register a Bitcoin wallet by providing a `BtcClient` object. This is a minimal interface that any Bitcoin wallet can implement.
 
-```
+```js
 import { BtcClient } from '@aioha/magi'
 ```
 
 The `BtcClient` interface:
 
-```
+```ts
 interface BtcClient {
   address: string
   signMessage(message: string): Promise<string>
@@ -99,11 +101,11 @@ interface BtcClient {
 * `address` — Bitcoin address (P2PKH `1...`, P2SH-P2WPKH `3...`, or P2WPKH `bc1q...`)
 * `signMessage` — Signs a message string and returns a base64-encoded signature (BIP-137 or BIP-322)
 
-note
+> **Note**
+>
+> Taproot (`bc1p...`) addresses are not currently supported.
 
-Taproot (`bc1p...`) addresses are not currently supported.
-
-```
+```js
 magi.setBitcoin({
   address: 'bc1qYourAddress',
   signMessage: (msg) => myBtcWallet.signMessage(msg)
@@ -114,7 +116,7 @@ Example: Reown AppKit
 
 If you use [Reown AppKit](https://reown.com/appkit) with the [Bitcoin adapter](https://docs.reown.com/appkit/bitcoin/core/installation), you can create a `BtcClient` from the AppKit modal:
 
-```
+```js
 import { createAppKit } from '@reown/appkit'
 import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
 
@@ -138,7 +140,7 @@ magi.setBitcoin({
 
 Example: UniSat
 
-```
+```js
 const unisat = window.unisat
 const accounts = await unisat.requestAccounts()
 
@@ -148,11 +150,11 @@ magi.setBitcoin({
 })
 ```
 
-### View-only Wallet[​](#view-only-wallet "Direct link to View-only Wallet")
+### View-only Wallet
 
 Register a view-only wallet by passing a prefixed DID. This lets you display an account's state without ever holding a signer — useful for dashboards, block explorers, or preview UIs.
 
-```
+```js
 // Hive account
 magi.setViewOnly('hive:alice')
 
@@ -173,15 +175,15 @@ The prefix determines the chain:
 
 Any other input throws an `Error`.
 
-note
+> **Note**
+>
+> All signing and broadcast operations on a view-only wallet return an `OperationError` with code `4200` and the message `Cannot sign or transact in view only mode`. `getUser()`, `isConnected()`, and `getWallet()` work as usual.
 
-All signing and broadcast operations on a view-only wallet return an `OperationError` with code `4200` and the message `Cannot sign or transact in view only mode`. `getUser()`, `isConnected()`, and `getWallet()` work as usual.
-
-## Set Active Wallet[​](#set-active-wallet "Direct link to Set Active Wallet")
+## Set Active Wallet
 
 Set the wallet type to use for transactions. This must be called before performing any operations.
 
-```
+```js
 import { Wallet } from '@aioha/magi'
 
 magi.setWallet(Wallet.Ethereum)
@@ -193,13 +195,13 @@ magi.setWallet(Wallet.Bitcoin)
 magi.setWallet(Wallet.ViewOnly)
 ```
 
-## Setters[​](#setters "Direct link to Setters")
+## Setters
 
-### Set Magi API[​](#set-magi-api "Direct link to Set Magi API")
+### Set Magi API
 
 Set the Magi GraphQL API URL. An optional array of fallback API URLs may be provided.
 
-```
+```js
 magi.setApi('https://vsc.techcoderx.com/api/v1/graphql', [
   'https://api.vsc.eco/api/v1/graphql',
   'https://vsc.atexoras.com:2087/api/v1/graphql'
@@ -208,40 +210,40 @@ magi.setApi('https://vsc.techcoderx.com/api/v1/graphql', [
 
 The URL must start with `http://` or `https://`. The default API is `https://vsc.techcoderx.com/api/v1/graphql` with built-in fallback nodes.
 
-### Set Network ID[​](#set-network-id "Direct link to Set Network ID")
+### Set Network ID
 
 Set the Magi network ID. Defaults to `vsc-mainnet`.
 
-```
+```js
 magi.setNetId('vsc-mainnet')
 
 // For testnet
 magi.setNetId('vsc-testnet')
 ```
 
-## Getters[​](#getters "Direct link to Getters")
+## Getters
 
-### Get API[​](#get-api "Direct link to Get API")
+### Get API
 
 Returns an array of API endpoints, where the first item is the main endpoint and the remaining are fallbacks.
 
-```
+```js
 magi.getApi() // ['https://vsc.techcoderx.com/api/v1/graphql', ...]
 ```
 
-### Get Network ID[​](#get-network-id "Direct link to Get Network ID")
+### Get Network ID
 
 Returns the current Magi network ID.
 
-```
+```js
 magi.getNetId() // 'vsc-mainnet'
 ```
 
-### Get Connected User[​](#get-connected-user "Direct link to Get Connected User")
+### Get Connected User
 
 Returns the connected user address, or `undefined` if not connected.
 
-```
+```js
 // Without prefix
 magi.getUser() // 'alice', '0xYourAddress', or 'bc1q...'
 
@@ -252,30 +254,29 @@ magi.getUser(true)
 // 'did:pkh:bip122:000000000019d6689c085ae165831e93:bc1q...'
 ```
 
-### Get Active Wallet[​](#get-active-wallet "Direct link to Get Active Wallet")
+### Get Active Wallet
 
 Returns the `Wallet` enum of the wallet type currently in use, or `undefined` if not set.
 
-```
+```js
 magi.getWallet() // Wallet.Hive, Wallet.Ethereum, Wallet.Bitcoin, or Wallet.ViewOnly
 ```
 
-### Is Connected[​](#is-connected "Direct link to Is Connected")
+### Is Connected
 
 Returns a boolean of whether a wallet is connected.
 
-```
+```js
 magi.isConnected() // true or false
 ```
 
-## Sign and Broadcast Transaction[​](#sign-and-broadcast-transaction "Direct link to Sign and Broadcast Transaction")
+## Sign and Broadcast Transaction
 
 Sign and broadcast a Magi transaction consisting of one or more operations.
 
-* Usage
-* Result
+**Usage:**
 
-```
+```js
 const result = await magi.signAndBroadcastTx([
   {
     type: 'call',
@@ -293,7 +294,9 @@ const result = await magi.signAndBroadcastTx([
 * `tx`: Array of `MagiOperation` objects
 * `keyType` *(optional)*: `KeyTypes.Active` or `KeyTypes.Posting` — only applicable for Hive wallets, defaults to `KeyTypes.Active`
 
-```
+**Result:**
+
+```js
 {
   "success": true,
   "result": "bafyreib5af..."
@@ -304,15 +307,15 @@ const result = await magi.signAndBroadcastTx([
 * `error`: Error message, if any
 * `result`: Transaction CID
 
-## Operations[​](#operations "Direct link to Operations")
+## Operations
 
 The return value for these method calls will be equivalent to sign and broadcast transaction result [above](#sign-and-broadcast-transaction).
 
-### Call Contract[​](#call-contract "Direct link to Call Contract")
+### Call Contract
 
 Call a Magi smart contract.
 
-```
+```js
 // Call testLog at contract vsc1Bp8y... with 100 RC limit, no intents
 const result = await magi.call('vsc1Bp8ykBKDT74vYrZShhfEhp8Mn8bG2ChiAf', 'testLog', { foo: 'bar' }, 100, [])
 
@@ -327,11 +330,11 @@ const result = await magi.call('vsc1Bp8ykBKDT74vYrZShhfEhp8Mn8bG2ChiAf', 'testLo
 * `intents`: Array of transaction intents
 * `keyType` *(optional)*: Key type for Hive wallets
 
-### Transfer[​](#transfer "Direct link to Transfer")
+### Transfer
 
 Transfer tokens to another Magi account.
 
-```
+```js
 // Transfer 1 HIVE to a Hive account
 const xfer = await magi.transfer('hive:bob', 1, Asset.hive)
 
@@ -344,11 +347,11 @@ const xferWithMemo = await magi.transfer('did:pkh:eip155:1:0xRecipient', 1, Asse
 * `currency`: `Asset.hive` or `Asset.hbd`
 * `memo` *(optional)*: Transfer memo
 
-### Unmap[​](#unmap "Direct link to Unmap")
+### Unmap
 
 Unmap tokens from Magi.
 
-```
+```js
 // Unmap 1 HIVE
 const wd = await magi.unmap('hive:charlie', 1, Asset.hive)
 
@@ -361,11 +364,11 @@ const wdWithMemo = await magi.unmap('hive:charlie', 50, Asset.hbd, 'Optional mem
 * `currency`: `Asset.hive` or `Asset.hbd`
 * `memo` *(optional)*: Withdrawal memo
 
-### Stake[​](#stake "Direct link to Stake")
+### Stake
 
 Stake tokens on Magi.
 
-```
+```js
 import { VscStakeType } from '@aioha/aioha'
 
 // Stake 2,000 HIVE for consensus (to self)
@@ -383,11 +386,11 @@ const hbdStake = await magi.stake(VscStakeType.HBD, 100)
 * `to` *(optional)*: Recipient address — defaults to the connected account
 * `memo` *(optional)*: Stake memo
 
-### Unstake[​](#unstake "Direct link to Unstake")
+### Unstake
 
 Unstake tokens on Magi.
 
-```
+```js
 import { VscStakeType } from '@aioha/aioha'
 
 // Unstake 2,000 HIVE from consensus
@@ -402,13 +405,13 @@ const hbdUnstake = await magi.unstake(VscStakeType.HBD, 100)
 * `to` *(optional)*: Recipient address — defaults to the connected account
 * `memo` *(optional)*: Unstake memo
 
-## Events[​](#events "Direct link to Events")
+## Events
 
 Subscribe to Magi events using the `on`, `once`, and `off` methods.
 
-### Subscribe[​](#subscribe "Direct link to Subscribe")
+### Subscribe
 
-```
+```js
 magi.on('wallet_changed', () => {
   console.log('Wallet type changed to:', magi.getWallet())
 })
@@ -418,19 +421,19 @@ magi.on('sign_tx_request', () => {
 })
 ```
 
-### Subscribe Once[​](#subscribe-once "Direct link to Subscribe Once")
+### Subscribe Once
 
 The listener will be called only on the next emission of the event.
 
-```
+```js
 magi.once('sign_tx_request', () => {
   console.log('This fires only once')
 })
 ```
 
-### Unsubscribe[​](#unsubscribe "Direct link to Unsubscribe")
+### Unsubscribe
 
-```
+```js
 const handler = () => console.log('wallet changed')
 magi.on('wallet_changed', handler)
 
@@ -441,7 +444,7 @@ magi.off('wallet_changed', handler)
 magi.off('wallet_changed')
 ```
 
-### Event Reference[​](#event-reference "Direct link to Event Reference")
+### Event Reference
 
 | Event             | Description                                                                                                                                            |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
