@@ -117,23 +117,30 @@ import '@aioha/react-ui/dist/build.css'
 
 ## `AiohaModal` Component[​](#aiohamodal-component "Direct link to aiohamodal-component")
 
-| Property             | Required? | Description                                                                                                                                                                      | Default                    |
-| -------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
-| `displayed`          | ✅        | Boolean of whether the modal is displayed.                                                                                                                                       | *false*                    |
-| `loginTitle`         | ❌        | Login title to be displayed.                                                                                                                                                     | Connect Wallet             |
-| `loginHelpUrl`       | ❌        | Help URL to be linked under provider selection view, if any.                                                                                                                     | *undefined*                |
-| `loginOptions`       | ✅        | Aioha login options. See available configuration [here](/docs/core/usage.md#login).                                                                                              |                            |
-| `discOptions`        | ❌        | Account discovery options. See available configuration [here](/docs/core/usage.md#discover-accounts).                                                                            |                            |
-| `arrangement`        | ❌        | Display view preference of provider selection. Valid values: `list` and `grid`.                                                                                                  | list                       |
-| `onLogin`            | ❌        | Callback function to be called upon successful login, if any. Parameter contains login result as defined [here](/docs/core/usage.md#login).                                      |                            |
-| `onClose`            | ✅        | Function to be called to close the modal.                                                                                                                                        |                            |
-| `imageServer`        | ❌        | Image server URL for user avatar.                                                                                                                                                | <https://images.hive.blog> |
-| `explorerUrl`        | ❌        | Hive block explorer URL.                                                                                                                                                         | <https://hivehub.dev>      |
-| `forceShowProviders` | ❌        | List of `Providers` to force show as login option, which must be registered already. Clicking on unavailable providers displayed will open the URL of the provider landing page. | *\[]*                      |
+| Property             | Required? | Description                                                                                                                                                                                    | Default                    |
+| -------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| `displayed`          | ✅        | Boolean of whether the modal is displayed.                                                                                                                                                     | *false*                    |
+| `loginTitle`         | ❌        | Login title to be displayed.                                                                                                                                                                   | Connect Wallet             |
+| `loginHelpUrl`       | ❌        | Help URL to be linked under provider selection view, if any.                                                                                                                                   | *undefined*                |
+| `loginOptions`       | ✅        | Aioha login options. See available configuration [here](/docs/core/usage.md#login).                                                                                                            |                            |
+| `discOptions`        | ❌        | Account discovery options. See available configuration [here](/docs/core/usage.md#discover-accounts).                                                                                          |                            |
+| `arrangement`        | ❌        | Display view preference of provider selection. Valid values: `list` and `grid`.                                                                                                                | list                       |
+| `onLogin`            | ❌        | Callback function to be called upon successful login, if any. Parameter contains login result as defined [here](/docs/core/usage.md#login).                                                    |                            |
+| `onClose`            | ✅        | Function to be called to close the modal.                                                                                                                                                      |                            |
+| `imageServer`        | ❌        | Image server URL for user avatar.                                                                                                                                                              | <https://images.hive.blog> |
+| `explorerUrl`        | ❌        | Hive block explorer URL.                                                                                                                                                                       | <https://hivehub.dev>      |
+| `forceShowProviders` | ❌        | List of `Providers` to force show as login option, which must be registered already. Clicking on unavailable providers displayed will open the URL of the provider landing page.               | *\[]*                      |
+| `language`           | ❌        | Active locale code (e.g. `en`, `fr`, `ar`, `ja`). See [Localization](/docs/ui/i18n.md) for the list of bundled locales.                                                                        | en                         |
+| `dir`                | ❌        | Text direction: `ltr`, `rtl`, or `auto`. When `auto`, inferred from `document.dir` and the active locale. See [Localization](/docs/ui/i18n.md#right-to-left-rtl).                              | auto                       |
+| `messages`           | ❌        | Custom [`Messages`](/docs/ui/i18n.md#the-messages-adapter) adapter to route translations through your own i18n framework (react-intl, lingui, i18next, ...). Defaults to the built-in adapter. | *undefined*                |
 
 warning
 
 `hiveauth.cbWait` in `loginOptions` will be overriden as `AiohaModal` will handle the presentation of HiveAuth QR codes.
+
+## Localization[​](#localization "Direct link to Localization")
+
+The modal ships with English and translations for 15 additional languages loaded on demand, full ICU MessageFormat support, RTL direction handling, and a pluggable adapter for other i18n frameworks. See [Localization](/docs/ui/i18n.md).
 
 ## HiveSigner Callback Page[​](#hivesigner-callback-page "Direct link to HiveSigner Callback Page")
 

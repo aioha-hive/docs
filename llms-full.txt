@@ -59,6 +59,7 @@ Branding
 Ready made modal containing all the UI components and logic required for Aioha.
 
 - [Ready Made UI](/docs/ui.md): Ready made modal containing all the UI components and logic required for Aioha.
+- [Localization (i18n)](/docs/ui/i18n.md): @aioha/react-ui and @aioha/lit-ui share a single canonical message catalog published as @aioha/i18n-keys. The catalog exposes namespaced message IDs, an English default, a framework-neutral Messages adapter, ICU MessageFormat support for pluralization and interpolation, a pseudo-locale for testing, RTL direction detection, and bundled translations for 16 languages.
 - [Lit UI](/docs/ui/lit.md): Opinionated Lit modal UI for Hive logins through Aioha, styled using Tailwind CSS. This provides a quick and easy way to bootstrap a Lit web app with ready to use Aioha-powered modal component.
 - [Web Components](/docs/ui/web-components.md): The ready made modal UI is available as a framework agnostic web component that can be integrated on vanilla HTML/JS or any web framework.
 
@@ -273,9 +274,9 @@ import { hivesignerCb } from '@aioha/aioha/build/lib/hivesigner-cb'
 hivesignerCb()
 ```
 
-## Polyfills[​](#polyfills "Direct link to Polyfills")
+## Environment defines[​](#environment-defines "Direct link to Environment defines")
 
-When using Aioha with bundlers such as Webpack or Vite, you may need to add some polyfills for it to work correctly.
+Aioha reads `process.env.NODE_DEBUG` from a transitive dependency. Define it as `false` in your bundler so the reference does not leak into the output.
 
 * Webpack
 * Vite
@@ -283,24 +284,20 @@ When using Aioha with bundlers such as Webpack or Vite, you may need to add some
 webpack.config.cjs
 
 ```
-const { DefinePlugin, ProvidePlugin } = require('webpack')
+const { DefinePlugin } = require('webpack')
 
 module.exports = {
   // ...
   resolve: {
     // ...
     fallback: {
-      url: false,
-      buffer: require.resolve('buffer/')
+      url: false
     }
   },
   plugins: [
     // ...
     new DefinePlugin({
       'process.env.NODE_DEBUG': false
-    }),
-    new ProvidePlugin({
-      Buffer: ['buffer', 'Buffer']
     })
   ]
 }
@@ -310,21 +307,12 @@ vite.config.ts
 
 ```
 import { defineConfig } from 'vite'
-import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 export default defineConfig({
   // ...
   define: {
     'process.env.NODE_DEBUG': false
-  },
-  plugins: [
-    // ...
-    nodePolyfills({
-      globals: {
-        Buffer: true
-      }
-    })
-  ]
+  }
 })
 ```
 
@@ -3221,23 +3209,30 @@ import '@aioha/react-ui/dist/build.css'
 
 ## `AiohaModal` Component[​](#aiohamodal-component "Direct link to aiohamodal-component")
 
-| Property             | Required? | Description                                                                                                                                                                      | Default                    |
-| -------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
-| `displayed`          | ✅        | Boolean of whether the modal is displayed.                                                                                                                                       | *false*                    |
-| `loginTitle`         | ❌        | Login title to be displayed.                                                                                                                                                     | Connect Wallet             |
-| `loginHelpUrl`       | ❌        | Help URL to be linked under provider selection view, if any.                                                                                                                     | *undefined*                |
-| `loginOptions`       | ✅        | Aioha login options. See available configuration [here](/docs/core/usage.md#login).                                                                                              |                            |
-| `discOptions`        | ❌        | Account discovery options. See available configuration [here](/docs/core/usage.md#discover-accounts).                                                                            |                            |
-| `arrangement`        | ❌        | Display view preference of provider selection. Valid values: `list` and `grid`.                                                                                                  | list                       |
-| `onLogin`            | ❌        | Callback function to be called upon successful login, if any. Parameter contains login result as defined [here](/docs/core/usage.md#login).                                      |                            |
-| `onClose`            | ✅        | Function to be called to close the modal.                                                                                                                                        |                            |
-| `imageServer`        | ❌        | Image server URL for user avatar.                                                                                                                                                | <https://images.hive.blog> |
-| `explorerUrl`        | ❌        | Hive block explorer URL.                                                                                                                                                         | <https://hivehub.dev>      |
-| `forceShowProviders` | ❌        | List of `Providers` to force show as login option, which must be registered already. Clicking on unavailable providers displayed will open the URL of the provider landing page. | *\[]*                      |
+| Property             | Required? | Description                                                                                                                                                                                    | Default                    |
+| -------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| `displayed`          | ✅        | Boolean of whether the modal is displayed.                                                                                                                                                     | *false*                    |
+| `loginTitle`         | ❌        | Login title to be displayed.                                                                                                                                                                   | Connect Wallet             |
+| `loginHelpUrl`       | ❌        | Help URL to be linked under provider selection view, if any.                                                                                                                                   | *undefined*                |
+| `loginOptions`       | ✅        | Aioha login options. See available configuration [here](/docs/core/usage.md#login).                                                                                                            |                            |
+| `discOptions`        | ❌        | Account discovery options. See available configuration [here](/docs/core/usage.md#discover-accounts).                                                                                          |                            |
+| `arrangement`        | ❌        | Display view preference of provider selection. Valid values: `list` and `grid`.                                                                                                                | list                       |
+| `onLogin`            | ❌        | Callback function to be called upon successful login, if any. Parameter contains login result as defined [here](/docs/core/usage.md#login).                                                    |                            |
+| `onClose`            | ✅        | Function to be called to close the modal.                                                                                                                                                      |                            |
+| `imageServer`        | ❌        | Image server URL for user avatar.                                                                                                                                                              | <https://images.hive.blog> |
+| `explorerUrl`        | ❌        | Hive block explorer URL.                                                                                                                                                                       | <https://hivehub.dev>      |
+| `forceShowProviders` | ❌        | List of `Providers` to force show as login option, which must be registered already. Clicking on unavailable providers displayed will open the URL of the provider landing page.               | *\[]*                      |
+| `language`           | ❌        | Active locale code (e.g. `en`, `fr`, `ar`, `ja`). See [Localization](/docs/ui/i18n.md) for the list of bundled locales.                                                                        | en                         |
+| `dir`                | ❌        | Text direction: `ltr`, `rtl`, or `auto`. When `auto`, inferred from `document.dir` and the active locale. See [Localization](/docs/ui/i18n.md#right-to-left-rtl).                              | auto                       |
+| `messages`           | ❌        | Custom [`Messages`](/docs/ui/i18n.md#the-messages-adapter) adapter to route translations through your own i18n framework (react-intl, lingui, i18next, ...). Defaults to the built-in adapter. | *undefined*                |
 
 warning
 
 `hiveauth.cbWait` in `loginOptions` will be overriden as `AiohaModal` will handle the presentation of HiveAuth QR codes.
+
+## Localization[​](#localization "Direct link to Localization")
+
+The modal ships with English and translations for 15 additional languages loaded on demand, full ICU MessageFormat support, RTL direction handling, and a pluggable adapter for other i18n frameworks. See [Localization](/docs/ui/i18n.md).
 
 ## HiveSigner Callback Page[​](#hivesigner-callback-page "Direct link to HiveSigner Callback Page")
 
@@ -3289,6 +3284,359 @@ const aioha = initAioha({
 ## [📄️<!-- --> <!-- -->Web Components](/docs/ui/web-components.md)
 
 [The ready made modal UI is available as a framework agnostic web component that can be integrated on vanilla HTML/JS or any web framework.](/docs/ui/web-components.md)
+
+
+---
+
+# Localization (i18n)
+
+`@aioha/react-ui` and `@aioha/lit-ui` share a single canonical message catalog published as `@aioha/i18n-keys`. The catalog exposes namespaced message IDs, an English default, a framework-neutral `Messages` adapter, ICU MessageFormat support for pluralization and interpolation, a pseudo-locale for testing, RTL direction detection, and bundled translations for 16 languages.
+
+## Installation[​](#installation "Direct link to Installation")
+
+```
+pnpm i @aioha/i18n-keys
+```
+
+Already installed transitively by `@aioha/react-ui` and `@aioha/lit-ui` — you only need to add it directly if you build your own adapter.
+
+## Usage[​](#usage "Direct link to Usage")
+
+### Switching language[​](#switching-language "Direct link to Switching language")
+
+`<AiohaModal>` (React) and `<aioha-modal>` (Lit) both accept a `language` prop/attribute. The default English catalog ships bundled; additional locales are loaded on demand.
+
+src/App.tsx
+
+```
+import { AiohaModal, defaultMessages } from '@aioha/react-ui'
+
+// Load a non-English catalog once at startup
+await defaultMessages.loadLocale('fr', (lng) =>
+  import(`@aioha/i18n-keys/build/locales/${lng}.json`).then((m) => m.default)
+)
+
+<AiohaModal language="fr" displayed={modalDisplayed} loginOptions={...} onClose={setModalDisplayed} />
+```
+
+aioha-page.ts
+
+```
+import { defaultMessages } from '@aioha/lit-ui'
+
+await defaultMessages.loadLocale('fr', (lng) =>
+  import(`@aioha/i18n-keys/build/locales/${lng}.json`).then((m) => m.default)
+)
+
+// In your template
+html`<aioha-modal language="fr" ...></aioha-modal>`
+```
+
+### Bundled locales[​](#bundled-locales "Direct link to Bundled locales")
+
+The package ships translation JSON for the following locales. Load each with dynamic import — English is always available without loading.
+
+| Locale  |                       |
+| ------- | --------------------- |
+| `ar`    | Arabic (RTL)          |
+| `de`    | German                |
+| `en`    | English (bundled)     |
+| `es`    | Spanish               |
+| `fr`    | French                |
+| `hi`    | Hindi                 |
+| `hr`    | Croatian              |
+| `it`    | Italian               |
+| `ja`    | Japanese              |
+| `ko`    | Korean                |
+| `ms`    | Malay                 |
+| `pl`    | Polish                |
+| `pt`    | Portuguese            |
+| `ru`    | Russian               |
+| `zh-CN` | Chinese (Simplified)  |
+| `zh-TW` | Chinese (Traditional) |
+
+### Bring your own translations[​](#bring-your-own-translations "Direct link to Bring your own translations")
+
+Pass a `Partial<Catalog>` to `defaultMessages.addCatalog(locale, catalog)` to extend or replace the shipped strings. Any subset is acceptable — unspecified keys fall back to English.
+
+```
+import { defaultMessages } from '@aioha/react-ui'
+
+defaultMessages.addCatalog('en', {
+  'wallet.connect': 'Sign in with Hive'
+})
+```
+
+## Right-to-left (RTL)[​](#right-to-left-rtl "Direct link to Right-to-left (RTL)")
+
+Both packages emit `dir="rtl"` on the modal root when the resolved direction is RTL, and use logical CSS properties (`ms-*`, `me-*`, `ps-*`, `pe-*`, `inset-x-*`) so layout mirrors automatically. Directional icons (back button, forward chevron) are flipped with `rtl:-scale-x-100`.
+
+The direction is resolved in this order:
+
+1. Explicit `dir` prop (React) or `direction` attribute (Lit): `'ltr' | 'rtl' | 'auto'`.
+2. If `'auto'`: `document.dir` if set to `rtl`.
+3. Otherwise: the active locale's direction (Arabic, Hebrew, Persian, Urdu, and related languages resolve to `rtl`).
+
+```
+<AiohaModal dir="rtl" language="ar" ... />
+```
+
+```
+<aioha-modal direction="rtl" language="ar" ...></aioha-modal>
+```
+
+## Pseudo-locale testing[​](#pseudo-locale-testing "Direct link to Pseudo-locale testing")
+
+A built-in `en-XA` locale wraps every English value with accented characters: `[!! Çóññéçţ Ŵàľľéţ !!]`. Use it to catch hardcoded strings, string-concatenation bugs, and layout truncation during development.
+
+```
+<AiohaModal language="en-XA" ... />
+```
+
+ICU placeholders (`{user}`, `{count, plural, one {...} other {...}}`) are preserved.
+
+## The `Messages` adapter[​](#the-messages-adapter "Direct link to the-messages-adapter")
+
+If your app already ships an i18n framework, implement the `Messages` interface and pass it as `messages` on the modal. This lets translators manage Aioha's strings alongside yours, and keeps only one i18n runtime in your bundle.
+
+```
+import type { Messages } from '@aioha/i18n-keys'
+
+interface Messages {
+  t(id: MessageId, vars?: Record<string, string | number>): string
+  getLocale(): string
+  setLocale(locale: string): void | Promise<void>
+  getDir(): 'ltr' | 'rtl'
+  subscribe(listener: () => void): () => void
+}
+```
+
+```
+<AiohaModal messages={myMessages} ... />
+```
+
+```
+<aioha-modal .messages=${myMessages} ...></aioha-modal>
+```
+
+The examples below show how to wire Aioha's 38 message IDs to a handful of popular frameworks. In every case, import the JSON catalogs from `@aioha/i18n-keys/build/locales/<lng>.json` — the framework becomes responsible only for formatting.
+
+### react-intl (FormatJS)[​](#react-intl-formatjs "Direct link to react-intl (FormatJS)")
+
+`react-intl` uses the same ICU MessageFormat syntax as Aioha's default adapter, so translations drop in unchanged.
+
+src/aioha-messages.ts
+
+```
+import { createIntl, createIntlCache } from 'react-intl'
+import type { Messages } from '@aioha/i18n-keys'
+import en from '@aioha/i18n-keys/build/locales/en.json'
+
+const cache = createIntlCache()
+let intl = createIntl({ locale: 'en', messages: en }, cache)
+const listeners = new Set<() => void>()
+
+export const aiohaMessages: Messages = {
+  t: (id, vars) => intl.formatMessage({ id }, vars),
+  getLocale: () => intl.locale,
+  setLocale: async (lng) => {
+    const messages = (await import(`@aioha/i18n-keys/build/locales/${lng}.json`)).default
+    intl = createIntl({ locale: lng, messages }, cache)
+    listeners.forEach((l) => l())
+  },
+  getDir: () => (['ar', 'he', 'fa', 'ur'].includes(intl.locale.split('-')[0]) ? 'rtl' : 'ltr'),
+  subscribe: (cb) => {
+    listeners.add(cb)
+    return () => listeners.delete(cb)
+  }
+}
+```
+
+src/App.tsx
+
+```
+import { AiohaModal } from '@aioha/react-ui'
+import { aiohaMessages } from './aioha-messages'
+
+<AiohaModal messages={aiohaMessages} language="fr" ... />
+```
+
+If you already have an `<IntlProvider>` in your tree, pass its `intl` object instead of creating a second one — then `t` simply becomes `(id, vars) => providedIntl.formatMessage({ id }, vars)`.
+
+### i18next[​](#i18next "Direct link to i18next")
+
+`i18next` uses `{{var}}` interpolation by default, but Aioha's catalogs use ICU `{var}`. Install [`i18next-icu`](https://github.com/i18next/i18next-icu) to parse them natively.
+
+src/aioha-messages.ts
+
+```
+import i18next from 'i18next'
+import ICU from 'i18next-icu'
+import type { Messages } from '@aioha/i18n-keys'
+import en from '@aioha/i18n-keys/build/locales/en.json'
+
+const i18n = i18next.createInstance()
+await i18n.use(ICU).init({
+  lng: 'en',
+  fallbackLng: 'en',
+  ns: ['aioha'],
+  defaultNS: 'aioha',
+  resources: { en: { aioha: en } }
+})
+
+export const aiohaMessages: Messages = {
+  t: (id, vars) => i18n.t(id, vars) as string,
+  getLocale: () => i18n.language,
+  setLocale: async (lng) => {
+    if (!i18n.hasResourceBundle(lng, 'aioha')) {
+      const res = (await import(`@aioha/i18n-keys/build/locales/${lng}.json`)).default
+      i18n.addResourceBundle(lng, 'aioha', res)
+    }
+    await i18n.changeLanguage(lng)
+  },
+  getDir: () => (i18n.dir() === 'rtl' ? 'rtl' : 'ltr'),
+  subscribe: (cb) => {
+    i18n.on('languageChanged', cb)
+    return () => i18n.off('languageChanged', cb)
+  }
+}
+```
+
+### LinguiJS[​](#linguijs "Direct link to LinguiJS")
+
+Lingui compiles ICU messages to a function map. Use the runtime `i18n` singleton and point it at Aioha's JSON:
+
+src/aioha-messages.ts
+
+```
+import { i18n } from '@lingui/core'
+import type { Messages } from '@aioha/i18n-keys'
+import en from '@aioha/i18n-keys/build/locales/en.json'
+
+i18n.load('en', en)
+i18n.activate('en')
+
+export const aiohaMessages: Messages = {
+  t: (id, vars) => i18n._(id, vars),
+  getLocale: () => i18n.locale,
+  setLocale: async (lng) => {
+    if (!i18n.messages[lng]) {
+      const res = (await import(`@aioha/i18n-keys/build/locales/${lng}.json`)).default
+      i18n.load(lng, res)
+    }
+    i18n.activate(lng)
+  },
+  getDir: () => (['ar', 'he', 'fa', 'ur'].includes(i18n.locale.split('-')[0]) ? 'rtl' : 'ltr'),
+  subscribe: (cb) => i18n.on('change', cb)
+}
+```
+
+### Vue I18n[​](#vue-i18n "Direct link to Vue I18n")
+
+For Vue apps, wrap an existing `createI18n()` instance:
+
+src/aioha-messages.ts
+
+```
+import { watch } from 'vue'
+import type { Messages } from '@aioha/i18n-keys'
+import i18n from './i18n' // your existing Vue i18n instance
+import en from '@aioha/i18n-keys/build/locales/en.json'
+
+i18n.global.mergeLocaleMessage('en', { aioha: en })
+
+export const aiohaMessages: Messages = {
+  t: (id, vars) => i18n.global.t(`aioha.${id}`, vars ?? {}),
+  getLocale: () => i18n.global.locale.value,
+  setLocale: async (lng) => {
+    if (!i18n.global.availableLocales.includes(lng)) {
+      const res = (await import(`@aioha/i18n-keys/build/locales/${lng}.json`)).default
+      i18n.global.mergeLocaleMessage(lng, { aioha: res })
+    }
+    i18n.global.locale.value = lng
+  },
+  getDir: () => (['ar', 'he', 'fa', 'ur'].includes(i18n.global.locale.value.split('-')[0]) ? 'rtl' : 'ltr'),
+  subscribe: (cb) => watch(i18n.global.locale, cb)
+}
+```
+
+Vue I18n supports ICU via the [`@intlify/core`](https://vue-i18n.intlify.dev/guide/essentials/syntax.html#message-format-syntax) engine — Aioha's `{var}` placeholders work out of the box.
+
+### @lit/localize[​](#litlocalize "Direct link to @lit/localize")
+
+`@lit/localize` is a compile-time extraction system — it expects you to author `msg()` calls in source, uses positional (not named) placeholders, and does not parse [ICU MessageFormat](https://formatjs.io/docs/intl-messageformat). Routing Aioha's pre-built ICU catalog through `msg()` fights the library.
+
+The idiomatic integration is to **share locale state only**: let `@lit/localize` drive locale switching for your own strings, and keep Aioha's built-in ICU formatter for Aioha's strings. The adapter below forwards `setLocale` to `@lit/localize` and listens for `lit-localize-status` to stay in sync.
+
+src/aioha-messages.ts
+
+```
+import { configureLocalization, getLocale, setLocale } from '@lit/localize'
+import { createDefaultMessages, resolveDir } from '@aioha/i18n-keys'
+import type { Messages } from '@aioha/i18n-keys'
+
+// Your existing @lit/localize setup for your own strings
+configureLocalization({
+  sourceLocale: 'en',
+  targetLocales: ['ar', 'de', 'es', 'fr', 'ja', 'zh-CN'],
+  loadLocale: (locale) => import(`./generated/locales/${locale}.js`)
+})
+
+// Aioha's built-in adapter does the ICU formatting for Aioha's catalog
+const aioha = createDefaultMessages({ initialLocale: getLocale() })
+
+// Bridge: mirror @lit/localize's active locale into Aioha
+window.addEventListener('lit-localize-status', async (e: Event) => {
+  const ev = e as CustomEvent<{ status: string; readyLocale?: string }>
+  if (ev.detail.status !== 'ready' || !ev.detail.readyLocale) return
+  const lng = ev.detail.readyLocale
+  if (!aioha.getLocale || aioha.getLocale() === lng) return
+  try {
+    const cat = (await import(`@aioha/i18n-keys/build/locales/${lng}.json`)).default
+    aioha.addCatalog(lng, cat)
+  } catch {
+    // locale not shipped by @aioha/i18n-keys — falls back to English
+  }
+  aioha.setLocale(lng)
+})
+
+export const aiohaMessages: Messages = {
+  t: (id, vars) => aioha.t(id, vars),
+  getLocale: () => getLocale(),
+  setLocale: async (lng) => {
+    await setLocale(lng) // @lit/localize drives the change; the listener above syncs Aioha
+  },
+  getDir: () => resolveDir(getLocale()),
+  subscribe: aioha.subscribe
+}
+```
+
+my-element.ts
+
+```
+html`<aioha-modal .messages=${aiohaMessages} ...></aioha-modal>`
+```
+
+Now one call to `setLocale('fr')` switches both your `msg()` output and Aioha's modal.
+
+### Rolling your own[​](#rolling-your-own "Direct link to Rolling your own")
+
+For any framework that isn't listed, the contract is only four responsibilities: format, read the current locale, switch it, and notify subscribers. Under the hood the built-in adapter uses [`intl-messageformat`](https://formatjs.io/docs/intl-messageformat) (FormatJS) — you can use it directly as a minimal formatter if your i18n layer doesn't ship an ICU parser.
+
+## Message IDs[​](#message-ids "Direct link to Message IDs")
+
+See the [`@aioha/i18n-keys` README](https://github.com/aioha-hive/i18n-keys#message-ids) for the full list of the 38 message IDs, their English defaults, and ICU variables.
+
+## Catalog versioning[​](#catalog-versioning "Direct link to Catalog versioning")
+
+The catalog schema is versioned. Consumers can guard against drift:
+
+```
+import { CATALOG_VERSION } from '@aioha/i18n-keys'
+if (CATALOG_VERSION !== 1) console.warn('Aioha catalog changed; review translations')
+```
+
+The version bumps on any key addition, removal, or rename.
 
 
 ---
@@ -3401,6 +3749,10 @@ export class Homepage extends LitElement {
 
 The list of `<aioha-modal>` component properties may be found [here](/docs/ui/web-components.md#initmodal-options).
 
+## Localization[​](#localization "Direct link to Localization")
+
+The modal ships with English and translations for 15 additional languages loaded on demand, full ICU MessageFormat support, RTL direction handling, and a pluggable adapter for other i18n frameworks. See [Localization](/docs/ui/i18n.md).
+
 ## Universal Web Component[​](#universal-web-component "Direct link to Universal Web Component")
 
 The Lit modal UI can be used as a universal web component on vanilla HTML/JS or any other web framework. Details [here](/docs/ui/web-components.md).
@@ -3481,6 +3833,9 @@ Full example usage may be found [here](https://github.com/aioha-hive/lit-ui/blob
 | `imageServer`        | Image server URL for user avatar.                                                                                                                                                | <https://images.hive.blog> |
 | `explorerUrl`        | Hive block explorer URL.                                                                                                                                                         | <https://hivehub.dev>      |
 | `forceShowProviders` | List of `Providers` to force show as login option, which must be registered already. Clicking on unavailable providers displayed will open the URL of the provider landing page. | *\[]*                      |
+| `language`           | Active locale code (e.g. `en`, `fr`, `ar`, `ja`). See [Localization](/docs/ui/i18n.md) for the list of bundled locales.                                                          | en                         |
+| `direction`          | Text direction: `ltr`, `rtl`, or `auto`. When `auto`, inferred from `document.dir` and the active locale.                                                                        | auto                       |
+| `messages`           | Custom [`Messages`](/docs/ui/i18n.md#the-messages-adapter) adapter for routing translations through your own i18n framework. Defaults to the built-in adapter.                   | *undefined*                |
 
 note
 

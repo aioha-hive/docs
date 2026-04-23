@@ -106,6 +106,10 @@ export class Homepage extends LitElement {
 
 The list of `<aioha-modal>` component properties may be found [here](/docs/ui/web-components.md#initmodal-options).
 
+## Localization[​](#localization "Direct link to Localization")
+
+The modal ships with English and translations for 15 additional languages loaded on demand, full ICU MessageFormat support, RTL direction handling, and a pluggable adapter for other i18n frameworks. See [Localization](/docs/ui/i18n.md).
+
 ## Universal Web Component[​](#universal-web-component "Direct link to Universal Web Component")
 
 The Lit modal UI can be used as a universal web component on vanilla HTML/JS or any other web framework. Details [here](/docs/ui/web-components.md).

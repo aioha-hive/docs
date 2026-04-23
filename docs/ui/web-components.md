@@ -71,6 +71,9 @@ Full example usage may be found [here](https://github.com/aioha-hive/lit-ui/blob
 | `imageServer`        | Image server URL for user avatar.                                                                                                                                                | <https://images.hive.blog> |
 | `explorerUrl`        | Hive block explorer URL.                                                                                                                                                         | <https://hivehub.dev>      |
 | `forceShowProviders` | List of `Providers` to force show as login option, which must be registered already. Clicking on unavailable providers displayed will open the URL of the provider landing page. | *\[]*                      |
+| `language`           | Active locale code (e.g. `en`, `fr`, `ar`, `ja`). See [Localization](/docs/ui/i18n.md) for the list of bundled locales.                                                          | en                         |
+| `direction`          | Text direction: `ltr`, `rtl`, or `auto`. When `auto`, inferred from `document.dir` and the active locale.                                                                        | auto                       |
+| `messages`           | Custom [`Messages`](/docs/ui/i18n.md#the-messages-adapter) adapter for routing translations through your own i18n framework. Defaults to the built-in adapter.                   | *undefined*                |
 
 note
 

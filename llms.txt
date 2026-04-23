@@ -59,5 +59,6 @@ Branding
 Ready made modal containing all the UI components and logic required for Aioha.
 
 - [Ready Made UI](/docs/ui.md): Ready made modal containing all the UI components and logic required for Aioha.
+- [Localization (i18n)](/docs/ui/i18n.md): @aioha/react-ui and @aioha/lit-ui share a single canonical message catalog published as @aioha/i18n-keys. The catalog exposes namespaced message IDs, an English default, a framework-neutral Messages adapter, ICU MessageFormat support for pluralization and interpolation, a pseudo-locale for testing, RTL direction detection, and bundled translations for 16 languages.
 - [Lit UI](/docs/ui/lit.md): Opinionated Lit modal UI for Hive logins through Aioha, styled using Tailwind CSS. This provides a quick and easy way to bootstrap a Lit web app with ready to use Aioha-powered modal component.
 - [Web Components](/docs/ui/web-components.md): The ready made modal UI is available as a framework agnostic web component that can be integrated on vanilla HTML/JS or any web framework.

@@ -94,9 +94,9 @@ import { hivesignerCb } from '@aioha/aioha/build/lib/hivesigner-cb'
 hivesignerCb()
 ```
 
-## Polyfills[​](#polyfills "Direct link to Polyfills")
+## Environment defines[​](#environment-defines "Direct link to Environment defines")
 
-When using Aioha with bundlers such as Webpack or Vite, you may need to add some polyfills for it to work correctly.
+Aioha reads `process.env.NODE_DEBUG` from a transitive dependency. Define it as `false` in your bundler so the reference does not leak into the output.
 
 * Webpack
 * Vite
@@ -104,24 +104,20 @@ When using Aioha with bundlers such as Webpack or Vite, you may need to add some
 webpack.config.cjs
 
 ```
-const { DefinePlugin, ProvidePlugin } = require('webpack')
+const { DefinePlugin } = require('webpack')
 
 module.exports = {
   // ...
   resolve: {
     // ...
     fallback: {
-      url: false,
-      buffer: require.resolve('buffer/')
+      url: false
     }
   },
   plugins: [
     // ...
     new DefinePlugin({
       'process.env.NODE_DEBUG': false
-    }),
-    new ProvidePlugin({
-      Buffer: ['buffer', 'Buffer']
     })
   ]
 }
@@ -131,21 +127,12 @@ vite.config.ts
 
 ```
 import { defineConfig } from 'vite'
-import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 export default defineConfig({
   // ...
   define: {
     'process.env.NODE_DEBUG': false
-  },
-  plugins: [
-    // ...
-    nodePolyfills({
-      globals: {
-        Buffer: true
-      }
-    })
-  ]
+  }
 })
 ```
 
