@@ -1,6 +1,7 @@
 import { themes as prismThemes } from 'prism-react-renderer'
 import type { Config } from '@docusaurus/types'
 import type * as Preset from '@docusaurus/preset-classic'
+import rehypeDocusaurusLlms from './src/plugins/rehype-docusaurus-llms.mjs'
 
 const config: Config = {
   title: 'Aioha',
@@ -46,7 +47,19 @@ const config: Config = {
         content: {
           includeBlog: false,
           includePages: false,
-          enableLlmsFullTxt: true // Optional: generates llms-full.txt
+          enableLlmsFullTxt: true, // Optional: generates llms-full.txt
+          beforeDefaultRehypePlugins: [rehypeDocusaurusLlms],
+          routeRules: [
+            { route: '/docs/**', categoryName: 'Docs' },
+            { route: '/docs/core/**', categoryName: 'Core API' },
+            { route: '/docs/framework/**', categoryName: 'Framework Libraries' },
+            { route: '/docs/magi/**', categoryName: 'Magi' },
+            { route: '/docs/ui/**', categoryName: 'Ready Made UI' },
+            { route: '/docs/react/**', categoryName: 'React UI' },
+            { route: '/docs/category/**', categoryName: 'Category Indexes' },
+            { route: '/docs/faq', categoryName: 'FAQ' },
+            { route: '/docs/media', categoryName: 'Media' }
+          ]
         }
       }
     ]
