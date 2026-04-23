@@ -104,31 +104,27 @@ HiveSigner provider requires a callback page that stores the login and transacti
   </TabItem>
 </Tabs>
 
-## Polyfills
+## Environment defines
 
-When using Aioha with bundlers such as Webpack or Vite, you may need to add some polyfills for it to work correctly.
+Aioha reads `process.env.NODE_DEBUG` from a transitive dependency. Define it as `false` in your bundler so the reference does not leak into the output.
 
 <Tabs>
   <TabItem value="webpack" label="Webpack" default>
     ```js title="webpack.config.cjs"
-    const { DefinePlugin, ProvidePlugin } = require('webpack')
+    const { DefinePlugin } = require('webpack')
 
     module.exports = {
       // ...
       resolve: {
         // ...
         fallback: {
-          url: false,
-          buffer: require.resolve('buffer/')
+          url: false
         }
       },
       plugins: [
         // ...
         new DefinePlugin({
           'process.env.NODE_DEBUG': false
-        }),
-        new ProvidePlugin({
-          Buffer: ['buffer', 'Buffer']
         })
       ]
     }
@@ -137,21 +133,12 @@ When using Aioha with bundlers such as Webpack or Vite, you may need to add some
   <TabItem value="vite" label="Vite">
     ```ts title="vite.config.ts"
     import { defineConfig } from 'vite'
-    import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
     export default defineConfig({
       // ...
       define: {
         'process.env.NODE_DEBUG': false
-      },
-      plugins: [
-        // ...
-        nodePolyfills({
-          globals: {
-            Buffer: true
-          }
-        })
-      ]
+      }
     })
     ```
   </TabItem>
