@@ -41,7 +41,7 @@ Aioha can be used as a transaction signer for applications powered by [Wax Types
 | Discover accounts           | ❌         | ❌       | ❌       | ❌         | ✅     | ✅       |
 | Memo encryption             | ✅         | ✅       | ❌4      | ❌         | ❌     | ✅       |
 | Memo decryption             | ✅         | ✅       | ❌5      | ✅2        | ❌     | ✅       |
-| Sign message                | ✅         | ✅       | ✅       | ❌         | ✅     | ❌       |
+| Sign message                | ✅         | ✅       | ✅       | ❌         | ✅     | ✅       |
 | Sign tx (without broadcast) | ✅         | ✅       | ❌3      | ❌         | ✅     | ✅       |
 | Sign tx (with broadcast)    | ✅         | ✅       | ✅       | ✅         | ✅     | ✅       |
 | Sign HF26 serialized tx     | ❌         | ❌       | ❌       | ❌         | ❌6    | ✅       |
