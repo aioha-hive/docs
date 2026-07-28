@@ -67,6 +67,8 @@ const aioha = initAioha({
       Custom = 'custom'
     }
     ```
+
+    The `LoginProvider` type (accepted by `login()`, `switchUser()`, etc.) also accepts any arbitrary string for [named custom providers](/docs/core/custom-provider#registering-custom-providers). This means you can pass `'my-custom-provider'` directly instead of going through the enum.
   </TabItem>
   <TabItem value="enum-keytypes" label="KeyTypes">
     The `KeyTypes` enum exported are as follows:
@@ -119,8 +121,9 @@ Login with specified provider and username. A signature request will be made to 
       }
     })
     ```
+    * `provider`: A `Providers` enum value or a [custom provider name](/docs/core/custom-provider#registering-custom-providers) string.
     * `msg`: Message to be signed
-    * `keyType`: Key type to be used to sign the message
+    * `keyType`: Key type to be used to sign the message. Not required for custom providers.
     * `loginTitle` *(optional)*: Title to be displayed on certain providers
     * `paths` *(optional)*: List of [SLIP-48](https://github.com/satoshilabs/slips/blob/master/slip-0048.md) paths to be used for wallets that support it to skip account search. Usually passed in from [account discovery](#discover-accounts) results.
     * `hiveauth.cbWait` *(optional)*: Callback function returning auth payload. It shall display a QR code using `payload` as data to be scanned by a HiveAuth PKSA. Login request may be cancelled before timeout by calling `cancel()`.
@@ -141,7 +144,7 @@ Login with specified provider and username. A signature request will be made to 
       "username": "randomvlogs"
     }
     ```
-    * `provider`: Name of provider selected by the user. See [Providers Enum](#enums) above for possibilities.
+    * `provider`: Name of provider selected by the user — a `Providers` enum value or a custom provider name string. See [Providers Enum](#enums) above for possibilities.
     * `success`: Boolean of whether login is successful or not
     * `error`: Error message, if any
     * `result`: ECDSA signature (or HiveSigner access token for HiveSigner provider)
@@ -178,7 +181,7 @@ Login with specified provider and username by decrypting a memo.
       "username": "randomvlogs"
     }
     ```
-    * `provider`: Name of provider selected by the user. See [Providers Enum](#enums) above for possibilities.
+    * `provider`: Name of provider selected by the user — a `Providers` enum value or a custom provider name string. See [Providers Enum](#enums) above for possibilities.
     * `success`: Boolean of whether the memo decryption is successful or not
     * `error`: Error message, if any
     * `result`: Decrypted message
@@ -539,7 +542,7 @@ Sign and broadcast a [hive-uri](https://gitlab.syncad.com/hive/hive-uri) encoded
 List all registered providers.
 
 ```js
-aioha.getProviders() // ['keychain', 'peakvault', 'ledger', 'hiveauth', 'hivesigner']
+aioha.getProviders() // ['keychain', 'peakvault', 'ledger', 'hiveauth', 'hivesigner', 'beekeeper', ...]
 ```
 
 ### Current Provider

@@ -2,9 +2,99 @@
 sidebar_position: 3
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 # Custom Provider
 
-Besides the [built-in providers](/docs#supported-providers), a custom defined provider that extends [`AiohaBaseProvider` class](https://github.com/aioha-hive/aioha/blob/main/src/providers/provider.ts) may be registered as `Providers.Custom` provider. This may be useful for backend use or development of another browser provider.
+Besides the [built-in providers](/docs#supported-providers), a custom defined provider that extends [`AiohaBaseProvider` class](https://github.com/aioha-hive/aioha/blob/main/src/providers/provider.ts) may be registered. This may be useful for backend use or development of another browser provider.
+
+## Registering Custom Providers
+
+`registerCustomProvider()` supports two forms:
+
+<Tabs>
+  <TabItem value="named-form" label="Named (Recommended)" default>
+    Register a provider under an arbitrary name. Multiple custom providers can be registered concurrently, each with a unique name. Use the same name when calling `login()`, `switchUser()`, or any other provider-aware method.
+
+    ```js
+    const aioha = new Aioha()
+
+    // Register a custom provider under the name 'beekeeper'
+    aioha.registerCustomProvider('beekeeper', new BeekeeperProvider(...))
+
+    // Login with the named custom provider
+    const login = await aioha.login('beekeeper', 'your-username', { msg: 'Hello World' })
+    ```
+
+    **Constraints:**
+    - `name` must be a non-empty string
+    - `name` must not collide with a built-in provider name (e.g. `'keychain'`, `'hiveauth'`, `'hivesigner'`, `'ledger'`, `'peakvault'`, `'metamasksnap'`, `'viewonly'`)
+    - `name` must not already be registered — call [`deregisterProvider()`](#managing-custom-providers) first to replace
+    - The literal `'custom'` is explicitly allowed (it maps to the legacy `Providers.Custom` slot)
+
+    **`keyType` bypass:** Named custom providers skip the `keyType` requirement in login options, so you can omit it when calling `login()`.
+
+    **Implementation requirement:** For `switchUser()` to round-trip correctly, your custom provider's `getLoginInfo()` must return the same `provider` name it was registered under. For example:
+
+    ```js
+    class MyProvider extends AiohaProviderBase {
+      getLoginInfo() {
+        return { provider: 'my-provider-name', pubKey: 'STM...' }
+      }
+    }
+    ```
+  </TabItem>
+  <TabItem value="legacy-form" label="Legacy (Providers.Custom)">
+    Register a single provider under the `Providers.Custom` enum value (`'custom'`). Only one provider can be registered this way at a time.
+
+    ```js
+    const aioha = new Aioha()
+    aioha.registerCustomProvider(new BeekeeperProvider(...))
+
+    const login = await aioha.login(Providers.Custom, 'your-username', { msg: 'Hello World' })
+    ```
+
+    This form is kept for backward compatibility. The named form above is recommended for new code.
+  </TabItem>
+</Tabs>
+
+### Multiple Custom Providers
+
+You can register and use several custom providers side by side:
+
+```js
+const aioha = new Aioha()
+
+// Register two custom providers
+aioha.registerCustomProvider('beekeeper', new BeekeeperProvider(...))
+aioha.registerCustomProvider('hardware-x', new HardwareXProvider(...))
+
+// Login as alice via beekeeper
+await aioha.login('beekeeper', 'alice', {})
+
+// Switch to bob via hardware-x
+await aioha.login('hardware-x', 'bob', {})
+
+// Switch back to alice — restores the beekeeper provider
+aioha.switchUser('alice')
+console.log(aioha.getCurrentProvider()) // 'beekeeper'
+```
+
+### Managing Custom Providers
+
+Custom providers work with all provider management methods:
+
+```js
+// Check if a custom provider is registered
+aioha.isProviderRegistered('beekeeper') // true
+
+// List all registered providers (includes custom names alongside built-in ones)
+aioha.getProviders() // ['beekeeper', 'hardware-x', 'keychain', ...]
+
+// Deregister a custom provider (must be logged out first)
+aioha.deregisterProvider('beekeeper') // true
+```
 
 ## Beekeeper Signer
 
@@ -19,7 +109,7 @@ pnpm i @aioha/aioha @hiveio/beekeeper
 ### Usage
 
 ```js
-import { Aioha, AiohaClient, Providers, KeyTypes } from '@aioha/aioha'
+import { Aioha, AiohaClient, KeyTypes } from '@aioha/aioha'
 import { BeekeeperProvider } from '@aioha/aioha/build/providers/custom/beekeeper.js'
 import { SimpleEventEmitter } from '@aioha/aioha/build/lib/event-emitter.js'
 import createBeekeeper from '@hiveio/beekeeper'
@@ -30,9 +120,10 @@ const session = bk.createSession('some-salt')
 const { wallet } = await session.createWallet('my-wallet', 'password', true)
 const pubKey = await wallet.importKey('5somethingsomething')
 
-// Register the beekeeper provider with Aioha
+// Register the beekeeper provider under a custom name
 const aioha = new Aioha()
 aioha.registerCustomProvider(
+  'beekeeper',
   new BeekeeperProvider(
     wallet,
     { [KeyTypes.Posting]: pubKey, [KeyTypes.Active]: pubKey },
@@ -41,8 +132,8 @@ aioha.registerCustomProvider(
   )
 )
 
-// Login as usual
-const login = await aioha.login(Providers.Custom, 'your-username', { msg: 'Hello World' })
+// Login with the named custom provider
+const login = await aioha.login('beekeeper', 'your-username', { msg: 'Hello World' })
 
 // Claim rewards
 const claim = await aioha.claimRewards()
@@ -66,11 +157,11 @@ Use `inMemory: true` for ephemeral sessions only. For persistent storage, omit t
 :::
 
 ```js
-import { Aioha, Providers } from '@aioha/aioha'
+import { Aioha } from '@aioha/aioha'
 import { PlaintextKeyProvider } from '@aioha/aioha/build/providers/custom/plaintext.js'
 
 const aioha = new Aioha()
-aioha.registerCustomProvider(new PlaintextKeyProvider('5somethingsomething'))
+aioha.registerCustomProvider('plaintext', new PlaintextKeyProvider('5somethingsomething'))
 
-const login = await aioha.login(Providers.Custom, 'your-username', { msg: 'Hello World' })
+const login = await aioha.login('plaintext', 'your-username', { msg: 'Hello World' })
 ```
